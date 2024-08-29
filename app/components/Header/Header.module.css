@@ -1,0 +1,33 @@
+/* app/components/Header/Header.module.css */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+    background-color: var(--light-text-color);
+    box-shadow: var(--box-shadow);
+}
+
+.logoImage {
+    height: 50px;
+    margin-left: 30px;
+}
+
+.nav {
+    display: flex;
+    gap: 20px;
+}
+
+.navLink {
+    color: var(--text-color);
+    font-size: 16px;
+    font-weight: 500;
+    padding: 10px 15px;
+    border-radius: var(--border-radius);
+    transition: background-color 0.3s ease;
+}
+
+.navLink:hover {
+    background-color: var(--background-color);
+    color: var(--primary-color);
+}

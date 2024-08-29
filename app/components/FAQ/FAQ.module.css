@@ -1,0 +1,88 @@
+/* app/components/FAQ/FAQ.module.css */
+
+.faqSection {
+  padding: 0px 0;
+  padding-bottom: 100px;
+  background-color: var(--background-color);
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  align-items: center;
+}
+
+.imageContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.faqImage {
+  max-width: 100%;
+  height: auto;
+}
+
+.accordionContainer {
+  max-width: 600px;
+}
+
+.faqTitle {
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 30px;
+  color: var(--text-color);
+}
+
+.accordion {
+  border-top: 1px solid #ddd;
+}
+
+.accordionItem {
+  border-bottom: 1px solid #ddd;
+}
+
+.accordionButton {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 20px;
+  font-size: 18px;
+  font-weight: 500;
+  text-align: left;
+  color: var(--text-color);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.accordionIcon {
+  font-size: 24px;
+  color: var(--primary-color);
+}
+
+.accordionContent {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+  padding: 0 20px;
+}
+
+.accordionContent p {
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--text-color);
+  margin: 20px 0;
+}
+
+.accordionContent.active {
+  max-height: 500px; /* Adjust based on content length */
+}
+
+.active .accordionContent {
+  max-height: 500px; /* Adjust based on content length */
+}

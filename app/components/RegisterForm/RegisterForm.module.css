@@ -1,0 +1,134 @@
+/* app/components/RegisterForm/RegisterForm.module.css */
+.formContainer {
+    width: 100%;
+    max-width: 500px;
+    margin: 100px auto;
+    padding: 60px;
+    background-color: white;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.title {
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: var(--text-color);
+    font-weight: 600;
+    text-align: center;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.input {
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    color: var(--text-color);
+    transition: border-color 0.3s ease;
+}
+
+.inputHalf {
+    width: 48%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    color: var(--text-color);
+    transition: border-color 0.3s ease;
+}
+
+.input:focus,
+.inputHalf:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
+}
+
+.errorBorder {
+    border-color: red;
+}
+
+.nameContainer,
+.dateOfBirthContainer {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.genderContainer {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 16px;
+}
+
+.radioInput {
+    margin-right: 5px;
+}
+
+.termsContainer {
+    margin-top: 20px;
+    font-size: 14px;
+    color: var(--text-color);
+}
+
+.checkbox {
+    margin-right: 8px;
+}
+
+.error {
+    color: red;
+    font-size: 14px;
+    margin-top: -10px;
+}
+
+.button {
+    padding: 14px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.button:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
+
+.loginLink {
+    margin-top: 20px;
+    font-size: 14px;
+    text-align: center;
+    color: var(--primary-color);
+}
+
+.link {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.link:hover {
+    text-decoration: underline;
+}

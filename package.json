@@ -1,0 +1,21 @@
+{
+  "name": "votly-app-web",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.0.0",
+    "@emotion/styled": "^11.0.0",
+    "@mui/material": "^6.0.0",
+    "next": "^13.0.0",
+    "react": "latest",
+    "react-dom": "latest",
+    "react-hook-form": "^7.0.0",
+    "styled-components": "^5.3.0"
+  }
+}

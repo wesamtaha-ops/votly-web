@@ -1,0 +1,89 @@
+/* app/components/Footer/Footer.module.css */
+
+.footer {
+    background-color: #222;
+    color: #ccc;
+    padding: 80px 60px;
+    padding-top: 100px;
+    text-align: left;
+    border-top: 3px solid var(--primary-color);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footerContent {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.footerSection {
+    flex: 1;
+    min-width: 250px;
+    margin-bottom: 20px;
+}
+
+.footerSection h3,
+.footerSection h4 {
+    margin-bottom: 15px;
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.footerSection p {
+    font-size: 14px;
+    color: #aaa;
+    line-height: 1.6;
+}
+
+.footerLinks {
+    list-style: none;
+    padding: 0;
+}
+
+.footerLinks li {
+    margin-bottom: 10px;
+}
+
+.footerLinks li a {
+    color: #ccc;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footerLinks li a:hover {
+    color: var(--primary-color);
+}
+
+.appLinks {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.appIcon {
+    height: 50px;
+    transition: transform 0.3s ease;
+}
+
+.appIcon:hover {
+    transform: scale(1.1);
+}
+
+.footerBottom {
+    margin-top: 20px;
+    text-align: center;
+    border-top: 1px solid #444;
+    padding-top: 20px;
+}
+
+.footerBottom p {
+    font-size: 14px;
+    color: #aaa;
+    margin: 0;
+}
