@@ -1,32 +1,55 @@
 "use client";
-
+import react, { useState, useEffect } from "react";
 import Link from "next/link";
 import styles from "./LoginForm.module.css";
 import { useForm } from "react-hook-form";
-import { callApi } from "../../../helper";
+import { signIn } from "next-auth/react";
+import { redirect } from "next/navigation";
 
 const Login = () => {
+  const [redirection, setRedirection] = useState(false);
+
   const {
     register,
     formState: { errors },
     handleSubmit,
     setError,
   } = useForm();
+
   const onSubmit = async (payload) => {
-    const res = await callApi({
-      type: "post",
-      url: "login",
-      data: payload,
+    const { error, status } = await signIn("credentials", {
+      email: payload.email,
+      password: payload.password,
+      redirect: false,
     });
 
-    if (res.status === "0") {
+    if (error) {
       // login failed
       setError("submit", {
         message: "Login failed, please check your email or password",
       });
     } else {
-      alert("success");
+      setRedirection(true);
     }
+  };
+
+  useEffect(() => {
+    if (redirection) {
+      redirect("/");
+    }
+
+    return () => {
+      setRedirection(false);
+    };
+  }, [redirection]);
+
+  const validateEmailOrPhone = (value) => {
+    const emailPattern = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+    const phonePattern = /^\+?\d{10,15}$/;
+    if (emailPattern.test(value) || phonePattern.test(value)) {
+      return true;
+    }
+    return "Please enter a valid email or phone number";
   };
 
   return (
@@ -46,10 +69,7 @@ const Login = () => {
             className={styles.input}
             {...register("email", {
               required: "Email Address is required",
-              pattern: {
-                value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
-                message: "Invalid email address",
-              },
+              validate: validateEmailOrPhone,
             })}
           />
           {errors.email && (
