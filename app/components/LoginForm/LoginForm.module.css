@@ -1,64 +1,65 @@
 /* app/components/Login/Login.module.css */
 .loginContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 80vh;
-    background-color: var(--background-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+  background-color: var(--background-color);
 }
 
 .loginBox {
-    width: 400px;
-    padding: 40px;
-    background-color: white;
-    border-radius: var(--border-radius);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    text-align: center;
+  width: 400px;
+  padding: 40px;
+  background-color: white;
+  border-radius: var(--border-radius);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  text-align: center;
 }
 
 .title {
-    font-size: 24px;
-    margin-bottom: 20px;
-    color: var(--text-color);
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: var(--text-color);
 }
 
 .form {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .input {
-    padding: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 16px;
-    color: var(--text-color);
+  padding: 10px;
+  margin-top: 20px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+  color: var(--text-color);
 }
 
 .loginButton {
-    padding: 12px;
-    background-color: var(--primary-color);
-    color: white;
-    border: none;
-    border-radius: 4px;
-    font-size: 18px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+  padding: 12px;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 20px;
 }
 
 .loginButton:hover {
-    background-color: #0056b3;
+  background-color: #0056b3;
 }
 
 .forgotPasswordLink {
-    margin-top: 20px;
-    font-size: 14px;
-    color: var(--primary-color);
-    text-decoration: none;
+  margin-top: 20px;
+  font-size: 14px;
+  color: var(--primary-color);
+  text-decoration: none;
 }
 
 .forgotPasswordLink:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
