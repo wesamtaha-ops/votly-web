@@ -7,6 +7,7 @@ import Link from "next/link";
 import { callApi } from "../../../helper";
 import toast from "react-hot-toast";
 import Button from "../Shared/Button";
+import axios from "axios";
 
 const EditProfile = ({ user, userToken, updateSession }) => {
   if (!user?.firstname) return;
@@ -15,12 +16,12 @@ const EditProfile = ({ user, userToken, updateSession }) => {
     user.image ||
       "https://t3.ftcdn.net/jpg/05/16/27/58/360_F_516275801_f3Fsp17x6HQK0xQgDQEELoTuERO4SsWV.jpg"
   );
+  const [imageFile, setImageFile] = useState();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-    watch,
   } = useForm({
     defaultValues: {
       firstname: user.firstname,
@@ -39,6 +40,13 @@ const EditProfile = ({ user, userToken, updateSession }) => {
     handleSubmit: passwordHandleSubmit,
     formState: { errors: passwordErros },
     watch: passwordWatch,
+  } = useForm();
+
+  const {
+    register: profileImageRegister,
+    handleSubmit: profileImageHandleSubmit,
+    formState: { errors: profileImageErros },
+    watch: profileImageWatch,
   } = useForm();
 
   const reloadSession = () => {
@@ -78,8 +86,32 @@ const EditProfile = ({ user, userToken, updateSession }) => {
     }
   };
 
-  const onSubmitProfileImage = (data) => {
-    console.log("Profile Image Updated:", data);
+  const onSubmitProfileImage = async (data) => {
+    try {
+      const formData = new FormData();
+      formData.append("image", imageFile);
+
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL_API}user`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${userToken}`,
+          },
+        }
+      );
+
+      if (response.data.status == "1") {
+        await updateSession({ user: response.data.user });
+        reloadSession();
+        toast("Profile Image has changed successfully");
+      }
+    } catch (error) {
+      // Handle the error (e.g., display an error message)
+      console.error("Error uploading image:", error);
+      toast("something went wrong! please try again later");
+    }
   };
 
   const handleImageChange = (event) => {
@@ -87,6 +119,7 @@ const EditProfile = ({ user, userToken, updateSession }) => {
     if (file) {
       const imageUrl = URL.createObjectURL(file);
       setSelectedImage(imageUrl);
+      setImageFile(event.target.files[0]);
     }
   };
 
@@ -227,7 +260,10 @@ const EditProfile = ({ user, userToken, updateSession }) => {
         {/* Change Profile Image Card */}
         <div className={`${styles.card} ${styles.changeProfileImageCard}`}>
           <h3 className={styles.cardTitle}>Change Profile Image</h3>
-          <div className={styles.profileImageContainer}>
+          <form
+            onSubmit={profileImageHandleSubmit(onSubmitProfileImage)}
+            className={styles.profileImageContainer}
+          >
             <img
               src={selectedImage}
               alt="Profile"
@@ -237,15 +273,17 @@ const EditProfile = ({ user, userToken, updateSession }) => {
               <input
                 type="file"
                 className={styles.fileInput}
-                {...register("profileImage")}
+                {...profileImageRegister("profileImage")}
                 onChange={handleImageChange}
               />
               <span className={styles.editIcon}>✎</span>
             </label>
-            <button className={styles.uploadbutton} type="submit">
-              Update Image
-            </button>
-          </div>
+
+            <Button
+              title="Update Image"
+              onClick={profileImageHandleSubmit(onSubmitProfileImage)}
+            />
+          </form>
         </div>
 
         {/* Change Password Card */}
