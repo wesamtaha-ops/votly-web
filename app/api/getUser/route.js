@@ -1,14 +1,13 @@
 import { NextResponse } from "next/server";
 import { callVotlyApi } from "../../../helper";
 
-export async function POST(req) {
+export async function GET(req) {
   const userToken = req.headers.get("userToken");
-  const payload = await req.json();
 
   const res = await callVotlyApi({
-    type: "post",
+    type: "get",
     url: "user",
-    data: payload,
+    data: {},
     userToken: userToken,
   });
 

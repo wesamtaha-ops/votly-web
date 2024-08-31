@@ -1,6 +1,7 @@
 import axios from "axios";
 import NextAuth from "next-auth";
 import CredentialProvider from "next-auth/providers/credentials";
+import { callApi } from "../../../../helper";
 
 export const authOptions = {
   pages: {
@@ -43,10 +44,14 @@ export const authOptions = {
     encryption: true,
   },
   callbacks: {
-    jwt: ({ token, user }) => {
+    jwt: ({ token, user, trigger, session }) => {
       if (user) {
         token.id = user.id;
         token.user = user.user;
+      }
+
+      if (trigger === "update" && session?.user) {
+        token.user = session.user;
       }
 
       return token;
@@ -56,6 +61,7 @@ export const authOptions = {
         session.id = token.id;
         session.user = token.user;
       }
+
       return session;
     },
   },

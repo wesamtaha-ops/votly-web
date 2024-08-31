@@ -8,7 +8,7 @@ import { callApi } from "../../../helper";
 import toast from "react-hot-toast";
 import Button from "../Shared/Button";
 
-const EditProfile = ({ user, userToken }) => {
+const EditProfile = ({ user, userToken, updateSession }) => {
   if (!user?.firstname) return;
 
   const [selectedImage, setSelectedImage] = useState(
@@ -41,8 +41,26 @@ const EditProfile = ({ user, userToken }) => {
     watch: passwordWatch,
   } = useForm();
 
-  const onSubmitMainInfo = (data) => {
-    console.log("Main Info Updated:", data);
+  const reloadSession = () => {
+    const event = new Event("visibilitychange");
+    document.dispatchEvent(event);
+  };
+
+  const onSubmitMainInfo = async (data) => {
+    const res = await callApi({
+      type: "post",
+      url: "profileUpdate",
+      data: data,
+      userToken: userToken,
+    });
+
+    if (res.status == "1") {
+      await updateSession({ user: res.user });
+      reloadSession();
+      toast("Profile has changed successfully");
+    } else {
+      toast("something went wrong! please try again later");
+    }
   };
 
   const onSubmitPassword = async (data) => {
@@ -186,9 +204,10 @@ const EditProfile = ({ user, userToken }) => {
               />
             </div>
 
-            <button className={styles.button} type="submit">
-              Save Changes
-            </button>
+            <Button
+              title="Save Changes"
+              onClick={handleSubmit(onSubmitMainInfo)}
+            />
           </form>
         </div>
 

@@ -42,19 +42,6 @@ export async function callApi({ type, url, data = [], userToken }) {
 }
 
 export async function callVotlyApi({ type, url, data = [], userToken }) {
-  console.log(`${process.env.BACKEND_BASE_URL_API}${url}`, {
-    method: type,
-    data,
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-      "Cache-Control": "no-cache",
-      Authorization: `Bearer ${userToken}`,
-      Pragma: "no-cache",
-      Expires: "0",
-    },
-  });
-
   const response = await axios(`${process.env.BACKEND_BASE_URL_API}${url}`, {
     method: type,
     data,
