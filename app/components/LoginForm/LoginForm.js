@@ -4,7 +4,6 @@ import Link from "next/link";
 import styles from "./LoginForm.module.css";
 import { useForm } from "react-hook-form";
 import { signIn } from "next-auth/react";
-import { redirect } from "next/navigation";
 import { useSearchParams } from "next/navigation";
 
 const Login = () => {
