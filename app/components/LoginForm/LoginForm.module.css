@@ -63,3 +63,20 @@
 .forgotPasswordLink:hover {
   text-decoration: underline;
 }
+
+.error {
+  color: red;
+  font-size: 14px;
+  text-align: left;
+}
+
+.errorBorder {
+  border-color: red;
+}
+
+.input:focus,
+.inputHalf:focus {
+  border-color: var(--primary-color);
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
+}

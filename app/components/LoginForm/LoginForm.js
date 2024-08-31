@@ -8,28 +8,32 @@ import { redirect } from "next/navigation";
 
 const Login = () => {
   const [redirection, setRedirection] = useState(false);
+  const [requestError, setRequestError] = useState("");
 
   const {
     register,
     formState: { errors },
     handleSubmit,
-    setError,
   } = useForm();
 
   const onSubmit = async (payload) => {
-    const { error, status } = await signIn("credentials", {
-      email: payload.email,
-      password: payload.password,
-      redirect: false,
-    });
-
-    if (error) {
-      // login failed
-      setError("submit", {
-        message: "Login failed, please check your email or password",
+    try {
+      const { error, status } = await signIn("credentials", {
+        email: payload.email,
+        password: payload.password,
+        redirect: false,
       });
-    } else {
-      setRedirection(true);
+
+      if (error) {
+        // login failed
+        setError("submit", {
+          message: "Login failed, please check your email or password",
+        });
+      } else {
+        setRedirection(true);
+      }
+    } catch (error) {
+      setRequestError("Login failed, please check your email or password");
     }
   };
 
@@ -57,23 +61,25 @@ const Login = () => {
       <div className={styles.loginBox}>
         <h2 className={styles.title}>Log in</h2>
         <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-          {errors.submit && (
-            <p role="alert" className="error">
-              {errors.submit.message}
+          {requestError && (
+            <p role="alert" className={styles.error}>
+              {requestError}
             </p>
           )}
 
           <input
             type="text"
             placeholder="Phone number or email"
-            className={styles.input}
+            className={`${styles.input} ${
+              errors.email ? styles.errorBorder : ""
+            }`}
             {...register("email", {
               required: "Email Address is required",
               validate: validateEmailOrPhone,
             })}
           />
           {errors.email && (
-            <p role="alert" className="error">
+            <p role="alert" className={styles.error}>
               {errors.email.message}
             </p>
           )}
@@ -81,11 +87,13 @@ const Login = () => {
           <input
             type="password"
             placeholder="Password"
-            className={styles.input}
+            className={`${styles.input} ${
+              errors.password ? styles.errorBorder : ""
+            }`}
             {...register("password", { required: "Password is required" })}
           />
           {errors.password && (
-            <p role="alert" className="error">
+            <p role="alert" className={styles.error}>
               {errors.password.message}
             </p>
           )}
@@ -97,6 +105,12 @@ const Login = () => {
         <br />
         <Link href="/forgot-password" className={styles.forgotPasswordLink}>
           Forgot your password?
+        </Link>
+
+        <br />
+        <br />
+        <Link href="/register" className={styles.forgotPasswordLink}>
+          Register
         </Link>
       </div>
     </div>

@@ -1,29 +1,18 @@
-import Header from '../components/Header/Header';
-import Footer from '../components/Footer/Footer';
-import Profile from '../components/Profile/Profile';
+"use client";
+
+import Header from "../components/Header/Header";
+import Footer from "../components/Footer/Footer";
+import Profile from "../components/Profile/Profile";
+import { useSession } from "next-auth/react";
 
 export default function ProfilePage() {
-  // Assume `user` is fetched from an API or context
-  const user = {
-    firstname: 'John',
-    lastname: 'Doe',
-    username: 'johndoe',
-    email: 'johndoe@example.com',
-    phone: '+1234567890',
-    birthday: '1990-01-01',
-    gender: 'male',
-    usertype: 'voter',
-    bio: 'Lover of polls and surveys.',
-    facebook: 'https://facebook.com/johndoe',
-    instagram: 'https://instagram.com/johndoe',
-    youtube: 'https://youtube.com/johndoe',
-  };
+  const { data: session } = useSession();
 
   return (
     <>
       <Header />
-      <main className='main-content'>
-        <Profile user={user} />
+      <main className="main-content">
+        <Profile user={session?.user ?? {}} />
       </main>
       <Footer />
     </>

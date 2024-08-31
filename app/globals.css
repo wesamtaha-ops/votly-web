@@ -57,9 +57,3 @@ a:hover {
 .main-content {
   flex: 1;
 }
-
-.error {
-  color: red;
-  text-align: left;
-  margin: 0px;
-}
