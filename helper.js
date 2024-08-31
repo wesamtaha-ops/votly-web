@@ -20,25 +20,28 @@ import axios from "axios";
 //   return context.token;
 // }
 
-export async function callApi({ type, url, data = [] }) {
+export async function callApi({ type, url, data = [], userToken }) {
   const response = await axios(
     `${process.env.NEXT_PUBLIC_BASE_URL_API}${url}`,
     {
       method: type,
-      data,
+      data: {
+        ...data,
+      },
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
         "Cache-Control": "no-cache",
         Pragma: "no-cache",
         Expires: "0",
+        userToken: userToken,
       },
     }
   );
   return response.data;
 }
 
-export async function callVotlyApi({ type, url, data = [] }) {
+export async function callVotlyApi({ type, url, data = [], userToken }) {
   const response = await axios(`${process.env.BACKEND_BASE_URL_API}${url}`, {
     method: type,
     data,
@@ -46,6 +49,7 @@ export async function callVotlyApi({ type, url, data = [] }) {
       Accept: "application/json",
       "Content-Type": "application/json",
       "Cache-Control": "no-cache",
+      Authorization: `Bearer ${userToken}`,
       Pragma: "no-cache",
       Expires: "0",
     },

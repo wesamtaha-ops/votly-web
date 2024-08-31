@@ -4,11 +4,12 @@ import Link from "next/link";
 import styles from "./LoginForm.module.css";
 import { useForm } from "react-hook-form";
 import { signIn } from "next-auth/react";
-import { redirect } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 
 const Login = () => {
   const [redirection, setRedirection] = useState(false);
   const [requestError, setRequestError] = useState("");
+  const searchParams = useSearchParams();
 
   const {
     register,
@@ -30,22 +31,23 @@ const Login = () => {
           message: "Login failed, please check your email or password",
         });
       } else {
-        setRedirection(true);
+        const callbackUrl = searchParams.get("callbackUrl");
+        window.location.href = callbackUrl ? callbackUrl : "/";
       }
     } catch (error) {
       setRequestError("Login failed, please check your email or password");
     }
   };
 
-  useEffect(() => {
-    if (redirection) {
-      redirect("/");
-    }
+  // useEffect(() => {
+  //   if (redirection) {
 
-    return () => {
-      setRedirection(false);
-    };
-  }, [redirection]);
+  //   }
+
+  //   return () => {
+  //     setRedirection(false);
+  //   };
+  // }, [redirection]);
 
   const validateEmailOrPhone = (value) => {
     const emailPattern = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
