@@ -1,20 +1,23 @@
-import './globals.css';
-
-export const metadata = {
-  title: 'Votly',
-  description: 'Earn rewards by completing surveys',
-};
+"use client";
+import "./globals.css";
+import { SessionProvider } from "next-auth/react";
+import { Toaster } from "react-hot-toast";
 
 export default function RootLayout({ children }) {
   return (
-    <html lang='en'>
+    <html lang="en">
       <head>
         <link
-          href='https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap'
-          rel='stylesheet'
+          href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+          rel="stylesheet"
         />
       </head>
-      <body>{children}</body>
+      <body>
+        <SessionProvider>
+          {children}
+          <Toaster />
+        </SessionProvider>
+      </body>
     </html>
   );
 }

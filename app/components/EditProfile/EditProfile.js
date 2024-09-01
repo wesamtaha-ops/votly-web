@@ -1,21 +1,27 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import styles from './EditProfile.module.css';
-import Link from 'next/link';
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import styles from "./EditProfile.module.css";
+import Link from "next/link";
+import { callApi } from "../../../helper";
+import toast from "react-hot-toast";
+import Button from "../Shared/Button";
+import axios from "axios";
 
-const EditProfile = ({ user }) => {
+const EditProfile = ({ user, userToken, updateSession }) => {
+  if (!user?.firstname) return;
+
   const [selectedImage, setSelectedImage] = useState(
     user.image ||
-      'https://t3.ftcdn.net/jpg/05/16/27/58/360_F_516275801_f3Fsp17x6HQK0xQgDQEELoTuERO4SsWV.jpg',
+      "https://t3.ftcdn.net/jpg/05/16/27/58/360_F_516275801_f3Fsp17x6HQK0xQgDQEELoTuERO4SsWV.jpg"
   );
+  const [imageFile, setImageFile] = useState();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-    watch,
   } = useForm({
     defaultValues: {
       firstname: user.firstname,
@@ -29,16 +35,83 @@ const EditProfile = ({ user }) => {
     },
   });
 
-  const onSubmitMainInfo = (data) => {
-    console.log('Main Info Updated:', data);
+  const {
+    register: passwordRegister,
+    handleSubmit: passwordHandleSubmit,
+    formState: { errors: passwordErros },
+    watch: passwordWatch,
+  } = useForm();
+
+  const {
+    register: profileImageRegister,
+    handleSubmit: profileImageHandleSubmit,
+    formState: { errors: profileImageErros },
+    watch: profileImageWatch,
+  } = useForm();
+
+  const reloadSession = () => {
+    const event = new Event("visibilitychange");
+    document.dispatchEvent(event);
   };
 
-  const onSubmitPassword = (data) => {
-    console.log('Password Updated:', data);
+  const onSubmitMainInfo = async (data) => {
+    const res = await callApi({
+      type: "post",
+      url: "profileUpdate",
+      data: data,
+      userToken: userToken,
+    });
+
+    if (res.status == "1") {
+      await updateSession({ user: res.user });
+      reloadSession();
+      toast("Profile has changed successfully");
+    } else {
+      toast("something went wrong! please try again later");
+    }
   };
 
-  const onSubmitProfileImage = (data) => {
-    console.log('Profile Image Updated:', data);
+  const onSubmitPassword = async (data) => {
+    const res = await callApi({
+      type: "post",
+      url: "passwordUpdate",
+      data: data,
+      userToken: userToken,
+    });
+
+    if (res.status == "1") {
+      toast("Password has changed successfully");
+    } else {
+      toast("something went wrong! please try again later");
+    }
+  };
+
+  const onSubmitProfileImage = async (data) => {
+    try {
+      const formData = new FormData();
+      formData.append("image", imageFile);
+
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL_API}user`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${userToken}`,
+          },
+        }
+      );
+
+      if (response.data.status == "1") {
+        await updateSession({ user: response.data.user });
+        reloadSession();
+        toast("Profile Image has changed successfully");
+      }
+    } catch (error) {
+      // Handle the error (e.g., display an error message)
+      console.error("Error uploading image:", error);
+      toast("something went wrong! please try again later");
+    }
   };
 
   const handleImageChange = (event) => {
@@ -46,6 +119,7 @@ const EditProfile = ({ user }) => {
     if (file) {
       const imageUrl = URL.createObjectURL(file);
       setSelectedImage(imageUrl);
+      setImageFile(event.target.files[0]);
     }
   };
 
@@ -59,15 +133,16 @@ const EditProfile = ({ user }) => {
           <h3 className={styles.cardTitle}>Main Information</h3>
           <form
             onSubmit={handleSubmit(onSubmitMainInfo)}
-            className={styles.form}>
+            className={styles.form}
+          >
             <div className={styles.formGroup}>
               <label>First Name</label>
               <input
                 className={`${styles.input} ${
-                  errors.firstname ? styles.errorBorder : ''
+                  errors.firstname ? styles.errorBorder : ""
                 }`}
-                {...register('firstname', {
-                  required: 'First name is required',
+                {...register("firstname", {
+                  required: "First name is required",
                 })}
               />
               {errors.firstname && (
@@ -79,9 +154,9 @@ const EditProfile = ({ user }) => {
               <label>Last Name</label>
               <input
                 className={`${styles.input} ${
-                  errors.lastname ? styles.errorBorder : ''
+                  errors.lastname ? styles.errorBorder : ""
                 }`}
-                {...register('lastname', { required: 'Last name is required' })}
+                {...register("lastname", { required: "Last name is required" })}
               />
               {errors.lastname && (
                 <p className={styles.error}>{errors.lastname.message}</p>
@@ -92,9 +167,9 @@ const EditProfile = ({ user }) => {
               <label>Username</label>
               <input
                 className={`${styles.input} ${
-                  errors.username ? styles.errorBorder : ''
+                  errors.username ? styles.errorBorder : ""
                 }`}
-                {...register('username', { required: 'Username is required' })}
+                {...register("username", { required: "Username is required" })}
               />
               {errors.username && (
                 <p className={styles.error}>{errors.username.message}</p>
@@ -105,13 +180,13 @@ const EditProfile = ({ user }) => {
               <label>Email</label>
               <input
                 className={`${styles.input} ${
-                  errors.email ? styles.errorBorder : ''
+                  errors.email ? styles.errorBorder : ""
                 }`}
-                {...register('email', {
-                  required: 'Email is required',
+                {...register("email", {
+                  required: "Email is required",
                   pattern: {
                     value: /^\S+@\S+$/i,
-                    message: 'Invalid email address',
+                    message: "Invalid email address",
                   },
                 })}
               />
@@ -124,9 +199,9 @@ const EditProfile = ({ user }) => {
               <label>Phone</label>
               <input
                 className={`${styles.input} ${
-                  errors.phone ? styles.errorBorder : ''
+                  errors.phone ? styles.errorBorder : ""
                 }`}
-                {...register('phone', { required: 'Phone number is required' })}
+                {...register("phone", { required: "Phone number is required" })}
               />
               {errors.phone && (
                 <p className={styles.error}>{errors.phone.message}</p>
@@ -136,19 +211,19 @@ const EditProfile = ({ user }) => {
             <div className={styles.formGroup}>
               <label>Birthday</label>
               <input
-                type='date'
+                type="date"
                 className={`${styles.input} ${
-                  errors.birthday ? styles.errorBorder : ''
+                  errors.birthday ? styles.errorBorder : ""
                 }`}
-                {...register('birthday')}
+                {...register("birthday")}
               />
             </div>
 
             <div className={styles.formGroup}>
               <label>Gender</label>
-              <select className={styles.input} {...register('gender')}>
-                <option value='male'>Male</option>
-                <option value='female'>Female</option>
+              <select className={styles.input} {...register("gender")}>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
               </select>
             </div>
 
@@ -156,15 +231,16 @@ const EditProfile = ({ user }) => {
               <label>Bio</label>
               <textarea
                 className={`${styles.input} ${
-                  errors.bio ? styles.errorBorder : ''
+                  errors.bio ? styles.errorBorder : ""
                 }`}
-                {...register('bio')}
+                {...register("bio")}
               />
             </div>
 
-            <button className={styles.button} type='submit'>
-              Save Changes
-            </button>
+            <Button
+              title="Save Changes"
+              onClick={handleSubmit(onSubmitMainInfo)}
+            />
           </form>
         </div>
 
@@ -172,62 +248,68 @@ const EditProfile = ({ user }) => {
         <div className={`${styles.card} ${styles.profileCompletionCard}`}>
           <h3 className={styles.cardTitle}>Profile Completion</h3>
           <div className={styles.progressBarContainer}>
-            <div className={styles.progressBar} style={{ width: '70%' }}>
+            <div className={styles.progressBar} style={{ width: "70%" }}>
               70% Complete
             </div>
           </div>
-          <Link href='/complete-profile'>
+          <Link href="/complete-profile">
             <button className={styles.button}>Complete Profile</button>
-          </Link>{' '}
+          </Link>{" "}
         </div>
 
         {/* Change Profile Image Card */}
         <div className={`${styles.card} ${styles.changeProfileImageCard}`}>
           <h3 className={styles.cardTitle}>Change Profile Image</h3>
-          <div className={styles.profileImageContainer}>
+          <form
+            onSubmit={profileImageHandleSubmit(onSubmitProfileImage)}
+            className={styles.profileImageContainer}
+          >
             <img
               src={selectedImage}
-              alt='Profile'
+              alt="Profile"
               className={styles.profileImage}
             />
             <label className={styles.editImageButton}>
               <input
-                type='file'
+                type="file"
                 className={styles.fileInput}
-                {...register('profileImage')}
+                {...profileImageRegister("profileImage")}
                 onChange={handleImageChange}
               />
               <span className={styles.editIcon}>✎</span>
             </label>
-            <button className={styles.uploadbutton} type='submit'>
-              Update Image
-            </button>
-          </div>
+
+            <Button
+              title="Update Image"
+              onClick={profileImageHandleSubmit(onSubmitProfileImage)}
+            />
+          </form>
         </div>
 
         {/* Change Password Card */}
         <div className={`${styles.card} ${styles.changePasswordCard}`}>
           <h3 className={styles.cardTitle}>Change Password</h3>
           <form
-            onSubmit={handleSubmit(onSubmitPassword)}
-            className={styles.form}>
+            onSubmit={passwordHandleSubmit(onSubmitPassword)}
+            className={styles.form}
+          >
             <div className={styles.formGroup}>
               <label>New Password</label>
               <input
                 className={`${styles.input} ${
-                  errors.password ? styles.errorBorder : ''
+                  passwordErros.password ? styles.errorBorder : ""
                 }`}
-                type='password'
-                {...register('password', {
-                  required: 'Password is required',
+                type="password"
+                {...passwordRegister("password", {
+                  required: "Password is required",
                   minLength: {
                     value: 6,
-                    message: 'Password must be at least 6 characters',
+                    message: "Password must be at least 6 characters",
                   },
                 })}
               />
-              {errors.password && (
-                <p className={styles.error}>{errors.password.message}</p>
+              {passwordErros.password && (
+                <p className={styles.error}>{passwordErros.password.message}</p>
               )}
             </div>
 
@@ -235,23 +317,27 @@ const EditProfile = ({ user }) => {
               <label>Confirm Password</label>
               <input
                 className={`${styles.input} ${
-                  errors.confirmPassword ? styles.errorBorder : ''
+                  passwordErros.confirmPassword ? styles.errorBorder : ""
                 }`}
-                type='password'
-                {...register('confirmPassword', {
-                  required: 'Please confirm your password',
+                type="password"
+                {...passwordRegister("confirmPassword", {
+                  required: "Please confirm your password",
                   validate: (value) =>
-                    value === watch('password') || 'Passwords do not match',
+                    value === passwordWatch("password") ||
+                    "Passwords do not match",
                 })}
               />
-              {errors.confirmPassword && (
-                <p className={styles.error}>{errors.confirmPassword.message}</p>
+              {passwordErros.confirmPassword && (
+                <p className={styles.error}>
+                  {passwordErros.confirmPassword.message}
+                </p>
               )}
             </div>
 
-            <button className={styles.button} type='submit'>
-              Change Password
-            </button>
+            <Button
+              title="Change Password"
+              onClick={passwordHandleSubmit(onSubmitPassword)}
+            />
           </form>
         </div>
       </div>
