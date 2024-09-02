@@ -27,7 +27,7 @@ const ForgotPassword = () => {
           placeholder='Enter your email'
         />
         {errors.email && <p className={styles.error}>{errors.email.message}</p>}
-
+          <br />
         <button className={styles.button} type='submit'>
           Reset Password
         </button>
