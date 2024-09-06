@@ -1,14 +1,21 @@
-'use client';
+"use client";
 
-import { useRef, useState } from 'react';
-import PropTypes from 'prop-types';
-import styles from './OtpVerification.module.css';
+import { useRef, useState } from "react";
+import PropTypes from "prop-types";
+import styles from "./OtpVerification.module.css";
+import toast from "react-hot-toast";
+import { useSession } from "next-auth/react";
+import { callApi } from "../../../helper";
+import { useRouter } from "next/navigation";
 
-const OtpVerification = ({ contactInfo }) => {
+const OtpVerification = ({ contactInfo, type }) => {
   const inputsRef = useRef([]);
-  const [otp, setOtp] = useState(['', '', '', '']);
-  const [message, setMessage] = useState('');
+  const [otp, setOtp] = useState(["", "", "", "", "", ""]);
+  const [message, setMessage] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
+  const { data: session, update: updateSession } = useSession();
+  const userToken = session?.id;
+  const router = useRouter();
 
   const handleInputChange = (index, event) => {
     const value = event.target.value;
@@ -27,13 +34,13 @@ const OtpVerification = ({ contactInfo }) => {
   };
 
   const handleKeyDown = (index, event) => {
-    if (event.key === 'Backspace') {
+    if (event.key === "Backspace") {
       const newOtp = [...otp];
       if (otp[index]) {
-        newOtp[index] = '';
+        newOtp[index] = "";
         setOtp(newOtp);
       } else if (index > 0) {
-        newOtp[index - 1] = '';
+        newOtp[index - 1] = "";
         setOtp(newOtp);
         inputsRef.current[index - 1].focus();
       }
@@ -48,9 +55,14 @@ const OtpVerification = ({ contactInfo }) => {
     }
   };
 
+  const reloadSession = () => {
+    const event = new Event("visibilitychange");
+    document.dispatchEvent(event);
+  };
+
   const handlePaste = (index, value) => {
     const newOtp = [...otp];
-    const digits = value.slice(0, 4 - index).split('');
+    const digits = value.slice(0, 6 - index).split("");
     digits.forEach((digit, i) => {
       newOtp[index + i] = digit;
     });
@@ -62,13 +74,31 @@ const OtpVerification = ({ contactInfo }) => {
     }
   };
 
-  const handleSubmit = () => {
-    const enteredOtp = otp.join('');
-    if (enteredOtp === '1111') {
-      setMessage('OTP verified successfully!');
-      setIsSuccess(true);
+  const handleSubmit = async () => {
+    const enteredOtp = otp.join("");
+
+    if (enteredOtp.length !== 6) {
+      toast("Enter valid otp");
+      return;
+    }
+
+    const response = await callApi({
+      type: "post",
+      url: type == "email" ? "emailVerify" : "mobileVerify",
+      data: {
+        code: enteredOtp,
+      },
+      userToken: userToken,
+    });
+
+    if (response.status == 200) {
+      toast("OTP verified successfully!");
+      await updateSession({ user: response.data });
+      await reloadSession();
+
+      router.push(type == "email" ? "/mobile-verification" : "/");
     } else {
-      setMessage('Invalid OTP. Please try again.');
+      toast("Invalid OTP. Please try again.");
       setIsSuccess(false);
     }
   };
@@ -77,14 +107,14 @@ const OtpVerification = ({ contactInfo }) => {
     <div className={styles.otpContainer}>
       <div className={styles.card}>
         <h2 className={styles.title}>
-          Enter the 4-digit code sent to {contactInfo}
+          Enter the 6-digit code sent to {contactInfo}
         </h2>
         <div className={styles.otpInputs}>
           {otp.map((digit, index) => (
             <input
               key={index}
-              type='text'
-              maxLength='1'
+              type="text"
+              maxLength="1"
               className={styles.otpInput}
               value={digit}
               ref={(el) => (inputsRef.current[index] = el)}
@@ -100,7 +130,8 @@ const OtpVerification = ({ contactInfo }) => {
           <p
             className={`${styles.message} ${
               isSuccess ? styles.success : styles.error
-            }`}>
+            }`}
+          >
             {message}
           </p>
         )}

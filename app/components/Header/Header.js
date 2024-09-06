@@ -26,12 +26,6 @@ const Header = () => {
         <Link href="/rewards" className={styles.navLink}>
           Rewards
         </Link>
-        <Link href="/mobile-verification" className={styles.navLink}>
-          mobile verification
-        </Link>
-        <Link href="/email-verification" className={styles.navLink}>
-          email verification
-        </Link>
 
         <Link href="/profile" className={styles.navLink}>
           My Profile
