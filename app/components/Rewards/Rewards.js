@@ -3,60 +3,19 @@ import { useState, useEffect } from "react";
 import styles from "./Rewards.module.css";
 import { useSession } from "next-auth/react";
 import { callApi } from "../../../helper";
-
-// const rewards = [
-//   {
-//     id: 1,
-//     name: "Happenis Gift Card",
-//     price: 60,
-//     image:
-//       "https://cdn.merchant-console.yougotagift.com/media/brands/image/2ea965a1-01ec-4efa-8254-2ce656c384c7.png",
-//   },
-//   {
-//     id: 2,
-//     name: "Noon Gift Card",
-//     price: 5,
-//     image:
-//       "https://cdn.merchant-console.yougotagift.com/media/brands/image/1fcf9521-35cf-4402-a496-65be1e4f981d.jpg",
-//   },
-//   {
-//     id: 3,
-//     name: "Amazon Gift Card",
-//     price: 20,
-//     image:
-//       "https://cdn.merchant-console.yougotagift.com/media/brands/image/f375361e-7604-4adb-8be7-839b144adab1.png",
-//   },
-//   {
-//     id: 1,
-//     name: "Virgin Gift Card",
-//     price: 60,
-//     image:
-//       "https://cdn.merchant-console.yougotagift.com/media/brands/image/194b920f-3885-439f-9a9f-c369043c02e7.png",
-//   },
-//   {
-//     id: 2,
-//     name: "Talabat Gift Card",
-//     price: 5,
-//     image:
-//       "https://cdn.merchant-console.yougotagift.com/media/brands/image/f08603bc-033d-43d3-9fb2-25a52378972d.png",
-//   },
-//   {
-//     id: 3,
-//     name: "IKIA Gift Card",
-//     price: 100,
-//     image:
-//       "https://cdn.merchant-console.yougotagift.com/media/brands/image/c6f3e6b6-bd6e-4159-85bc-d72977830b4f.png",
-//   },
-//   // Add more rewards as needed
-// ];
+import Swal from "sweetalert2";
 
 const Rewards = () => {
-  const userBalance = 18; // Example user balance
-
-  const [rewards, setRewards] = useState([]);
-
   const { data: session } = useSession();
   const userToken = session?.id;
+
+  const [rewards, setRewards] = useState([]);
+  const [userPoints, setUserPoints] = useState(0);
+  const [userBalance, setUserBalance] = useState(0);
+
+  const minimum_points_to_redeem = rewards?.[0]?.minimum_points_to_redeem;
+  const point_value_in_dollars = rewards?.[0]?.point_value_in_dollars;
+  const usedCurrency = rewards?.[0]?.country_currency;
 
   async function fetchData() {
     const response = await callApi({
@@ -70,16 +29,42 @@ const Rewards = () => {
     }
   }
 
+  function handleRedeem() {
+    Swal.fire({
+      title: "Do you want to redeem?",
+      showCancelButton: true,
+      confirmButtonText: "Redeem",
+      confirmButtonColor: "#017bfe",
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        Swal.fire("Redeemed!", "", "success");
+      } else if (result.isDenied) {
+        Swal.fire("No redeem", "", "info");
+      }
+    });
+  }
+
   useEffect(() => {
     if (userToken) {
       fetchData();
+      setUserPoints(session?.user?.num_points);
     }
   }, [userToken]);
+
+  useEffect(() => {
+    if (point_value_in_dollars > 0 && userPoints > 0) {
+      setUserBalance(userPoints * point_value_in_dollars);
+    }
+  }, [point_value_in_dollars]);
 
   return (
     <div className={styles.rewardsContainer}>
       <div className={styles.balanceBanner}>
-        <h2>Your Balance: ${userBalance.toFixed(2)}</h2>
+        <h2>
+          Your Balance: {usedCurrency} {userBalance.toFixed(2)}{" "}
+        </h2>
+        <h2>Minimus Points required {minimum_points_to_redeem} Points</h2>
       </div>
       <h2 className={styles.title}>Available Rewards</h2>
       <div className={styles.rewardsGrid}>
@@ -92,13 +77,20 @@ const Rewards = () => {
             />
             <h3>{reward.brand_en}</h3>
             <p className={styles.rewardPrice}>
-              Price: ${reward.value_in_votly.toFixed(2)}
+              Price: {usedCurrency} {reward.value_in_votly.toFixed(2)}
             </p>
             <button
               className={styles.redeemButton}
-              disabled={userBalance < reward.value_in_votly}
+              onClick={handleRedeem}
+              disabled={
+                !(
+                  minimum_points_to_redeem < userPoints &&
+                  userBalance >= reward.value_in_votly
+                )
+              }
             >
-              {userBalance >= reward.value_in_votly
+              {minimum_points_to_redeem < userPoints &&
+              userBalance >= reward.value_in_votly
                 ? "Redeem"
                 : "Not Enough Balance"}
             </button>
