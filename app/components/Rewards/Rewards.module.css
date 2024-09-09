@@ -24,11 +24,18 @@
 
 .title {
   font-size: 34px;
-  margin-bottom: 40px;
+  margin-top: 20px;
+  margin-bottom: 20px;
   color: var(--text-color);
   text-align: center;
 }
 
+.noRewardsMessage {
+  font-size: 24px;
+  color: var(--text-color);
+  text-align: center;
+  line-height: 100px;
+}
 .rewardsGrid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -63,6 +70,7 @@
   color: var(--text-color);
 }
 
+
 .rewardCard p {
   margin-bottom: 15px;
   font-size: 16px;
@@ -91,4 +99,58 @@
   background-color: gray;
   opacity: 0.6;
   cursor: not-allowed;
+}
+
+.filterContainer {
+  margin-bottom: 20px;
+}
+
+.featuredTitle {
+  color: #f4f5fd;
+  font-weight: bold;
+}
+
+.nonFeaturedTitle {
+  color: gray;
+  font-weight: bold;
+}
+
+.filterContainer {
+  margin-bottom: 20px;
+}
+
+.filterLabel {
+  font-size: 16px;
+  margin-right: 10px;
+}
+
+.filterSelect {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: white;
+  font-size: 16px;
+  color: #333;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.filterSelect:focus {
+  border-color: #017bfe;
+  outline: none;
+  box-shadow: 0 0 5px rgba(1, 123, 254, 0.5);
+}
+
+.filterSelect option {
+  padding: 10px;
+  background-color: white;
+  color: #333;
+}
+
+/* Custom styling for mobile screens */
+@media (max-width: 600px) {
+  .filterSelect {
+    width: 100%;
+    font-size: 14px;
+  }
 }
