@@ -15,7 +15,7 @@ export default async function EmailVerificationPage() {
   return (
     <>
       <Header />
-      <OtpVerification contactInfo="user@example.com" type="email" />
+      <OtpVerification contactInfo={session?.user?.email} type="email" />
       <Footer />
     </>
   );

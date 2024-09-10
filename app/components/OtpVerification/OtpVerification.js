@@ -74,6 +74,18 @@ const OtpVerification = ({ contactInfo, type }) => {
     }
   };
 
+  const resendOtp = async () => {
+    if (type == "email") {
+      await callApi({
+        type: "post",
+        url: "resendOtp",
+        userToken: userToken,
+      });
+    }
+
+    toast.success("OTP has been sent successfully");
+  };
+
   const handleSubmit = async () => {
     const enteredOtp = otp.join("");
 
@@ -92,7 +104,7 @@ const OtpVerification = ({ contactInfo, type }) => {
     });
 
     if (response.status == 200) {
-      toast("OTP verified successfully!");
+      toast.success("OTP verified successfully!");
       await updateSession({ user: response.data });
       await reloadSession();
 
@@ -135,6 +147,10 @@ const OtpVerification = ({ contactInfo, type }) => {
             {message}
           </p>
         )}
+
+        <button className={styles.btnResend} onClick={resendOtp}>
+          Resend Code
+        </button>
       </div>
     </div>
   );

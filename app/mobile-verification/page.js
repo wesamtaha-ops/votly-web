@@ -15,7 +15,7 @@ export default async function MobileVerificationPage() {
   return (
     <>
       <Header />
-      <OtpVerification contactInfo="+971555076146" type="mobile" />
+      <OtpVerification contactInfo={session?.user?.phone} type="mobile" />
       <Footer />
     </>
   );

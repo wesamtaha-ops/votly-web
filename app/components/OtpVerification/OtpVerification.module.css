@@ -80,3 +80,10 @@
 .error {
   color: red;
 }
+
+.btnResend {
+  margin-top: 40px;
+  background-color: transparent;
+  border: 0px;
+  cursor: pointer;
+}
