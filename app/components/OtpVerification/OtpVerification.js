@@ -110,7 +110,7 @@ const OtpVerification = ({ contactInfo, type }) => {
 
       router.push(type == "email" ? "/mobile-verification" : "/");
     } else {
-      toast("Invalid OTP. Please try again.");
+      toast.error("Invalid OTP. Please try again.");
       setIsSuccess(false);
     }
   };

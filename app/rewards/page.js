@@ -12,7 +12,7 @@ export default async function RewardsPage() {
   // Check redirections
   const redirectResult = await redirectIfEmailPhoneNotVerified(session);
 
-  if (redirectResult.redirect) {
+  if (redirectResult?.redirect) {
     return redirect(redirectResult.redirect);
   }
 

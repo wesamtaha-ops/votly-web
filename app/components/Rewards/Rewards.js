@@ -187,7 +187,7 @@ const Rewards = () => {
             <br />
             <div className={styles.rewardsGrid}>
               {filteredNonFeaturedRewards.map((reward, ind) => (
-                <div key={"reward" + id} className={styles.rewardCard}>
+                <div key={"reward" + ind} className={styles.rewardCard}>
                   <img
                     src={reward.brand_image}
                     alt={reward.brand_en}

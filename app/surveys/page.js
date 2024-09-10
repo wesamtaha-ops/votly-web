@@ -12,7 +12,7 @@ export default async function SurveysPage() {
   // Check redirections
   const redirectResult = await redirectIfEmailPhoneNotVerified(session);
 
-  if (redirectResult.redirect) {
+  if (redirectResult?.redirect) {
     return redirect(redirectResult.redirect);
   }
 
