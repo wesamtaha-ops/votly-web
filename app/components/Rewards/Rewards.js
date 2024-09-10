@@ -6,16 +6,14 @@ import { callApi } from "../../../helper";
 import Swal from "sweetalert2";
 
 const Rewards = () => {
-  const { data: session } = useSession();
+  const { data: session, update: updateSession } = useSession();
   const userToken = session?.id;
-  const [userCountryCode, setUserCountryCode] = useState(
-    session?.user?.country_id
-  );
   const [rewards, setRewards] = useState([]);
   const [userPoints, setUserPoints] = useState(0);
   const [userBalance, setUserBalance] = useState(0);
   const [showRewards, setShowRewards] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("");
+  const [submitting, setSubmitting] = useState(false);
   const [categories, setCategories] = useState([
     { id: 1, name: "Fashion & Accessories" },
     { id: 2, name: "Jewellery" },
@@ -58,18 +56,39 @@ const Rewards = () => {
     }
   }
 
-  function handleRedeem() {
+  const reloadSession = () => {
+    const event = new Event("visibilitychange");
+    document.dispatchEvent(event);
+  };
+
+  function handleRedeem(brand_code) {
     Swal.fire({
       title: "Do you want to redeem?",
       showCancelButton: true,
       confirmButtonText: "Redeem",
       confirmButtonColor: "#017bfe",
-    }).then((result) => {
+    }).then(async (result) => {
       if (result.isConfirmed) {
-        Swal.fire("Redeemed!", "", "success");
+        const response = await callApi({
+          type: "post",
+          url: "order",
+          data: { brand_code: brand_code },
+          userToken: userToken,
+        });
+
+        if (response?.data?.status == 200) {
+          await updateSession({ user: response.data.data });
+          reloadSession();
+
+          Swal.fire("Redeemed!", "", "success");
+        } else {
+          Swal.fire("No redeem", "", "error");
+        }
       } else if (result.isDenied) {
         Swal.fire("No redeem", "", "info");
       }
+
+      setSubmitting(false);
     });
   }
 
@@ -88,13 +107,13 @@ const Rewards = () => {
       setUserPoints(session?.user?.num_points);
       setShowRewards(true);
     }
-  }, [userToken]);
+  }, [userToken, session]);
 
   useEffect(() => {
     if (point_value_in_dollars > 0 && userPoints > 0) {
       setUserBalance(userPoints * point_value_in_dollars);
     }
-  }, [point_value_in_dollars]);
+  }, [point_value_in_dollars, session]);
 
   // Filter rewards based on the selected category
   const filteredFeaturedRewards = featuredRewards.filter((reward) =>
@@ -163,16 +182,21 @@ const Rewards = () => {
                     </p>
                     <button
                       className={styles.redeemButton}
-                      onClick={handleRedeem}
+                      onClick={async () => {
+                        setSubmitting(true);
+                        await handleRedeem(reward.provider_origin_id);
+                      }}
                       disabled={
                         !(
                           minimum_points_to_redeem < userPoints &&
                           userBalance >= reward.value_in_votly
-                        )
+                        ) || submitting
                       }
                     >
-                      {minimum_points_to_redeem < userPoints &&
-                      userBalance >= reward.value_in_votly
+                      {submitting
+                        ? "Submitting ... "
+                        : minimum_points_to_redeem < userPoints &&
+                          userBalance >= reward.value_in_votly
                         ? "Redeem"
                         : "Not Enough Balance"}
                     </button>
