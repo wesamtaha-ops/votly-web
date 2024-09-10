@@ -1,43 +1,43 @@
-'use client';
-import { useState, useEffect } from 'react';
-import styles from './Rewards.module.css';
-import { useSession } from 'next-auth/react';
-import { callApi } from '../../../helper';
-import Swal from 'sweetalert2';
+"use client";
+import { useState, useEffect } from "react";
+import styles from "./Rewards.module.css";
+import { useSession } from "next-auth/react";
+import { callApi } from "../../../helper";
+import Swal from "sweetalert2";
 
 const Rewards = () => {
   const { data: session } = useSession();
   const userToken = session?.id;
   const [userCountryCode, setUserCountryCode] = useState(
-    session?.user?.country_id,
+    session?.user?.country_id
   );
   const [rewards, setRewards] = useState([]);
   const [userPoints, setUserPoints] = useState(0);
   const [userBalance, setUserBalance] = useState(0);
   const [showRewards, setShowRewards] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState("");
   const [categories, setCategories] = useState([
-    { id: 1, name: 'Fashion & Accessories' },
-    { id: 2, name: 'Jewellery' },
-    { id: 3, name: 'Kids & Fun' },
-    { id: 4, name: 'Beauty & Cosmetics' },
-    { id: 5, name: 'Mobile Recharge' },
-    { id: 6, name: 'Restaurants & Cafes' },
-    { id: 7, name: 'Hotels & Travel' },
-    { id: 8, name: 'Spas & Fitness' },
-    { id: 9, name: 'Experiences & Entertainment' },
-    { id: 10, name: 'Electronics' },
-    { id: 11, name: 'Hypermarkets' },
-    { id: 12, name: 'Cinemas' },
-    { id: 13, name: 'Shopping Malls' },
-    { id: 14, name: 'Hobbies & More' },
-    { id: 15, name: 'Sportswear & Equipment' },
-    { id: 16, name: 'Gaming' },
-    { id: 17, name: 'Software Subscriptions' },
-    { id: 18, name: 'Online Shopping' },
-    { id: 19, name: 'Food Delivery' },
-    { id: 20, name: 'Home & Garden' },
-    { id: 21, name: 'Digital Entertainment' },
+    { id: 1, name: "Fashion & Accessories" },
+    { id: 2, name: "Jewellery" },
+    { id: 3, name: "Kids & Fun" },
+    { id: 4, name: "Beauty & Cosmetics" },
+    { id: 5, name: "Mobile Recharge" },
+    { id: 6, name: "Restaurants & Cafes" },
+    { id: 7, name: "Hotels & Travel" },
+    { id: 8, name: "Spas & Fitness" },
+    { id: 9, name: "Experiences & Entertainment" },
+    { id: 10, name: "Electronics" },
+    { id: 11, name: "Hypermarkets" },
+    { id: 12, name: "Cinemas" },
+    { id: 13, name: "Shopping Malls" },
+    { id: 14, name: "Hobbies & More" },
+    { id: 15, name: "Sportswear & Equipment" },
+    { id: 16, name: "Gaming" },
+    { id: 17, name: "Software Subscriptions" },
+    { id: 18, name: "Online Shopping" },
+    { id: 19, name: "Food Delivery" },
+    { id: 20, name: "Home & Garden" },
+    { id: 21, name: "Digital Entertainment" },
 
     // Add more categories based on your data
   ]);
@@ -48,8 +48,8 @@ const Rewards = () => {
 
   async function fetchData() {
     const response = await callApi({
-      type: 'get',
-      url: 'order',
+      type: "get",
+      url: "order",
       userToken: userToken,
     });
 
@@ -60,15 +60,15 @@ const Rewards = () => {
 
   function handleRedeem() {
     Swal.fire({
-      title: 'Do you want to redeem?',
+      title: "Do you want to redeem?",
       showCancelButton: true,
-      confirmButtonText: 'Redeem',
-      confirmButtonColor: '#017bfe',
+      confirmButtonText: "Redeem",
+      confirmButtonColor: "#017bfe",
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire('Redeemed!', '', 'success');
+        Swal.fire("Redeemed!", "", "success");
       } else if (result.isDenied) {
-        Swal.fire('No redeem', '', 'info');
+        Swal.fire("No redeem", "", "info");
       }
     });
   }
@@ -98,21 +98,21 @@ const Rewards = () => {
 
   // Filter rewards based on the selected category
   const filteredFeaturedRewards = featuredRewards.filter((reward) =>
-    selectedCategory ? reward.category_id === parseInt(selectedCategory) : true,
+    selectedCategory ? reward.category_id === parseInt(selectedCategory) : true
   );
 
   const filteredNonFeaturedRewards = nonFeaturedRewards.filter((reward) =>
-    selectedCategory ? reward.category_id === parseInt(selectedCategory) : true,
+    selectedCategory ? reward.category_id === parseInt(selectedCategory) : true
   );
 
   return (
     <div className={styles.rewardsContainer}>
       <div className={styles.balanceBanner}>
         <h2>
-          Your Balance: {usedCurrency} {userBalance.toFixed(2)}{' '}
+          Your Balance: {usedCurrency} {userBalance.toFixed(2)}{" "}
         </h2>
         {showRewards && (
-          <h5 style={{ foontWeight: 'light', marginTop: 10 }}>
+          <h5 style={{ foontWeight: "light", marginTop: 10 }}>
             Minimum Points required {minimum_points_to_redeem} Points
           </h5>
         )}
@@ -121,15 +121,16 @@ const Rewards = () => {
         <>
           {/* Category Filter Dropdown */}
           <div className={styles.filterContainer}>
-            <label htmlFor='categoryFilter' className={styles.filterLabel}>
+            <label htmlFor="categoryFilter" className={styles.filterLabel}>
               Filter by Category:
             </label>
             <select
-              id='categoryFilter'
+              id="categoryFilter"
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
-              className={styles.filterSelect}>
-              <option value=''>All Categories</option>
+              className={styles.filterSelect}
+            >
+              <option value="">All Categories</option>
               {categories.map((category) => (
                 <option key={category.id} value={category.id}>
                   {category.name}
@@ -145,11 +146,11 @@ const Rewards = () => {
             <div>
               <h3 className={styles.featuredTitle}>Featured Rewards</h3>
               <div className={styles.rewardsGrid}>
-                {filteredFeaturedRewards.map((reward) => (
+                {filteredFeaturedRewards.map((reward, ind) => (
                   <div
-                    key={reward.id}
+                    key={"re" + ind}
                     className={styles.rewardCard}
-                    style={{ backgroundColor: '#fffeef' }} // Light gold background
+                    style={{ backgroundColor: "#fffeef" }} // Light gold background
                   >
                     <img
                       src={reward.brand_image}
@@ -168,11 +169,12 @@ const Rewards = () => {
                           minimum_points_to_redeem < userPoints &&
                           userBalance >= reward.value_in_votly
                         )
-                      }>
+                      }
+                    >
                       {minimum_points_to_redeem < userPoints &&
                       userBalance >= reward.value_in_votly
-                        ? 'Redeem'
-                        : 'Not Enough Balance'}
+                        ? "Redeem"
+                        : "Not Enough Balance"}
                     </button>
                   </div>
                 ))}
@@ -184,8 +186,8 @@ const Rewards = () => {
           <div>
             <br />
             <div className={styles.rewardsGrid}>
-              {filteredNonFeaturedRewards.map((reward) => (
-                <div key={reward.id} className={styles.rewardCard}>
+              {filteredNonFeaturedRewards.map((reward, ind) => (
+                <div key={"reward" + id} className={styles.rewardCard}>
                   <img
                     src={reward.brand_image}
                     alt={reward.brand_en}
@@ -203,11 +205,12 @@ const Rewards = () => {
                         minimum_points_to_redeem < userPoints &&
                         userBalance >= reward.value_in_votly
                       )
-                    }>
+                    }
+                  >
                     {minimum_points_to_redeem < userPoints &&
                     userBalance >= reward.value_in_votly
-                      ? 'Redeem'
-                      : 'Not Enough Balance'}
+                      ? "Redeem"
+                      : "Not Enough Balance"}
                   </button>
                 </div>
               ))}
@@ -217,10 +220,10 @@ const Rewards = () => {
       ) : (
         <div className={styles.noRewardsMessage}>
           <img
-            src='https://www.deeluxe.fr/img/cms/Homepage%202024/Reassurance/Paiement-securis%C3%A9-png.png'
+            src="https://www.deeluxe.fr/img/cms/Homepage%202024/Reassurance/Paiement-securis%C3%A9-png.png"
             width={250}
             style={{ marginBottom: -50 }}
-            alt='No rewards available'
+            alt="No rewards available"
           />
           <h2>No rewards available yet in your country</h2>
           <p>

@@ -4,17 +4,16 @@ import { authOptions } from "../api/auth/[...nextauth]/route"; // Import your au
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
 import SurveysList from "../components/SurveysList/SurveysList";
+import { redirectIfEmailPhoneNotVerified } from "../../helper";
 
 export default async function SurveysPage() {
   const session = await getServerSession(authOptions);
 
-  // Check if session exists and if the email is verified
-  if (!session || session.user.is_email_verified !== 1) {
-    redirect("/email-verification"); // Redirect to /email if email is not verified
-  }
+  // Check redirections
+  const redirectResult = await redirectIfEmailPhoneNotVerified(session);
 
-  if (!session || session.user.is_phone_verified !== 1) {
-    redirect("/mobile-verification"); // Redirect to /phone if phone is not verified
+  if (redirectResult.redirect) {
+    return redirect(redirectResult.redirect);
   }
 
   return (

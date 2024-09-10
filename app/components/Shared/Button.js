@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "./Button.module.css";
 
-export default function Button({ title, onClick }) {
+export default function Button({ title, onClick, style = {} }) {
   const [loading, setLoading] = useState(false);
 
   const handleClick = async () => {
@@ -11,7 +11,12 @@ export default function Button({ title, onClick }) {
   };
 
   return (
-    <button className={styles.button} onClick={handleClick} disabled={loading}>
+    <button
+      className={styles.button}
+      onClick={handleClick}
+      disabled={loading}
+      style={style}
+    >
       {loading ? (
         <img
           src="https://bontelstore.ru/images/blue-loading-gif-transparent-9.gif"

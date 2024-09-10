@@ -5,9 +5,9 @@ import styles from "./LoginForm.module.css";
 import { useForm } from "react-hook-form";
 import { signIn } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
+import Button from "../Shared/Button";
 
 const Login = () => {
-  const [redirection, setRedirection] = useState(false);
   const [requestError, setRequestError] = useState("");
   const searchParams = useSearchParams();
 
@@ -38,16 +38,6 @@ const Login = () => {
       setRequestError("Login failed, please check your email or password");
     }
   };
-
-  // useEffect(() => {
-  //   if (redirection) {
-
-  //   }
-
-  //   return () => {
-  //     setRedirection(false);
-  //   };
-  // }, [redirection]);
 
   const validateEmailOrPhone = (value) => {
     const emailPattern = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
@@ -100,9 +90,11 @@ const Login = () => {
             </p>
           )}
 
-          <button type="submit" className={styles.loginButton}>
-            Log in
-          </button>
+          <Button
+            title="Log in"
+            onClick={handleSubmit(onSubmit)}
+            style={{ marginTop: 20 }}
+          />
         </form>
         <br />
         <Link href="/forgot-password" className={styles.forgotPasswordLink}>

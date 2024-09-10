@@ -1,24 +1,20 @@
 import axios from "axios";
 
-// export async function setUserToken(token) {
-//   await localStorage.setItem("context", JSON.stringify({ token }));
-// }
+export async function getUserToken(session) {
+  if (session?.id) {
+    return session.id;
+  }
+}
 
-// export async function getUserToken(session) {
-//   if (session?.id) {
-//     return session.id;
-//   }
-//   const localStorageContext = JSON.parse(localStorage.getItem("context"));
+export async function redirectIfEmailPhoneNotVerified(session) {
+  if (!session || session.user.is_email_verified !== 1) {
+    return { redirect: "/email-verification" };
+  }
 
-//   if (localStorageContext) {
-//     return localStorageContext.token;
-//   }
-
-//   const res = await callApi({ url: "/api/context", method: "get" });
-//   const context = res.data;
-//   await setUserToken(context.token);
-//   return context.token;
-// }
+  if (!session || session.user.is_phone_verified !== 1) {
+    return { redirect: "/mobile-verification" };
+  }
+}
 
 export async function callApi({ type, url, data = [], userToken }) {
   const response = await axios(
