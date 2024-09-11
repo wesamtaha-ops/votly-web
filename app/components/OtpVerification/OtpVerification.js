@@ -1,17 +1,17 @@
-"use client";
+'use client';
 
-import { useRef, useState } from "react";
-import PropTypes from "prop-types";
-import styles from "./OtpVerification.module.css";
-import toast from "react-hot-toast";
-import { useSession } from "next-auth/react";
-import { callApi } from "../../../helper";
-import { useRouter } from "next/navigation";
+import { useRef, useState } from 'react';
+import PropTypes from 'prop-types';
+import styles from './OtpVerification.module.css';
+import toast from 'react-hot-toast';
+import { useSession } from 'next-auth/react';
+import { callApi } from '../../../helper';
+import { useRouter } from 'next/navigation';
 
 const OtpVerification = ({ contactInfo, type }) => {
   const inputsRef = useRef([]);
-  const [otp, setOtp] = useState(["", "", "", "", "", ""]);
-  const [message, setMessage] = useState("");
+  const [otp, setOtp] = useState(['', '', '', '', '', '']);
+  const [message, setMessage] = useState('');
   const [isSuccess, setIsSuccess] = useState(false);
   const { data: session, update: updateSession } = useSession();
   const userToken = session?.id;
@@ -34,13 +34,13 @@ const OtpVerification = ({ contactInfo, type }) => {
   };
 
   const handleKeyDown = (index, event) => {
-    if (event.key === "Backspace") {
+    if (event.key === 'Backspace') {
       const newOtp = [...otp];
       if (otp[index]) {
-        newOtp[index] = "";
+        newOtp[index] = '';
         setOtp(newOtp);
       } else if (index > 0) {
-        newOtp[index - 1] = "";
+        newOtp[index - 1] = '';
         setOtp(newOtp);
         inputsRef.current[index - 1].focus();
       }
@@ -56,13 +56,13 @@ const OtpVerification = ({ contactInfo, type }) => {
   };
 
   const reloadSession = () => {
-    const event = new Event("visibilitychange");
+    const event = new Event('visibilitychange');
     document.dispatchEvent(event);
   };
 
   const handlePaste = (index, value) => {
     const newOtp = [...otp];
-    const digits = value.slice(0, 6 - index).split("");
+    const digits = value.slice(0, 6 - index).split('');
     digits.forEach((digit, i) => {
       newOtp[index + i] = digit;
     });
@@ -75,28 +75,28 @@ const OtpVerification = ({ contactInfo, type }) => {
   };
 
   const resendOtp = async () => {
-    if (type == "email") {
+    if (type == 'email') {
       await callApi({
-        type: "post",
-        url: "resendOtp",
+        type: 'post',
+        url: 'resendOtp',
         userToken: userToken,
       });
     }
 
-    toast.success("OTP has been sent successfully");
+    toast.success('OTP has been sent successfully');
   };
 
   const handleSubmit = async () => {
-    const enteredOtp = otp.join("");
+    const enteredOtp = otp.join('');
 
     if (enteredOtp.length !== 6) {
-      toast("Enter valid otp");
+      toast('Enter valid otp');
       return;
     }
 
     const response = await callApi({
-      type: "post",
-      url: type == "email" ? "emailVerify" : "mobileVerify",
+      type: 'post',
+      url: type == 'email' ? 'emailVerify' : 'mobileVerify',
       data: {
         code: enteredOtp,
       },
@@ -104,13 +104,13 @@ const OtpVerification = ({ contactInfo, type }) => {
     });
 
     if (response.status == 200) {
-      toast.success("OTP verified successfully!");
+      toast.success('OTP verified successfully!');
       await updateSession({ user: response.data });
       await reloadSession();
 
-      router.push(type == "email" ? "/mobile-verification" : "/");
+      router.push(type == 'email' ? '/mobile-verification' : '/');
     } else {
-      toast.error("Invalid OTP. Please try again.");
+      toast.error('Invalid OTP. Please try again.');
       setIsSuccess(false);
     }
   };
@@ -118,15 +118,29 @@ const OtpVerification = ({ contactInfo, type }) => {
   return (
     <div className={styles.otpContainer}>
       <div className={styles.card}>
+        {type == 'mobile' && (
+          <img
+            src='https://static.vecteezy.com/system/resources/previews/025/674/495/non_2x/verification-otp-one-time-password-has-been-send-input-code-with-smartphone-concept-illustration-flat-design-eps10-modern-graphic-element-for-landing-page-empty-state-ui-infographic-icon-vector.jpg'
+            alt='otp'
+            className={styles.otpImage}
+          />
+        )}
+        {type == 'email' && (
+          <img
+            src='https://blog.typingdna.com/wp-content/uploads/2021/11/email_OTP.jpg'
+            alt='otp'
+            className={styles.otpImage}
+          />
+        )}
         <h2 className={styles.title}>
-          Enter the 6-digit code sent to {contactInfo}
+          Enter the 6-digit code sent to <br /> {contactInfo}
         </h2>
         <div className={styles.otpInputs}>
           {otp.map((digit, index) => (
             <input
               key={index}
-              type="text"
-              maxLength="1"
+              type='text'
+              maxLength='1'
               className={styles.otpInput}
               value={digit}
               ref={(el) => (inputsRef.current[index] = el)}
@@ -142,8 +156,7 @@ const OtpVerification = ({ contactInfo, type }) => {
           <p
             className={`${styles.message} ${
               isSuccess ? styles.success : styles.error
-            }`}
-          >
+            }`}>
             {message}
           </p>
         )}
