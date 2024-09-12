@@ -1,0 +1,156 @@
+.rewardsContainer {
+  max-width: 1200px;
+  margin: 50px auto;
+  padding: 20px;
+  border-radius: var(--border-radius);
+}
+
+.balanceBanner {
+  background-color: #ffffff;
+  color: white;
+  padding: 20px;
+  border-radius: 30px;
+  text-align: center;
+  margin-bottom: 40px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+}
+
+.balanceBanner h2 {
+  margin: 0;
+  font-size: 26px;
+}
+
+.title {
+  font-size: 34px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  color: var(--text-color);
+  text-align: center;
+}
+
+.noRewardsMessage {
+  font-size: 24px;
+  color: var(--text-color);
+  text-align: center;
+  line-height: 100px;
+}
+.rewardsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  justify-content: center;
+}
+
+.rewardCard {
+  background-color: white;
+  padding: 30px;
+  border-radius: var(--border-radius);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.rewardCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.rewardImage {
+  width: 100%;
+  height: auto;
+  margin-bottom: 20px;
+  border-radius: 8px;
+}
+
+.rewardCard h3 {
+  margin-bottom: 10px;
+  font-size: 22px;
+  color: var(--text-color);
+}
+
+
+.rewardCard p {
+  margin-bottom: 15px;
+  font-size: 16px;
+  color: var(--text-color-secondary);
+}
+
+.rewardPrice {
+  font-weight: bold;
+  font-size: 18px;
+  margin-bottom: 25px;
+  color: var(--text-color);
+}
+
+.redeemButton {
+  padding: 12px 25px;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 18px;
+  transition: background-color 0.3s ease, opacity 0.3s ease;
+}
+
+.redeemButton:disabled {
+  background-color: gray;
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.filterContainer {
+  margin-bottom: 20px;
+}
+
+.featuredTitle {
+  color: #f4f5fd;
+  font-weight: bold;
+}
+
+.nonFeaturedTitle {
+  color: gray;
+  font-weight: bold;
+}
+
+.filterContainer {
+  margin-bottom: 20px;
+}
+
+.filterLabel {
+  font-size: 16px;
+  margin-right: 10px;
+}
+
+.filterSelect {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: white;
+  font-size: 16px;
+  color: #333;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.filterSelect:focus {
+  border-color: #017bfe;
+  outline: none;
+  box-shadow: 0 0 5px rgba(1, 123, 254, 0.5);
+}
+
+.filterSelect option {
+  padding: 10px;
+  background-color: white;
+  color: #333;
+}
+
+/* Custom styling for mobile screens */
+@media (max-width: 600px) {
+  .filterSelect {
+    width: 100%;
+    font-size: 14px;
+  }
+}

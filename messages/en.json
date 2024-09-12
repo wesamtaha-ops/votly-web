@@ -1,0 +1,118 @@
+{
+    "HeroBanner": {
+        "heroImageAlt": "Hero Image",
+        "title": "Make Your Voice Heard, Shape the Future",
+        "description": "Influence the future of society, brands, and the world around you with Votly. Share your opinions and earn rewards in return.",
+        "ctaButton": "Join Us Today"
+    },
+    "InfoSection": {
+        "title": "Share Your Views, Earn Rewards",
+        "impactAlt": "Impact",
+        "impactTitle": "Make an Impact",
+        "impactDescription": "Your input answers pressing questions and influences key decisions.",
+        "differenceAlt": "Difference",
+        "differenceTitle": "See the Difference You Can Make",
+        "differenceDescription": "Your opinion matters.",
+        "rewardsAlt": "Rewards",
+        "rewardsTitle": "Earn Rewards That Matter to You",
+        "rewardsDescription": "Choose from a variety of rewards, including gift cards."
+    },
+    "FeaturesList": {
+        "title": "Unlocking Benefits for Individuals, Corporates, and Governments",
+        "subtitle": "VOTLY offers a versatile platform that caters to the unique needs of individuals, businesses, and government entities...",
+        "feature1": {
+            "title": "Market and Research Tool",
+            "description": "Ideal for market research and various studies, empowering users to gather valuable data and insights to drive informed decisions."
+        },
+        "feature2": {
+            "title": "Individuals",
+            "description": "Engage with a diverse community, sharing opinions and gaining insights into current trends and public sentiment."
+        },
+        "feature3": {
+            "title": "Corporates",
+            "description": "Conduct efficient market research, identify consumer preferences, and boost brand engagement through interactive content."
+        },
+        "feature4": {
+            "title": "Governments",
+            "description": "Gauge public opinion, encourage civic participation, and gather insights for data-driven decision-making."
+        },
+        "feature5": {
+            "title": "Collaborative Environment",
+            "description": "Foster partnerships between individuals, businesses, and governments to drive innovation and positive change."
+        },
+        "feature6": {
+            "title": "Comprehensive Research Platform",
+            "description": "Combining AI-generated content, user-created polls, and advanced analytics, VOTLY offers a powerful solution for diverse research needs."
+        },
+        "imageAlt": "Votly Mobile Interface"
+    },
+    "FAQ": {
+        "title": "Frequently Asked Questions",
+        "imageAlt": "FAQ Illustration",
+        "faq1": {
+            "question": "What is Votly?",
+            "answer": "Votly is a social polling app that allows users to create, discover, and participate in AI-generated and user-created polls, fostering a community for sharing opinions and insights."
+        },
+        "faq2": {
+            "question": "How do I create a poll on Votly?",
+            "answer": "To create a poll, simply log into your account, navigate to the 'Create Poll' section, and follow the instructions to set up your poll."
+        },
+        "faq3": {
+            "question": "How does the AI-generated content feature work?",
+            "answer": "Our AI technology converts news articles and trending topics into interactive polls, allowing users to engage with content in a new way."
+        },
+        "faq4": {
+            "question": "How does Votly's personalized feed algorithm work?",
+            "answer": "Votly's algorithm curates a personalized feed of polls based on your past interactions, preferences, and interests."
+        },
+        "faq5": {
+            "question": "How can I earn and redeem coins in Votly?",
+            "answer": "You can earn coins by participating in polls, completing surveys, and engaging with the community. Coins can be redeemed for rewards such as gift cards, cash transfers, or donations to charities."
+        },
+        "faq6": {
+            "question": "How do I share my polls with friends or on social media?",
+            "answer": "Once you create a poll, you can easily share it with your friends via social media platforms or through a direct link."
+        },
+        "faq7": {
+            "question": "Can I use Votly for market research or other types of research?",
+            "answer": "Yes, Votly is an excellent platform for market research. Businesses and researchers can create targeted polls to gather insights from a diverse audience."
+        },
+        "faq8": {
+            "question": "How does Votly ensure data privacy and security?",
+            "answer": "Votly takes data privacy and security seriously. We use industry-standard encryption and follow strict privacy policies to protect your data."
+        }
+    },
+    "Footer": {
+        "title": "VOTLY",
+        "description": "Votly is a social app on a mission to bring the polling industry into the 21st century.",
+        "usefulLinks": "Useful Links",
+        "link1": {
+            "href": "/about",
+            "title": "About Us"
+        },
+        "link2": {
+            "href": "/privacy",
+            "title": "Privacy Policy"
+        },
+        "link3": {
+            "href": "/cookies",
+            "title": "Cookies Policy"
+        },
+        "link4": {
+            "href": "/terms",
+            "title": "Terms and Conditions"
+        },
+        "downloadApp": "Download Our App",
+        "googlePlay": "Google Play",
+        "appStore": "App Store",
+        "copyright": "© 2024 The Blockchain Labs. All Rights Reserved."
+    },
+    "Header": {
+        "surveys": "Surveys",
+        "rewards": "Rewards",
+        "myProfile": "My Profile",
+        "login": "Login",
+        "logout": "Logout",
+        "language": "Language"
+    }
+}

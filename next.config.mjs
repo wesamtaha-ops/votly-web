@@ -6,6 +6,11 @@ const nextConfig = {
   images: {
     domains: ['votly.app'], // Allow images from votly.app
   },
+  i18n: {
+    locales: ['en', 'ar'],
+    defaultLocale: 'en',
+    localeDetection: true, // Detects locale from browser settings
+  },
 };
 
 export default nextConfig;
