@@ -1,9 +1,12 @@
 'use client'; // Ensure this component is treated as a client-side component
 
 import { useForm } from 'react-hook-form';
+import { useTranslations } from 'next-intl'; // Import for translations
 import styles from './ForgotPassword.module.css';
 
 const ForgotPassword = () => {
+  const t = useTranslations('ForgotPassword'); // Initialize translations
+
   const {
     register,
     handleSubmit,
@@ -16,20 +19,20 @@ const ForgotPassword = () => {
 
   return (
     <div className={styles.formContainer}>
-      <h2 className={styles.title}>Forgot your password?</h2>
+      <h2 className={styles.title}>{t('forgotPasswordTitle')}</h2>
       <form onSubmit={handleSubmit(onSubmit)}>
         <input
           className={styles.input}
           {...register('email', {
-            required: 'Email is required',
-            pattern: { value: /^\S+@\S+$/i, message: 'Invalid email address' },
+            required: t('emailRequired'),
+            pattern: { value: /^\S+@\S+$/i, message: t('invalidEmail') },
           })}
-          placeholder='Enter your email'
+          placeholder={t('emailPlaceholder')}
         />
         {errors.email && <p className={styles.error}>{errors.email.message}</p>}
-          <br />
+        <br />
         <button className={styles.button} type='submit'>
-          Reset Password
+          {t('resetPasswordButton')}
         </button>
       </form>
     </div>

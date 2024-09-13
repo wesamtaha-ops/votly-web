@@ -17,22 +17,9 @@ export default async function MobileVerificationPage() {
       <Header />
       <div
         style={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          padding: '20px',
-          backgroundColor: '#f9f9f9',
-          borderRadius: '10px',
           marginTop: '100px',
           lineHeight: '40px',
-          marginBottom: 0,
-        }}>
-        <h1>Mobile Verification</h1>
-        <p>
-          Please enter the OTP sent to your mobile number to verify your
-          account.
-        </p>
-      </div>
+        }}></div>
       <OtpVerification contactInfo={session?.user?.phone} type='mobile' />
       <Footer />
     </>

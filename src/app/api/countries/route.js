@@ -1,13 +1,13 @@
-import { NextResponse } from "next/server";
-import { callVotlyApi } from "../../helper";
+import { NextResponse } from 'next/server';
+import { callVotlyApi } from '../../helper';
 
 export async function GET(req) {
-  const userToken = req.headers.get("userToken");
-
+  const userToken = req.headers.get('userToken');
   const res = await callVotlyApi({
-    type: "get",
-    url: "countries",
+    type: 'get',
+    url: 'countries',
     userToken: userToken,
+    lang: 'ar',
   });
 
   return NextResponse.json(res);

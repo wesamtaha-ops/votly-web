@@ -70,7 +70,6 @@
   color: var(--text-color);
 }
 
-
 .rewardCard p {
   margin-bottom: 15px;
   font-size: 16px;
@@ -93,6 +92,7 @@
   cursor: pointer;
   font-size: 18px;
   transition: background-color 0.3s ease, opacity 0.3s ease;
+  font-family: 'Almarai', sans-serif;
 }
 
 .redeemButton:disabled {
@@ -133,6 +133,9 @@
   color: #333;
   cursor: pointer;
   transition: all 0.3s ease;
+  font-family: 'Almarai', sans-serif;
+  margin-right: 20px;
+  margin-left: 20px;
 }
 
 .filterSelect:focus {

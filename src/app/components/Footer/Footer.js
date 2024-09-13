@@ -20,7 +20,12 @@ const Footer = () => {
       <div className={styles.container}>
         <div className={styles.footerContent}>
           <div className={styles.footerSection}>
-            <h3>{t('title')}</h3>
+            <h3
+              style={{
+                textAlign: 'center',
+              }}>
+              {t('title')}
+            </h3>
             <p>{t('description')}</p>
           </div>
           <div className={styles.footerSection}>
@@ -34,7 +39,12 @@ const Footer = () => {
             </ul>
           </div>
           <div className={styles.footerSection}>
-            <h4>{t('downloadApp')}</h4>
+            <h4
+              style={{
+                textAlign: 'center',
+              }}>
+              {t('downloadApp')}
+            </h4>
             <div className={styles.appLinks}>
               <Link href='https://play.google.com/store/apps/details?id=com.example'>
                 <img

@@ -1,15 +1,18 @@
-"use client";
-import react, { useState, useEffect } from "react";
-import Link from "next/link";
-import styles from "./LoginForm.module.css";
-import { useForm } from "react-hook-form";
-import { signIn } from "next-auth/react";
-import { useSearchParams } from "next/navigation";
-import Button from "../Shared/Button";
+'use client';
+
+import react, { useState } from 'react';
+import Link from 'next/link';
+import styles from './LoginForm.module.css';
+import { useForm } from 'react-hook-form';
+import { signIn } from 'next-auth/react';
+import { useSearchParams } from 'next/navigation';
+import { useTranslations } from 'next-intl'; // Import for translations
+import Button from '../Shared/Button';
 
 const Login = () => {
-  const [requestError, setRequestError] = useState("");
+  const [requestError, setRequestError] = useState('');
   const searchParams = useSearchParams();
+  const t = useTranslations('Login'); // Initialize translations
 
   const {
     register,
@@ -19,23 +22,22 @@ const Login = () => {
 
   const onSubmit = async (payload) => {
     try {
-      const { error, status } = await signIn("credentials", {
+      const { error, status } = await signIn('credentials', {
         email: payload.email,
         password: payload.password,
         redirect: false,
       });
 
       if (error) {
-        // login failed
-        setError("submit", {
-          message: "Login failed, please check your email or password",
+        setError('submit', {
+          message: t('loginFailed'),
         });
       } else {
-        const callbackUrl = searchParams.get("callbackUrl");
-        window.location.href = callbackUrl ? callbackUrl : "/";
+        const callbackUrl = searchParams.get('callbackUrl');
+        window.location.href = callbackUrl ? callbackUrl : '/';
       }
     } catch (error) {
-      setRequestError("Login failed, please check your email or password");
+      setRequestError(t('loginFailed'));
     }
   };
 
@@ -45,66 +47,65 @@ const Login = () => {
     if (emailPattern.test(value) || phonePattern.test(value)) {
       return true;
     }
-    return "Please enter a valid email or phone number";
+    return t('validEmailOrPhone');
   };
 
   return (
     <div className={styles.loginContainer}>
       <div className={styles.loginBox}>
-        <h2 className={styles.title}>Log in</h2>
+        <h2 className={styles.title}>{t('logIn')}</h2>
         <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
           {requestError && (
-            <p role="alert" className={styles.error}>
+            <p role='alert' className={styles.error}>
               {requestError}
             </p>
           )}
 
           <input
-            type="text"
-            placeholder="Phone number or email"
+            type='text'
+            placeholder={t('emailOrPhone')}
             className={`${styles.input} ${
-              errors.email ? styles.errorBorder : ""
+              errors.email ? styles.errorBorder : ''
             }`}
-            {...register("email", {
-              required: "Email Address is required",
+            {...register('email', {
+              required: t('emailRequired'),
               validate: validateEmailOrPhone,
             })}
           />
           {errors.email && (
-            <p role="alert" className={styles.error}>
+            <p role='alert' className={styles.error}>
               {errors.email.message}
             </p>
           )}
 
           <input
-            type="password"
-            placeholder="Password"
+            type='password'
+            placeholder={t('password')}
             className={`${styles.input} ${
-              errors.password ? styles.errorBorder : ""
+              errors.password ? styles.errorBorder : ''
             }`}
-            {...register("password", { required: "Password is required" })}
+            {...register('password', { required: t('passwordRequired') })}
           />
           {errors.password && (
-            <p role="alert" className={styles.error}>
+            <p role='alert' className={styles.error}>
               {errors.password.message}
             </p>
           )}
 
           <Button
-            title="Log in"
+            title={t('logIn')}
             onClick={handleSubmit(onSubmit)}
-            style={{ marginTop: 20 }}
+            style={{ fontFamily: 'Almarai', marginTop: 20 }}
           />
         </form>
         <br />
-        <Link href="/forgot-password" className={styles.forgotPasswordLink}>
-          Forgot your password?
+        <Link href='/forgot-password' className={styles.forgotPasswordLink}>
+          {t('forgotPassword')}
         </Link>
-
         <br />
         <br />
-        <Link href="/register" className={styles.forgotPasswordLink}>
-          Register
+        <Link href='/register' className={styles.forgotPasswordLink}>
+          {t('register')}
         </Link>
       </div>
     </div>

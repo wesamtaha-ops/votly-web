@@ -62,6 +62,7 @@
   cursor: pointer;
   transition: background-color 0.3s ease;
   margin-top: 20px;
+  font-family: 'Almarai', sans-serif;
 }
 
 .submitButton:hover {
@@ -89,6 +90,8 @@
   cursor: pointer;
   color: var(--primary-color);
   text-decoration: underline;
+  font-family: 'Almarai', sans-serif;
+  font-family: 16px;
 }
 
 .otpImage {

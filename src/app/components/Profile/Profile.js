@@ -2,70 +2,73 @@
 
 import styles from './Profile.module.css';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl'; // Import for translations
 
 const Profile = ({ user }) => {
+  const t = useTranslations('Profile'); // Initialize translations
+
   return (
     <div className={styles.profileContainer}>
-      <h2 className={styles.title}>My Profile</h2>
+      <h2 className={styles.title}>{t('myProfile')}</h2>
 
       <div className={styles.cardsGrid}>
         {/* Main Information Card */}
         <div className={`${styles.card} ${styles.mainInfoCard}`}>
-          <h3 className={styles.cardTitle}>Main Information</h3>
+          <h3 className={styles.cardTitle}>{t('mainInfo')}</h3>
           <div className={styles.infoGroup}>
             <p>
-              <strong>First Name:</strong> {user.firstname}
+              <strong>{t('firstName')}:</strong> {user.firstname}
             </p>
             <p>
-              <strong>Last Name:</strong> {user.lastname}
+              <strong>{t('lastName')}:</strong> {user.lastname}
             </p>
             <p>
-              <strong>Username:</strong> {user.username}
+              <strong>{t('username')}:</strong> {user.username}
             </p>
             <p>
-              <strong>Email:</strong> {user.email}
+              <strong>{t('email')}:</strong> {user.email}
             </p>
             <p>
-              <strong>Phone:</strong> {user.phone}
+              <strong>{t('phone')}:</strong> {user.phone}
             </p>
             <p>
-              <strong>Birthday:</strong> {user.birthday}
+              <strong>{t('birthday')}:</strong> {user.birthday}
             </p>
             <p>
-              <strong>Gender:</strong> {user.gender}
+              <strong>{t('gender')}:</strong> {user.gender}
             </p>
             <p>
-              <strong>Bio:</strong> {user.bio}
+              <strong>{t('bio')}:</strong> {user.bio}
             </p>
           </div>
           <Link href='/edit-profile'>
-            <button className={styles.button}>Edit Profile</button>
+            <button className={styles.button}>{t('editProfile')}</button>
           </Link>
         </div>
 
         {/* Profile Completion Card */}
         <div className={`${styles.card} ${styles.profileCompletionCard}`}>
-          <h3 className={styles.cardTitle}>Profile Completion</h3>
+          <h3 className={styles.cardTitle}>{t('profileCompletion')}</h3>
           <div className={styles.progressBarContainer}>
             <div className={styles.progressBar} style={{ width: '70%' }}>
-              70% Complete
+              {t('profileCompletionPercentage')}
             </div>
           </div>
           <Link href='/complete-profile'>
-            <button className={styles.button}>Complete Profile</button>
+            <button className={styles.button}>{t('completeProfile')}</button>
           </Link>
         </div>
 
         {/* Profile Image Card */}
         <div className={`${styles.card} ${styles.profileImageCard}`}>
-          <h3 className={styles.cardTitle}>Profile Image</h3>
+          <h3 className={styles.cardTitle}>{t('profileImage')}</h3>
           <div className={styles.profileImageContainer}>
             <img
               src={
                 user.image ||
                 'https://t3.ftcdn.net/jpg/05/16/27/58/360_F_516275801_f3Fsp17x6HQK0xQgDQEELoTuERO4SsWV.jpg'
               }
-              alt='Profile'
+              alt={t('profileImageAlt')}
               className={styles.profileImage}
             />
           </div>
