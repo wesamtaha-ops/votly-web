@@ -197,11 +197,14 @@
         "phone": "رقم الهاتف",
         "birthday": "تاريخ الميلاد",
         "gender": "الجنس",
+        "male": "ذكر",
+        "female": "أنثى",
         "bio": "السيرة الذاتية",
         "editProfile": "تعديل الملف الشخصي",
         "profileCompletion": "اكتمال الملف الشخصي",
-        "profileCompletionPercentage": "70٪ مكتمل",
+        "profileCompletionPercentage": "مكتمل",
         "completeProfile": "أكمل الملف الشخصي",
+        "editCompleteProfile": "تعديل البينانات الشخصية ",
         "profileImage": "صورة الملف الشخصي",
         "profileImageAlt": "صورة الملف الشخصي"
     },
@@ -226,8 +229,9 @@
         "bio": "السيرة الذاتية",
         "saveChanges": "حفظ التغييرات",
         "profileCompletion": "اكتمال الملف الشخصي",
-        "profileCompletionPercentage": "مكتمل 70%",
+        "profileCompletionPercentage": "مكتمل ",
         "completeProfile": "أكمل الملف الشخصي",
+        "editCompleteProfile": "تعديل البينانات الشخصية ",
         "changeProfileImage": "تغيير صورة الملف الشخصي",
         "profileImage": "صورة الملف الشخصي",
         "updateImage": "تحديث الصورة",
@@ -281,5 +285,20 @@
         "foodDelivery": "توصيل الطعام",
         "homeGarden": "المنزل والحديقة",
         "digitalEntertainment": "الترفيه الرقمي"
+    },
+    "ProfileCompletionForm": {
+        "beforeContinue": "قبل أن تكمل...",
+        "moreDetails": "نحتاج إلى المزيد من التفاصيل ",
+        "complete": "مكتمل",
+        "nationality": "الجنسية",
+        "residence": "الإقامة",
+        "householdIncome": "دخل الأسرة",
+        "lessThan1500": "أقل من 1500 [currency] في الشهر",
+        "5000To10000": "5000 - 10000 [currency] في الشهر",
+        "10000To20000": "10000 - 20000 [currency] في الشهر",
+        "moreThan20000": "أكثر من 20000 [currency] في الشهر",
+        "preferNotToSay": "أفضل عدم القول",
+        "submitting": "جاري الإرسال...",
+        "submit": "إرسال"
     }
 }

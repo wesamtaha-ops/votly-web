@@ -15,7 +15,7 @@ html,
 body {
   margin: 0;
   padding: 0;
-  font-family: "Roboto", sans-serif;
+  font-family: 'Almarai', sans-serif !important;
   /* Updated font-family */
   background-color: var(--background-color);
   color: var(--text-color);
@@ -32,11 +32,13 @@ h5,
 h6 {
   margin: 0;
   color: var(--text-color);
+  font-family: 'Almarai', sans-serif !important;
 }
 
 p {
   margin: 0;
   color: var(--text-color);
+  font-family: 'Almarai', sans-serif !important;
 }
 
 a {
@@ -52,8 +54,23 @@ a:hover {
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
+  font-family: 'Almarai', sans-serif !important;
 }
 
+.css-1q964xs-MuiFormLabel-root-MuiInputLabel-root,
+.css-1h4bzp1-MuiButtonBase-root-MuiMenuItem-root,
+.css-15k6ek6-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.MuiSelect-select,
+.css-18pjc51-MuiFormLabel-root-MuiInputLabel-root {
+  font-family: 'Almarai', sans-serif !important;
+  text-align: right !important;
+}
+
+.css-18pjc51-MuiFormLabel-root-MuiInputLabel-root {
+  font-family: 'Almarai', sans-serif !important;
+  text-align: right !important;
+  font-size: 20px !important;
+  margin-top: -10px !important;
+}
 .main-content {
   flex: 1;
 }

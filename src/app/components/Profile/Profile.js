@@ -6,7 +6,6 @@ import { useTranslations } from 'next-intl'; // Import for translations
 
 const Profile = ({ user }) => {
   const t = useTranslations('Profile'); // Initialize translations
-
   return (
     <div className={styles.profileContainer}>
       <h2 className={styles.title}>{t('myProfile')}</h2>
@@ -35,11 +34,14 @@ const Profile = ({ user }) => {
               <strong>{t('birthday')}:</strong> {user.birthday}
             </p>
             <p>
-              <strong>{t('gender')}:</strong> {user.gender}
+              <strong>{t('gender')}:</strong>{' '}
+              {user.gender === 'male' ? t('male') : t('female')}
             </p>
-            <p>
-              <strong>{t('bio')}:</strong> {user.bio}
-            </p>
+            {user.bio && (
+              <p>
+                <strong>{t('bio')}:</strong> {user.bio}
+              </p>
+            )}
           </div>
           <Link href='/edit-profile'>
             <button className={styles.button}>{t('editProfile')}</button>
@@ -50,12 +52,21 @@ const Profile = ({ user }) => {
         <div className={`${styles.card} ${styles.profileCompletionCard}`}>
           <h3 className={styles.cardTitle}>{t('profileCompletion')}</h3>
           <div className={styles.progressBarContainer}>
-            <div className={styles.progressBar} style={{ width: '70%' }}>
+            <div
+              className={styles.progressBar}
+              style={{
+                width: user.is_profile_completed === 1 ? '100%' : '50%',
+              }}>
+              <span> {user.is_profile_completed === 1 ? '100%' : '50%'} </span>
               {t('profileCompletionPercentage')}
             </div>
           </div>
           <Link href='/complete-profile'>
-            <button className={styles.button}>{t('completeProfile')}</button>
+            <button className={styles.button}>
+              {user.is_profile_completed === 1
+                ? t('editCompleteProfile')
+                : t('completeProfile')}
+            </button>
           </Link>
         </div>
 
