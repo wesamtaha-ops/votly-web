@@ -10,7 +10,7 @@ import toast from "react-hot-toast";
 
 export default function CompleteProfile() {
   const [profile, setProfile] = useState({});
-  const { data: session } = useSession();
+  const { data: session, update: updateSession } = useSession();
   const userToken = session?.id;
 
   async function fetchProfile(userToken) {
@@ -29,6 +29,11 @@ export default function CompleteProfile() {
     }
   }, [userToken]);
 
+  const reloadSession = () => {
+    const event = new Event("visibilitychange");
+    document.dispatchEvent(event);
+  };
+
   const handleProfileSubmit = async (data) => {
     try {
       const response = await callApi({
@@ -41,6 +46,10 @@ export default function CompleteProfile() {
       if (response.status != 200) {
         throw new Error("Failed to submit profile");
       }
+
+      await updateSession({ user: response.data });
+
+      reloadSession();
 
       toast("Profile completed successfully!");
     } catch (error) {

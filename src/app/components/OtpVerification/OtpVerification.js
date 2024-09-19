@@ -127,14 +127,14 @@ const OtpVerification = ({ contactInfo, type }) => {
       ); // Create credential using OTP and verificationId
       await signInWithCredential(auth, credential); // Sign in using the credential
 
+      // toast.success("Phone number verified successfully");
+
       // After verification, update the phone verification status in the backend
-      await callApi({
+      return await callApi({
         type: "post",
         url: "mobileVerify",
-        userToken: userToken,
+        userToken: session?.id,
       });
-
-      toast.success("Phone number verified successfully");
     } catch (error) {
       console.log("error", error);
       return {
