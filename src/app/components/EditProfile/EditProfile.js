@@ -247,12 +247,21 @@ const EditProfile = ({ user, userToken, updateSession }) => {
         <div className={`${styles.card} ${styles.profileCompletionCard}`}>
           <h3 className={styles.cardTitle}>{t('profileCompletion')}</h3>
           <div className={styles.progressBarContainer}>
-            <div className={styles.progressBar} style={{ width: '70%' }}>
+            <div
+              className={styles.progressBar}
+              style={{
+                width: user.is_profile_completed === 1 ? '100%' : '50%',
+              }}>
+              <span> {user.is_profile_completed === 1 ? '100%' : '50%'} </span>
               {t('profileCompletionPercentage')}
             </div>
           </div>
           <Link href='/complete-profile'>
-            <button className={styles.button}>{t('completeProfile')}</button>
+            <button className={styles.button}>
+              {user.is_profile_completed === 1
+                ? t('editCompleteProfile')
+                : t('completeProfile')}
+            </button>
           </Link>
         </div>
 
@@ -276,13 +285,18 @@ const EditProfile = ({ user, userToken, updateSession }) => {
               />
               <span className={styles.editIcon}>✎</span>
             </label>
-
-            <Button
-              style={{ fontFamily: 'Almarai' }}
-              title={t('updateImage')}
-              onClick={profileImageHandleSubmit(onSubmitProfileImage)}
-            />
           </form>
+
+          <Button
+            style={{
+              fontFamily: 'Almarai',
+              marginTop: 10,
+              minWidth: '100%',
+              selfAlign: 'center',
+            }}
+            title={t('updateImage')}
+            onClick={profileImageHandleSubmit(onSubmitProfileImage)}
+          />
         </div>
 
         {/* Change Password Card */}

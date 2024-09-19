@@ -197,11 +197,14 @@
         "phone": "Phone",
         "birthday": "Birthday",
         "gender": "Gender",
+        "male": "Male",
+        "female": "Female",
         "bio": "Bio",
         "editProfile": "Edit Profile",
         "profileCompletion": "Profile Completion",
-        "profileCompletionPercentage": "70% Complete",
+        "profileCompletionPercentage": "Complete",
         "completeProfile": "Complete Profile",
+        "editCompleteProfile": "Edit Personal Data",
         "profileImage": "Profile Image",
         "profileImageAlt": "Profile Image"
     },
@@ -226,8 +229,9 @@
         "bio": "Bio",
         "saveChanges": "Save Changes",
         "profileCompletion": "Profile Completion",
-        "profileCompletionPercentage": "70% Complete",
+        "profileCompletionPercentage": "Complete",
         "completeProfile": "Complete Profile",
+        "editCompleteProfile": "Edit Personal Data",
         "changeProfileImage": "Change Profile Image",
         "profileImage": "Profile Image",
         "updateImage": "Update Image",
@@ -281,5 +285,20 @@
         "foodDelivery": "Food Delivery",
         "homeGarden": "Home & Garden",
         "digitalEntertainment": "Digital Entertainment"
+    },
+    "ProfileCompletionForm": {
+        "beforeContinue": "Before you continue...",
+        "moreDetails": "We need a few more details to complete your profile",
+        "complete": "Complete",
+        "nationality": "Nationality",
+        "residence": "Residence",
+        "householdIncome": "Household Income",
+        "lessThan1500": "Less than 1500 [currency] per month",
+        "5000To10000": "5000 - 10000 [currency] per month",
+        "10000To20000": "10000 - 20000 [currency] per month",
+        "moreThan20000": "More than 20000 [currency] per month",
+        "preferNotToSay": "Prefer not to say",
+        "submitting": "Submitting...",
+        "submit": "Submit"
     }
 }
