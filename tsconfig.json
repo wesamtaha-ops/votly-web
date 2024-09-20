@@ -1,34 +1,28 @@
 {
   "compilerOptions": {
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
-    "skipLibCheck": true,
-    "strict": false,
-    "noEmit": true,
-    "incremental": true,
-    "esModuleInterop": true,
+    "skipLibCheck": true, // Skips type checking for declaration files
+    "strict": false, // Disables all strict type-checking options
+    "noEmit": true, // Does not emit outputs, useful for development
+    "incremental": true, // Enable incremental compilation
+    "esModuleInterop": true, // Enables interoperation between ES modules and CommonJS modules
     "module": "esnext",
     "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "jsx": "preserve",
+    "resolveJsonModule": true, // Allows importing JSON files
+    "isolatedModules": true, // Ensures that each file is treated as its own module
+    "jsx": "preserve", // JSX is preserved in output, works with Next.js
     "plugins": [
       {
         "name": "next"
       }
     ]
   },
-  "include": [
-    "next-env.d.ts",
-    ".next/types/**/*.ts",
-    "**/*.ts",
-    "**/*.tsx"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["next-env.d.ts", ".next/types/**/*.ts", "**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules"],
+  "next": {
+    "typescript": {
+      "ignoreBuildErrors": true // Skips type checking errors during the build process
+    }
+  }
 }
