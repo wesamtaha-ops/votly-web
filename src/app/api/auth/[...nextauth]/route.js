@@ -11,11 +11,16 @@ export const authOptions = {
       name: "credentials",
       credentials: {},
       authorize: async (credentials) => {
+        console.log("Base URL:", process.env.NEXT_PUBLIC_BASE_URL_API);
+
         try {
-          const res = await axios.post(`https://staging.votly.app/api/login`, {
-            email: credentials.email,
-            password: credentials.password,
-          });
+          const res = await axios.post(
+            `${process.env.NEXT_PUBLIC_BASE_URL_API}login`,
+            {
+              email: credentials.email,
+              password: credentials.password,
+            }
+          );
 
           if (res.data.token) {
             return {
@@ -24,7 +29,10 @@ export const authOptions = {
             };
           }
         } catch (error) {
-          console.log("Login failed:", error);
+          console.log("Login failed:", error.response?.data || error.message);
+          throw new Error(
+            "Login failed: " + (error.response?.data.message || error.message)
+          );
         }
 
         return null; // Return null if login fails
