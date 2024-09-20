@@ -7,7 +7,7 @@ export async function POST(req) {
 
   const res = await callVotlyApi({
     type: "post",
-    url: "user/passsword",
+    url: "v2/user/passsword",
     data: payload,
     userToken: userToken,
   });
