@@ -3,12 +3,12 @@ import { callVotlyApi } from "../../helper";
 
 export async function POST(req) {
   const userToken = req.headers.get("userToken");
-  const payload = await req.json();
+  const data = await req.json();
 
   const res = await callVotlyApi({
     type: "post",
-    url: "v2/user/passsword",
-    data: payload,
+    url: "v2/forget",
+    data: data,
     userToken: userToken,
   });
 
