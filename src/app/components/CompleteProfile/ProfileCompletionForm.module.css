@@ -26,13 +26,14 @@
 .form {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 40px;
   font-family: 'Almarai', sans-serif;
 }
 
 .formField {
   margin-bottom: 20px;
   font-family: 'Almarai', sans-serif !important;
+  
 }
 
 .submitButton {

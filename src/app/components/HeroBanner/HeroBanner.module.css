@@ -1,4 +1,3 @@
-/* app/components/HeroBanner/HeroBanner.module.css */
 .hero {
   background-image: url('../../assets/bg.png');
   /* Optional background image */
@@ -52,15 +51,29 @@
   color: #dddddd;
 }
 
+/* Ensure that buttons are displayed in a row on larger screens */
 .buttons {
   display: flex;
   gap: 20px;
   justify-content: center;
+  flex-direction: row; /* Row layout for desktop */
 }
 
 .ctaButton {
   padding: 18px 45px;
   background-color: var(--green);
+  color: white;
+  border-radius: 20px;
+  font-size: 18px;
+  font-weight: bold;
+  text-decoration: none;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease;
+}
+
+.ctaButton2 {
+  padding: 18px 45px;
+  background-color: #b76edd;
   color: white;
   border-radius: 20px;
   font-size: 18px;
@@ -90,4 +103,31 @@
 .secondaryButton:hover {
   background-color: white;
   color: var(--primary-color);
+}
+
+@media screen and (max-width: 768px) {
+  .hero {
+    padding-top: 10%;
+  }
+
+  .heroContent {
+    margin-top: 0px;
+    margin-bottom: 150px;
+  }
+
+  .heroTitle {
+    font-size: 36px;
+  }
+
+  .heroDescription {
+    font-size: 16px;
+  }
+
+  .buttons {
+    flex-direction: column; /* Stack buttons vertically on mobile */
+  }
+
+  .secondaryButton {
+    margin-top: 20px;
+  }
 }

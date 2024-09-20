@@ -1,16 +1,22 @@
 'use client';
 
 import styles from './SurveysList.module.css';
+import { useLocale, useTranslations } from 'next-intl'; // Import translation hook
 
 const SurveysList = () => {
-    const surveys = [
+    const t = useTranslations('Surveys'); // Initialize translations
+    const lang = useLocale(); // Get the current locale
+    const isArabic = lang === 'ar';
+
+
+    // English surveys array
+    const englishSurveys = [
         {
             id: 1,
             title: 'Customer Satisfaction Survey',
             description: 'Help us improve our services by answering a few questions.',
             time: 5,
             price: 1,
-
         },
         {
             id: 2,
@@ -18,7 +24,6 @@ const SurveysList = () => {
             description: 'Share your thoughts on our latest product line.',
             time: 20,
             price: 3,
-
         },
         {
             id: 3,
@@ -26,16 +31,43 @@ const SurveysList = () => {
             description: 'Give us feedback on your experience using our website.',
             time: 10,
             price: 2,
-
         },
-        // Add more surveys as needed
     ];
 
+    // Arabic surveys array
+    const arabicSurveys = [
+        {
+            id: 1,
+            title: 'استطلاع رضا العملاء',
+            description: 'ساعدنا على تحسين خدماتنا من خلال الإجابة على بعض الأسئلة.',
+            time: 5,
+            price: 1,
+        },
+        {
+            id: 2,
+            title: 'استطلاع آراء حول المنتجات',
+            description: 'شاركنا رأيك في أحدث منتجاتنا.',
+            time: 20,
+            price: 3,
+        },
+        {
+            id: 3,
+            title: 'استطلاع سهولة استخدام الموقع',
+            description: 'أخبرنا بتجربتك في استخدام موقعنا.',
+            time: 10,
+            price: 2,
+        },
+    ];
+
+    // Determine which survey array to use based on language
+    const surveys = lang === 'ar' ? arabicSurveys : englishSurveys;
+    console.log(arabicSurveys);
     return (
         <div className={styles.surveysContainer}>
-            <h2 className={styles.title}>Earn money by completing surveys</h2>
-            <p className={styles.surveyDescription}>Paid surveys are a convenient side hustle for anyone who wants to earn a little extra.
-                Earn points for each survey you complete and use them to get cash or gift cards.</p>
+            <h2 className={styles.title}>{t('earnBySurveys')}</h2>
+            <p className={styles.surveyDescription}>
+                {t('surveyDescription')}
+            </p>
             <br /><br />
             <div className={styles.surveysGrid}>
                 {surveys.map((survey) => (
@@ -43,20 +75,36 @@ const SurveysList = () => {
                         <h3 className={styles.surveyTitle}>{survey.title}</h3>
                         <p className={styles.surveyDescription}>{survey.description}</p>
                         <div className={styles.surveyInfo}>
-                            <img src="https://i.etsystatic.com/36262552/r/il/aa81a7/4191400611/il_570xN.4191400611_23uk.jpg" alt="Time Icon" className={styles.timeIcon} />
+                            <img
+                                src="https://i.etsystatic.com/36262552/r/il/aa81a7/4191400611/il_570xN.4191400611_23uk.jpg"
+                                alt={t('timeIconAlt')}
+                                className={styles.timeIcon}
+                            />
                             <span style={{
-                                marginRight: '40px',
-                                fontWeight: 'bold',
-                            }} >{survey.time} mins</span>
+                                marginRight: lang === 'ar' ? '0px' : '20',
+                                marginLeft: lang === 'en' ? '0px' : '20',
 
-                            <img src="https://i.pinimg.com/564x/a4/91/7a/a4917a4fcb3b1a6b3416e27491d9422b.jpg" alt="Time Icon" className={styles.timeIcon} />
+                                fontWeight: 'bold',
+                            }}>
+                                {survey.time} {t('mins')}
+                            </span>
+
+                            <img
+                                src="https://i.pinimg.com/564x/a4/91/7a/a4917a4fcb3b1a6b3416e27491d9422b.jpg"
+                                alt={t('priceIconAlt')}
+                                className={styles.timeIcon2}
+                            />
                             <span
                                 style={{
                                     fontWeight: 'bold',
                                     marginLeft: '10px',
-                                }}>${survey.price}</span>
+                                }}>
+                                {survey.price} {t('currency')}
+                            </span>
                         </div>
-                        <button className={styles.takeSurveyButton}>Take Survey</button>
+                        <button className={styles.takeSurveyButton}>
+                            {t('takeSurvey')}
+                        </button>
                     </div>
                 ))}
             </div>

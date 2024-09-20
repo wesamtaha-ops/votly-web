@@ -19,6 +19,15 @@ const FeaturesList = () => {
   return (
     <section className={styles.features}>
       <div className={styles.container}>
+        <div className={styles.imageContainer}>
+          <Image
+            src='https://votly.app/images/app.png'
+            alt={t('imageAlt')}
+            width={500}
+            height={500}
+            className={styles.featureImage}
+          />
+        </div>
         <div className={styles.textContainer}>
           <h2 className={styles.featuresTitle}>{t('title')}</h2>
           <p className={styles.featuresSubtitle}>{t('subtitle')}</p>
@@ -30,15 +39,6 @@ const FeaturesList = () => {
               </li>
             ))}
           </ul>
-        </div>
-        <div className={styles.imageContainer}>
-          <Image
-            src='https://votly.app/images/app.png'
-            alt={t('imageAlt')}
-            width={500}
-            height={500}
-            className={styles.featureImage}
-          />
         </div>
       </div>
     </section>

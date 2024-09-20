@@ -1309,6 +1309,7 @@ const ProfileCompletionForm = ({ profile, onSubmit }) => {
     setLoading(true);
     await onSubmit(data);
     setLoading(false);
+    window.location.href = '/surveys';
   };
 
   return (

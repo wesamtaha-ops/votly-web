@@ -2,12 +2,15 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import styles from './FAQ.module.css';
 
 const FAQ = () => {
   const t = useTranslations('FAQ');
   const [activeIndex, setActiveIndex] = useState(null);
+
+  const lang = useLocale(); // Get the current locale
+  const isArabic = lang === 'ar';
 
   const faqs = [
     { question: t('faq1.question'), answer: t('faq1.answer') },
@@ -42,7 +45,11 @@ const FAQ = () => {
             {faqs.map((faq, index) => (
               <div key={index} className={styles.accordionItem}>
                 <button
-                  className={styles.accordionButton}
+                  className={
+                    isArabic
+                      ? styles.accordionButton
+                      : styles.accordionButtonEnglish
+                  }
                   onClick={() => toggleAccordion(index)}>
                   {faq.question}
                   <span className={styles.accordionIcon}>

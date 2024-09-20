@@ -22,6 +22,10 @@ const HeroBanner = () => {
           <Link href='/register' className={styles.ctaButton}>
             {t('ctaButton')}
           </Link>
+      
+          <Link href='/register' className={styles.ctaButton2}>
+            {t('ctaButtonLogin')}
+          </Link>
         </div>
       </div>
     </section>

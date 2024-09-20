@@ -75,7 +75,8 @@
         "heroImageAlt": "Hero Image",
         "title": "Make Your Voice Heard, Shape the Future",
         "description": "Influence the future of society, brands, and the world around you with Votly. Share your opinions and earn rewards in return.",
-        "ctaButton": "Join Us Today"
+        "ctaButton": "Join Us Today",
+        "ctaButtonLogin": "Login"
     },
     "InfoSection": {
         "title": "Share Your Views, Earn Rewards",
@@ -186,6 +187,15 @@
         "login": "Login",
         "logout": "Logout",
         "language": "Language"
+    },
+    "Surveys": {
+        "earnBySurveys": "Earn money by completing surveys",
+        "surveyDescription": "Paid surveys are a convenient side hustle for anyone who wants to earn a little extra. Earn points for each survey you complete and use them to get cash or gift cards.",
+        "mins": "mins",
+        "currency": "$",
+        "takeSurvey": "Take Survey",
+        "timeIconAlt": "Time Icon",
+        "priceIconAlt": "Price Icon"
     },
     "Profile": {
         "myProfile": "My Profile",
