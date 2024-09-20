@@ -138,11 +138,6 @@ const Rewards = () => {
         <h2>
           {t('yourBalance')}: {userBalance.toFixed(2)} {usedCurrency}
         </h2>
-        {showRewards && (
-          <h5 style={{ fontWeight: 'light', marginTop: 10 }}>
-            {t('minimumPoints')}: {minimum_points_to_redeem}
-          </h5>
-        )}
       </div>
       {showRewards ? (
         <>

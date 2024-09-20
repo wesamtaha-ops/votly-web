@@ -108,11 +108,13 @@
 @media screen and (max-width: 768px) {
   .hero {
     padding-top: 10%;
+    
   }
 
   .heroContent {
     margin-top: 0px;
     margin-bottom: 150px;
+    
   }
 
   .heroTitle {
@@ -129,5 +131,13 @@
 
   .secondaryButton {
     margin-top: 20px;
+  }
+
+  .heroImage {
+    align-self: center;
+    width: 80%;
+    margin: 0 auto;
+    margin-left: 40px;
+    margin-bottom: 30px;
   }
 }

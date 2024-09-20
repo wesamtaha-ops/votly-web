@@ -153,7 +153,12 @@
 /* Custom styling for mobile screens */
 @media (max-width: 600px) {
   .filterSelect {
-    width: 100%;
+    width: 90%;
     font-size: 14px;
+    margin-top: 30px;
+    padding: 14px 12px;
+  }
+  .hideMobile{
+    display: none;
   }
 }

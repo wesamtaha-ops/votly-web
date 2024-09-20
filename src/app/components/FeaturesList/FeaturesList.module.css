@@ -67,7 +67,6 @@
 @media (max-width: 768px) {
   .features {
     padding: 20px;
-    text-align: center;
   }
 
   .container {
@@ -88,7 +87,6 @@
 
   .featureItem {
     flex-direction: column;
-    text-align: center;
     font-size: 16px;
   }
 

@@ -77,9 +77,15 @@ const Header = () => {
         )}
 
         {!session?.id ? (
-          <Link href={`/${lang}/login`} className={styles.navLink}>
-            {t('login')}
-          </Link>
+          <>
+            <Link href={`/${lang}/register`} className={styles.navLink}>
+              {t('register')}
+            </Link>
+
+            <Link href={`/${lang}/login`} className={styles.navLink}>
+              {t('login')}
+            </Link>
+          </>
         ) : (
           <a
             href='#'
