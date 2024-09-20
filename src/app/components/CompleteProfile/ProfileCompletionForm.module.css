@@ -10,11 +10,15 @@
 }
 
 .progressContainer {
-  margin: 10px 0;
+  margin: 0px 0;
   display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
+  justify-content: end;
+  align-items: start;
   font-family: 'Almarai', sans-serif;
+  width: '100%';
+  margin-top: -80px;
+  margin-bottom: 50px;
+  flex-direction: row-reverse;
 }
 
 .progressText {
@@ -26,7 +30,7 @@
 .form {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 40px;
   font-family: 'Almarai', sans-serif;
 }
 
@@ -39,6 +43,27 @@
   margin-top: 20px;
   font-family: 'Almarai', sans-serif;
 }
+
 .MuiTypography-root {
   font-family: 'Almarai', sans-serif !important;
+}
+
+/* Media query for mobile devices */
+@media screen and (max-width: 768px) {
+  .progressContainer {
+    width: 100%;
+    margin-top: 20px;
+    margin-bottom: 40px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  /* Change flexDirection to column for mobile view */
+  .twoRowMobile {
+    display: flex;
+    flex-direction: column; /* Stack items vertically on mobile */
+    width: 100%;
+  }
 }

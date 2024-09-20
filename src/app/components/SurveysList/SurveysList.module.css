@@ -1,77 +1,89 @@
 .surveysContainer {
-    max-width: 1200px;
-    margin: 50px auto;
-    padding: 20px;
-    border-radius: var(--border-radius);
+  max-width: 1200px;
+  margin: 30px auto;
+  padding: 20px;
+  border-radius: var(--border-radius);
+  line-height: 40px;
+  margin-bottom: 0;
 }
 
 .title {
-    font-size: 34px;
-    margin-bottom: 40px;
-    color: #1f3e55;
-    text-align: center;
+  font-size: 34px;
+  margin-bottom: 40px;
+  color: #1f3e55;
+  text-align: center;
+  line-height: 50px;
 }
 
 .surveysGrid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px;
-    justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  justify-content: center;
 }
 
 .surveyCard {
-    background-color: white;
-    padding: 30px;
-    border-radius: var(--border-radius);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background-color: white;
+  padding: 30px;
+  border-radius: var(--border-radius);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .surveyCard:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
 .surveyTitle {
-    margin-bottom: 15px;
-    font-size: 22px;
-    color: #1f3e55;
+  margin-bottom: 15px;
+  font-size: 22px;
+  color: #1f3e55;
 }
 
 .surveyDescription {
-    margin-bottom: 20px;
-    font-size: 16px;
-    color: var(--text-color-secondary);
-    text-align: center;
+  margin-bottom: 20px;
+  font-size: 16px;
+  color: var(--text-color-secondary);
+  text-align: center;
 }
 
 .surveyInfo {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 25px;
-    font-size: 16px;
-    color: var(--text-color-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 25px;
+  font-size: 16px;
+  color: var(--text-color-secondary);
 }
 
 .timeIcon {
-    width: 50px;
-    height: 40px;
-    margin-right: 8px;
+  width: 50px;
+  height: 40px;
+  margin-right: 5px;
+  margin-left: 5px;
+}
+
+.timeIcon2 {
+  width: 50px;
+  height: 40px;
+  margin-right: 20px;
+  margin-left: 20px;
 }
 
 .takeSurveyButton {
-    padding: 12px 25px;
-    background-color: var(--primary-color);
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 18px;
-    transition: background-color 0.3s ease, opacity 0.3s ease;
+  padding: 12px 25px;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 18px;
+  transition: background-color 0.3s ease, opacity 0.3s ease;
+  font-family: Almarai, sans-serif;
 }
 
 .takeSurveyButton:hover {
-    background-color: #0056b3;
+  background-color: #0056b3;
 }

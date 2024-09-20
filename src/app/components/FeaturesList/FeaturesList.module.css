@@ -1,91 +1,103 @@
-/* app/components/FeaturesList/FeaturesList.module.css */
-
 .features {
-    padding: 0px 50px;
-    background-color: #f9f9f9;
-    padding-bottom: 100px;
+  padding: 0px 50px;
+  background-color: #f9f9f9;
+  padding-bottom: 100px;
 }
 
 .container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    max-width: 1200px;
-    margin: 0 auto;
-    align-items: center;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  align-items: center;
 }
 
 .textContainer {
-    max-width: 700px;
+  max-width: 700px;
 }
 
 .featuresTitle {
-    font-size: 32px;
-    font-weight: bold;
-    margin-bottom: 20px;
-    color: #333;
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #333;
 }
 
 .featuresSubtitle {
-    font-size: 18px;
-    line-height: 1.6;
-    margin-bottom: 30px;
-    color: #666;
+  font-size: 18px;
+  line-height: 1.6;
+  margin-bottom: 30px;
+  color: #666;
 }
 
 .featureItems {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 .featureItem {
-    font-size: 18px;
-    line-height: 1.8;
-    margin-bottom: 15px;
-    color: #333;
-    align-items: flex-start;
+  font-size: 18px;
+  line-height: 1.8;
+  margin-bottom: 15px;
+  color: #333;
+  display: flex;
+  align-items: flex-start;
 }
 
 .checkmark {
-    color: #007bff;
-    margin-right: 10px;
-    font-size: 20px;
-    margin-left: 10px;
+  color: #007bff;
+  margin-right: 10px;
+  font-size: 20px;
 }
 
 .imageContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .featureImage {
-    max-width: 100%;
-    height: auto;
+  max-width: 100%;
+  height: auto;
 }
 
+/* Media query for mobile responsiveness */
 @media (max-width: 768px) {
-  .heroContent, .infoContent, .features, .faqSection {
+  .features {
     padding: 20px;
-    text-align: center;
   }
 
-  .heroTitle {
+  .container {
+    grid-template-columns: 1fr;
+  }
+
+  .textContainer {
+    max-width: 100%;
+  }
+
+  .featuresTitle {
     font-size: 28px;
   }
 
-  .heroDescription {
+  .featuresSubtitle {
     font-size: 16px;
   }
 
-  .infoBlock, .featureItem {
+  .featureItem {
     flex-direction: column;
-    text-align: center;
+    font-size: 16px;
   }
 
-  .ctaButton, .secondaryButton {
-    padding: 15px 30px;
-    font-size: 16px;
+  .checkmark {
+    margin-left: 0;
+    margin-right: 5px;
+    font-size: 18px;
+  }
+
+  .featureImage {
+    width: 80%;
+    max-width: 400px;
   }
 }

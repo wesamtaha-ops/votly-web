@@ -1,27 +1,23 @@
-import axios from "axios";
-import NextAuth from "next-auth";
-import CredentialProvider from "next-auth/providers/credentials";
-import { callApi } from "../../../helper";
+import NextAuth from 'next-auth';
+import CredentialProvider from 'next-auth/providers/credentials';
+import axios from 'axios';
 
 export const authOptions = {
   pages: {
-    signIn: "/login",
+    signIn: '/login',
   },
   providers: [
     CredentialProvider({
-      name: "credentials",
+      name: 'credentials',
       credentials: {},
       authorize: async (credentials) => {
         try {
-          const res = await axios(
+          const res = await axios.post(
             `${process.env.NEXT_PUBLIC_BASE_URL_API}login`,
             {
-              method: "post",
-              data: {
-                email: credentials.email,
-                password: credentials.password,
-              },
-            }
+              email: credentials.email,
+              password: credentials.password,
+            },
           );
 
           if (res.data.token) {
@@ -31,37 +27,24 @@ export const authOptions = {
             };
           }
         } catch (error) {
-          console.log(error);
+          console.log('Login failed:', error);
         }
 
-        // login failed
-        return null;
+        return null; // Return null if login fails
       },
     }),
   ],
-  jwt: {
-    secret: process.env.NEXTAUTH_SECRET,
-    encryption: true,
-  },
   callbacks: {
-    jwt: ({ token, user, trigger, session }) => {
+    jwt: ({ token, user }) => {
       if (user) {
         token.id = user.id;
         token.user = user.user;
       }
-
-      if (trigger === "update" && session?.user) {
-        token.user = session.user;
-      }
-
       return token;
     },
-    session: async ({ session, token }) => {
-      if (token) {
-        session.id = token.id;
-        session.user = token.user;
-      }
-
+    session: ({ session, token }) => {
+      session.id = token.id;
+      session.user = token.user;
       return session;
     },
   },
@@ -69,4 +52,7 @@ export const authOptions = {
 };
 
 const handler = NextAuth(authOptions);
-export { handler as GET, handler as POST };
+
+// Export the `GET` and `POST` methods separately for Next.js 13+ API route
+export const GET = handler;
+export const POST = handler;

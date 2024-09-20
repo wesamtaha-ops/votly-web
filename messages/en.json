@@ -33,10 +33,10 @@
         "countryRequired": "Country is required",
         "citizenship": "What's your citizenship?",
         "acceptTerms": "You must accept the terms",
-        "acceptTermsText": "I have read and accept the",
+        "acceptTermsText": "I accept the",
         "terms": "Terms and Conditions",
         "acceptPrivacy": "You must acknowledge the privacy policy",
-        "acceptPrivacyText": "I have read and acknowledge the",
+        "acceptPrivacyText": "I acknowledge the",
         "privacy": "Privacy Policy",
         "signUp": "Sign up",
         "alreadyHaveAccount": "Already have an account?",
@@ -75,7 +75,9 @@
         "heroImageAlt": "Hero Image",
         "title": "Make Your Voice Heard, Shape the Future",
         "description": "Influence the future of society, brands, and the world around you with Votly. Share your opinions and earn rewards in return.",
-        "ctaButton": "Join Us Today"
+        "ctaButton": "Join Us Today",
+        "ctaButtonLogin": "Login",
+        "ctaButtonDashboard": "Get Started Now"
     },
     "InfoSection": {
         "title": "Share Your Views, Earn Rewards",
@@ -184,8 +186,18 @@
         "rewards": "Rewards",
         "myProfile": "My Profile",
         "login": "Login",
+        "register": "Register",
         "logout": "Logout",
         "language": "Language"
+    },
+    "Surveys": {
+        "earnBySurveys": "Earn money by completing surveys",
+        "surveyDescription": "Paid surveys are a convenient side hustle for anyone who wants to earn a little extra. Earn points for each survey you complete and use them to get cash or gift cards.",
+        "mins": "mins",
+        "currency": "$",
+        "takeSurvey": "Take Survey",
+        "timeIconAlt": "Time Icon",
+        "priceIconAlt": "Price Icon"
     },
     "Profile": {
         "myProfile": "My Profile",
@@ -259,7 +271,7 @@
         "notEnoughBalance": "Not Enough Balance",
         "submitting": "Submitting ...",
         "redeemTitle": "Do you want to redeem?",
-        "redeemed": "Redeemed!",
+        "redeemed": "Redeemed! you will receive your reward on your email",
         "noRedeem": "No redeem",
         "noRewardsAvailable": "No rewards available",
         "noRewardsAvailableTitle": "No rewards available yet in your country",
