@@ -1,25 +1,25 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import styles from "./EditProfile.module.css";
-import Link from "next/link";
-import { callApi } from "../../helper";
-import toast from "react-hot-toast";
-import Button from "../Shared/Button";
-import axios from "axios";
-import { useTranslations } from "next-intl"; // Import for translations
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import styles from './EditProfile.module.css';
+import Link from 'next/link';
+import { callApi } from '../../helper';
+import toast from 'react-hot-toast';
+import Button from '../Shared/Button';
+import axios from 'axios';
+import { useTranslations } from 'next-intl'; // Import for translations
 
 const EditProfile = ({ user, userToken, updateSession }) => {
   if (!user?.firstname) return;
 
   const [selectedImage, setSelectedImage] = useState(
     user.image ||
-      "https://t3.ftcdn.net/jpg/05/16/27/58/360_F_516275801_f3Fsp17x6HQK0xQgDQEELoTuERO4SsWV.jpg"
+      'https://t3.ftcdn.net/jpg/05/16/27/58/360_F_516275801_f3Fsp17x6HQK0xQgDQEELoTuERO4SsWV.jpg',
   );
   const [imageFile, setImageFile] = useState();
 
-  const t = useTranslations("EditProfile"); // Initialize translations
+  const t = useTranslations('EditProfile'); // Initialize translations
 
   const {
     register,
@@ -51,31 +51,31 @@ const EditProfile = ({ user, userToken, updateSession }) => {
   } = useForm();
 
   const reloadSession = () => {
-    const event = new Event("visibilitychange");
+    const event = new Event('visibilitychange');
     document.dispatchEvent(event);
   };
 
   const onSubmitMainInfo = async (data) => {
     const res = await callApi({
-      type: "post",
-      url: "profileUpdate",
+      type: 'post',
+      url: 'profileUpdate',
       data: data,
       userToken: userToken,
     });
 
-    if (res.status == "1") {
+    if (res.status == '1') {
       await updateSession({ user: res.user });
       reloadSession();
-      toast(t("profileUpdated"));
+      toast(t('profileUpdated'));
     } else {
-      toast(t("somethingWentWrong"));
+      toast(t('somethingWentWrong'));
     }
   };
 
   const onSubmitPassword = async (data) => {
     const res = await callApi({
-      type: "post",
-      url: "passwordUpdate",
+      type: 'post',
+      url: 'passwordUpdate',
       data: {
         password: data.password,
         email: user.email,
@@ -83,36 +83,36 @@ const EditProfile = ({ user, userToken, updateSession }) => {
       userToken: userToken,
     });
 
-    if (res.status == "1") {
-      toast(t("passwordUpdated"));
+    if (res.status == '1') {
+      toast(t('passwordUpdated'));
     } else {
-      toast(t("somethingWentWrong"));
+      toast(t('somethingWentWrong'));
     }
   };
 
   const onSubmitProfileImage = async (data) => {
     try {
       const formData = new FormData();
-      formData.append("image", imageFile);
+      formData.append('image', imageFile);
 
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL_API}user`,
         formData,
         {
           headers: {
-            "Content-Type": "multipart/form-data",
+            'Content-Type': 'multipart/form-data',
             Authorization: `Bearer ${userToken}`,
           },
-        }
+        },
       );
 
-      if (response.data.status == "1") {
+      if (response.data.status == '1') {
         await updateSession({ user: response.data.user });
         reloadSession();
-        toast(t("profileImageUpdated"));
+        toast(t('profileImageUpdated'));
       }
     } catch (error) {
-      toast(t("somethingWentWrong"));
+      toast(t('somethingWentWrong'));
     }
   };
 
@@ -127,24 +127,23 @@ const EditProfile = ({ user, userToken, updateSession }) => {
 
   return (
     <div className={styles.editProfileContainer}>
-      <h2 className={styles.title}>{t("editProfile")}</h2>
+      <h2 className={styles.title}>{t('editProfile')}</h2>
 
       <div className={styles.cardsGrid}>
         {/* Main Information Card */}
         <div className={`${styles.card} ${styles.mainInfoCard}`}>
-          <h3 className={styles.cardTitle}>{t("mainInfo")}</h3>
+          <h3 className={styles.cardTitle}>{t('mainInfo')}</h3>
           <form
             onSubmit={handleSubmit(onSubmitMainInfo)}
-            className={styles.form}
-          >
+            className={styles.form}>
             <div className={styles.formGroup}>
-              <label>{t("firstName")}</label>
+              <label>{t('firstName')}</label>
               <input
                 className={`${styles.input} ${
-                  errors.firstname ? styles.errorBorder : ""
+                  errors.firstname ? styles.errorBorder : ''
                 }`}
-                {...register("firstname", {
-                  required: t("firstNameRequired"),
+                {...register('firstname', {
+                  required: t('firstNameRequired'),
                 })}
               />
               {errors.firstname && (
@@ -153,12 +152,12 @@ const EditProfile = ({ user, userToken, updateSession }) => {
             </div>
 
             <div className={styles.formGroup}>
-              <label>{t("lastName")}</label>
+              <label>{t('lastName')}</label>
               <input
                 className={`${styles.input} ${
-                  errors.lastname ? styles.errorBorder : ""
+                  errors.lastname ? styles.errorBorder : ''
                 }`}
-                {...register("lastname", { required: t("lastNameRequired") })}
+                {...register('lastname', { required: t('lastNameRequired') })}
               />
               {errors.lastname && (
                 <p className={styles.error}>{errors.lastname.message}</p>
@@ -166,12 +165,12 @@ const EditProfile = ({ user, userToken, updateSession }) => {
             </div>
 
             <div className={styles.formGroup}>
-              <label>{t("username")}</label>
+              <label>{t('username')}</label>
               <input
                 className={`${styles.input} ${
-                  errors.username ? styles.errorBorder : ""
+                  errors.username ? styles.errorBorder : ''
                 }`}
-                {...register("username", { required: t("usernameRequired") })}
+                {...register('username', { required: t('usernameRequired') })}
               />
               {errors.username && (
                 <p className={styles.error}>{errors.username.message}</p>
@@ -179,16 +178,16 @@ const EditProfile = ({ user, userToken, updateSession }) => {
             </div>
 
             <div className={styles.formGroup}>
-              <label>{t("email")}</label>
+              <label>{t('email')}</label>
               <input
                 className={`${styles.input} ${
-                  errors.email ? styles.errorBorder : ""
+                  errors.email ? styles.errorBorder : ''
                 }`}
-                {...register("email", {
-                  required: t("emailRequired"),
+                {...register('email', {
+                  required: t('emailRequired'),
                   pattern: {
                     value: /^\S+@\S+$/i,
-                    message: t("invalidEmail"),
+                    message: t('invalidEmail'),
                   },
                 })}
               />
@@ -198,12 +197,12 @@ const EditProfile = ({ user, userToken, updateSession }) => {
             </div>
 
             <div className={styles.formGroup}>
-              <label>{t("phone")}</label>
+              <label>{t('phone')}</label>
               <input
                 className={`${styles.input} ${
-                  errors.phone ? styles.errorBorder : ""
+                  errors.phone ? styles.errorBorder : ''
                 }`}
-                {...register("phone", { required: t("phoneRequired") })}
+                {...register('phone', { required: t('phoneRequired') })}
               />
               {errors.phone && (
                 <p className={styles.error}>{errors.phone.message}</p>
@@ -211,37 +210,37 @@ const EditProfile = ({ user, userToken, updateSession }) => {
             </div>
 
             <div className={styles.formGroup}>
-              <label>{t("birthday")}</label>
+              <label>{t('birthday')}</label>
               <input
-                type="date"
+                type='date'
                 className={`${styles.input} ${
-                  errors.birthday ? styles.errorBorder : ""
+                  errors.birthday ? styles.errorBorder : ''
                 }`}
-                {...register("birthday")}
+                {...register('birthday')}
               />
             </div>
 
             <div className={styles.formGroup}>
-              <label>{t("gender")}</label>
-              <select className={styles.input} {...register("gender")}>
-                <option value="male">{t("male")}</option>
-                <option value="female">{t("female")}</option>
+              <label>{t('gender')}</label>
+              <select className={styles.input} {...register('gender')}>
+                <option value='male'>{t('male')}</option>
+                <option value='female'>{t('female')}</option>
               </select>
             </div>
 
             <div className={styles.formGroup}>
-              <label>{t("bio")}</label>
+              <label>{t('bio')}</label>
               <textarea
                 className={`${styles.input} ${
-                  errors.bio ? styles.errorBorder : ""
+                  errors.bio ? styles.errorBorder : ''
                 }`}
-                {...register("bio")}
+                {...register('bio')}
               />
             </div>
 
             <Button
-              style={{ fontFamily: "Almarai" }}
-              title={t("saveChanges")}
+              style={{ fontFamily: 'Almarai' }}
+              title={t('saveChanges')}
               onClick={handleSubmit(onSubmitMainInfo)}
             />
           </form>
@@ -249,44 +248,42 @@ const EditProfile = ({ user, userToken, updateSession }) => {
 
         {/* Profile Completion Card */}
         <div className={`${styles.card} ${styles.profileCompletionCard}`}>
-          <h3 className={styles.cardTitle}>{t("profileCompletion")}</h3>
+          <h3 className={styles.cardTitle}>{t('profileCompletion')}</h3>
           <div className={styles.progressBarContainer}>
             <div
               className={styles.progressBar}
               style={{
-                width: user.is_profile_completed === 1 ? "100%" : "50%",
-              }}
-            >
-              <span> {user.is_profile_completed === 1 ? "100%" : "50%"} </span>
-              {t("profileCompletionPercentage")}
+                width: user.is_profile_completed === 1 ? '100%' : '50%',
+              }}>
+              <span> {user.is_profile_completed === 1 ? '100%' : '50%'} </span>
+              {t('profileCompletionPercentage')}
             </div>
           </div>
-          <Link href="/complete-profile">
+          <Link href='/complete-profile'>
             <button className={styles.button}>
               {user.is_profile_completed === 1
-                ? t("editCompleteProfile")
-                : t("completeProfile")}
+                ? t('editCompleteProfile')
+                : t('completeProfile')}
             </button>
           </Link>
         </div>
 
         {/* Change Profile Image Card */}
         <div className={`${styles.card} ${styles.changeProfileImageCard}`}>
-          <h3 className={styles.cardTitle}>{t("changeProfileImage")}</h3>
+          <h3 className={styles.cardTitle}>{t('changeProfileImage')}</h3>
           <form
             onSubmit={profileImageHandleSubmit(onSubmitProfileImage)}
-            className={styles.profileImageContainer}
-          >
+            className={styles.profileImageContainer}>
             <img
               src={selectedImage}
-              alt={t("profileImage")}
+              alt={t('profileImage')}
               className={styles.profileImage}
             />
             <label className={styles.editImageButton}>
               <input
-                type="file"
+                type='file'
                 className={styles.fileInput}
-                {...profileImageRegister("profileImage")}
+                {...profileImageRegister('profileImage')}
                 onChange={handleImageChange}
               />
               <span className={styles.editIcon}>✎</span>
@@ -295,35 +292,34 @@ const EditProfile = ({ user, userToken, updateSession }) => {
 
           <Button
             style={{
-              fontFamily: "Almarai",
+              fontFamily: 'Almarai',
               marginTop: 10,
-              minWidth: "100%",
-              selfAlign: "center",
+              minWidth: '100%',
+              selfAlign: 'center',
             }}
-            title={t("updateImage")}
+            title={t('updateImage')}
             onClick={profileImageHandleSubmit(onSubmitProfileImage)}
           />
         </div>
 
         {/* Change Password Card */}
         <div className={`${styles.card} ${styles.changePasswordCard}`}>
-          <h3 className={styles.cardTitle}>{t("changePassword")}</h3>
+          <h3 className={styles.cardTitle}>{t('changePassword')}</h3>
           <form
             onSubmit={passwordHandleSubmit(onSubmitPassword)}
-            className={styles.form}
-          >
+            className={styles.form}>
             <div className={styles.formGroup}>
-              <label>{t("newPassword")}</label>
+              <label>{t('newPassword')}</label>
               <input
                 className={`${styles.input} ${
-                  passwordErrors.password ? styles.errorBorder : ""
+                  passwordErrors.password ? styles.errorBorder : ''
                 }`}
-                type="password"
-                {...passwordRegister("password", {
-                  required: t("passwordRequired"),
+                type='password'
+                {...passwordRegister('password', {
+                  required: t('passwordRequired'),
                   minLength: {
                     value: 6,
-                    message: t("passwordMinLength"),
+                    message: t('passwordMinLength'),
                   },
                 })}
               />
@@ -335,17 +331,17 @@ const EditProfile = ({ user, userToken, updateSession }) => {
             </div>
 
             <div className={styles.formGroup}>
-              <label>{t("confirmPassword")}</label>
+              <label>{t('confirmPassword')}</label>
               <input
                 className={`${styles.input} ${
-                  passwordErrors.confirmPassword ? styles.errorBorder : ""
+                  passwordErrors.confirmPassword ? styles.errorBorder : ''
                 }`}
-                type="password"
-                {...passwordRegister("confirmPassword", {
-                  required: t("confirmPasswordRequired"),
+                type='password'
+                {...passwordRegister('confirmPassword', {
+                  required: t('confirmPasswordRequired'),
                   validate: (value) =>
-                    value === passwordWatch("password") ||
-                    t("passwordMismatch"),
+                    value === passwordWatch('password') ||
+                    t('passwordMismatch'),
                 })}
               />
               {passwordErrors.confirmPassword && (
@@ -356,8 +352,8 @@ const EditProfile = ({ user, userToken, updateSession }) => {
             </div>
 
             <Button
-              style={{ fontFamily: "Almarai" }}
-              title={t("changePassword")}
+              style={{ fontFamily: 'Almarai' }}
+              title={t('changePassword')}
               onClick={passwordHandleSubmit(onSubmitPassword)}
             />
           </form>
