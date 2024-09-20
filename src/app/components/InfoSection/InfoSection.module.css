@@ -26,9 +26,11 @@
   padding: 30px;
   background-color: white;
   border-radius: var(--border-radius);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  filter: drop-shadow(0px 19px 43.5px rgba(0, 37, 141, .12));
   text-align: center;
+  padding:  40px;
   transition: transform 0.3s ease;
+
 }
 
 .infoBlock:hover {
