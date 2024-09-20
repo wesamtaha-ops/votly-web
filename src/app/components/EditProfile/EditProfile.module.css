@@ -55,6 +55,7 @@
   border-radius: 4px;
   font-size: 16px;
   color: var(--text-color);
+  background-color: #f5f8fa;
 }
 
 .input:focus {
@@ -97,7 +98,6 @@
   margin-left: 16px;
   margin-top: -20px;
   font-family: 'Almarai', sans-serif;
-
 }
 
 .button:hover {
@@ -193,6 +193,7 @@
 
   .input {
     font-size: 14px;
+    background-color: #f5f8fa;
   }
 
   .button {

@@ -98,7 +98,7 @@ const Header = () => {
         {/* Language switcher dropdown */}
         <div className={styles.languageSwitcher}>
           <button className={styles.dropdownButton} onClick={toggleDropdown}>
-            🌐 {lang == 'ar' ? 'العربية' : 'English'}
+            🌐 {' '} {lang == 'ar' ? 'العربية' : 'English'}
           </button>
           {isDropdownOpen && (
             <ul className={styles.dropdownMenu}>

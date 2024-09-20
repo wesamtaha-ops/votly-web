@@ -1,10 +1,10 @@
 :root {
-  --primary-color: #007bff;
+  --primary-color: #1b34fb;
   /* Adjusted based on the screenshots */
   --secondary-color: #6c757d;
-  --background-color: #f8f9fa;
+  --background-color: #fafbff;
   --text-color: #212529;
-  --light-text-color: #ffffff;
+  --light-text-color: #fafbff;
   --border-radius: 8px;
   --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   --pink: #b76edd;
@@ -22,6 +22,7 @@ body {
   height: 100%;
   display: flex;
   flex-direction: column;
+  padding-top: 40px;
 }
 
 h1,
