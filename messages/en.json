@@ -76,7 +76,8 @@
         "title": "Make Your Voice Heard, Shape the Future",
         "description": "Influence the future of society, brands, and the world around you with Votly. Share your opinions and earn rewards in return.",
         "ctaButton": "Join Us Today",
-        "ctaButtonLogin": "Login"
+        "ctaButtonLogin": "Login",
+        "ctaButtonDashboard": "Get Started Now"
     },
     "InfoSection": {
         "title": "Share Your Views, Earn Rewards",

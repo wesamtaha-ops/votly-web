@@ -76,7 +76,8 @@
         "title": "اجعل صوتك مسموعًا، شكّل المستقبل",
         "description": "أثر في مستقبل المجتمع والعلامات التجارية...",
         "ctaButton": "انضم إلينا اليوم",
-        "ctaButtonLogin": "تسجيل الدخول"
+        "ctaButtonLogin": "تسجيل الدخول",
+        "ctaButtonDashboard": "إبدأ الآن "
     },
     "InfoSection": {
         "title": "شارك بآرائك، اكسب المكافآت",
