@@ -1,24 +1,21 @@
-import NextAuth from 'next-auth';
-import CredentialProvider from 'next-auth/providers/credentials';
-import axios from 'axios';
+import NextAuth from "next-auth";
+import CredentialProvider from "next-auth/providers/credentials";
+import axios from "axios";
 
 export const authOptions = {
   pages: {
-    signIn: '/login',
+    signIn: "/login",
   },
   providers: [
     CredentialProvider({
-      name: 'credentials',
+      name: "credentials",
       credentials: {},
       authorize: async (credentials) => {
         try {
-          const res = await axios.post(
-            `${process.env.NEXT_PUBLIC_BASE_URL_API}login`,
-            {
-              email: credentials.email,
-              password: credentials.password,
-            },
-          );
+          const res = await axios.post(`https://staging.votly.app/api/login`, {
+            email: credentials.email,
+            password: credentials.password,
+          });
 
           if (res.data.token) {
             return {
@@ -27,7 +24,7 @@ export const authOptions = {
             };
           }
         } catch (error) {
-          console.log('Login failed:', error);
+          console.log("Login failed:", error);
         }
 
         return null; // Return null if login fails
