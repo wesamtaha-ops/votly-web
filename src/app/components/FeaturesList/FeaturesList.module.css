@@ -42,7 +42,7 @@
   line-height: 1.8;
   margin-bottom: 15px;
   color: #333;
-  display: flex;
+  display: block;
   align-items: flex-start;
 }
 
@@ -50,6 +50,8 @@
   color: #007bff;
   margin-right: 10px;
   font-size: 20px;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 .imageContainer {

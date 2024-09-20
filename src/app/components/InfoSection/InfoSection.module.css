@@ -2,9 +2,8 @@
 .infoSection {
   padding: 50px 0px;
   padding-top: 0px;
-  background-color: #ffffff;
   text-align: center;
-  margin-top: -20px;
+  margin-top: 50px;
 }
 
 .infoTitle {
@@ -50,4 +49,10 @@
 .infoBlockDescription {
   font-size: 16px;
   color: var(--secondary-color);
+}
+
+@media screen and (max-width: 768px) {
+  .infoContent {
+    margin-top: -20px;
+  }
 }

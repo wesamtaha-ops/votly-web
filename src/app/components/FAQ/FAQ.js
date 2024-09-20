@@ -45,11 +45,12 @@ const FAQ = () => {
             {faqs.map((faq, index) => (
               <div key={index} className={styles.accordionItem}>
                 <button
-                  className={
+                  className={[
+                    styles.accordionButton,
                     isArabic
                       ? styles.accordionButton
-                      : styles.accordionButtonEnglish
-                  }
+                      : styles.accordionButtonEnglish,
+                  ].join(' ')}
                   onClick={() => toggleAccordion(index)}>
                   {faq.question}
                   <span className={styles.accordionIcon}>
