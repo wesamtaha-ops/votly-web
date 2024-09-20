@@ -8,6 +8,7 @@
   box-shadow: 0px 10px 30px #1b34fb1f;
   animation: fadeIn 0.3s ease-in-out;
   padding: 3%;
+  padding-top: 15%;
 }
 
 .react_tel_input_custom {
