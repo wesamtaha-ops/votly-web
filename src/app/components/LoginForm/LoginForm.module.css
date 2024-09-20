@@ -5,8 +5,7 @@
   align-items: center;
   height: 80vh;
   background-color: var(--background-color);
-  padding: 5%;
-  padding-top: 15%;
+  padding: 10%;
 }
 
 .loginBox {
@@ -86,4 +85,10 @@
   outline: none;
   box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
   font-family: 'Almarai', sans-serif;
+}
+
+@media screen and (max-width: 768px) {
+  .loginContainer {
+    padding-top: 20%;
+  }
 }
