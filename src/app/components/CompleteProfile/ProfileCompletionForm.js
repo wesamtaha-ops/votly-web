@@ -132,7 +132,7 @@ const ProfileCompletionForm = ({ profile, onSubmit }) => {
         setCurrency({ en: 'PKR', ar: 'روبية باكستانية' });
         break;
       case 'Palestinian':
-        setCurrency({ en: 'ILS', ar: 'شيكل إسرائيلي' });
+        setCurrency({ en: 'ILS', ar: 'شيكل ' });
         break;
       case 'Qatari':
         setCurrency({ en: 'QAR', ar: 'ريال قطري' });
