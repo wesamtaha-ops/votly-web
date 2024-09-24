@@ -51,9 +51,21 @@ export const authOptions = {
       }
       return token;
     },
-    session: ({ session, token }) => {
+    session: async ({ session, token }) => {
       session.id = token.id;
-      session.user = token.user;
+
+      const response = await axios(
+        `${process.env.NEXT_PUBLIC_BASE_URL_API}getUser`,
+        {
+          method: "get",
+          headers: { userToken: token.id },
+        }
+      );
+
+      console.log("session update", response.data);
+
+      session.user = response.data;
+
       return session;
     },
   },
