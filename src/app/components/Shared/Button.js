@@ -1,30 +1,30 @@
-import React, { useState } from "react";
-import styles from "./Button.module.css";
+import React from 'react';
+import PropTypes from 'prop-types';
+import styles from './Button.module.css';
 
-export default function Button({ title, onClick, style = {} }) {
-  const [loading, setLoading] = useState(false);
-
-  const handleClick = async () => {
-    setLoading(true);
-    await onClick();
-    setLoading(false);
+const Button = ({ title, onClick, disabled, style }) => {
+  const handleClick = (e) => {
+    if (onClick) {
+      onClick(e);
+    }
   };
 
   return (
     <button
       className={styles.button}
       onClick={handleClick}
-      disabled={loading}
-      style={style}
-    >
-      {loading ? (
-        <img
-          src="https://bontelstore.ru/images/blue-loading-gif-transparent-9.gif"
-          style={{ height: 30 }}
-        />
-      ) : (
-        title
-      )}
+      disabled={disabled}
+      style={style}>
+      {title}
     </button>
   );
-}
+};
+
+Button.propTypes = {
+  title: PropTypes.string.isRequired,
+  onClick: PropTypes.func, // Make onClick optional
+  disabled: PropTypes.bool,
+  style: PropTypes.object,
+};
+
+export default Button;

@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import Link from 'next/link';
-import { useTranslations } from 'next-intl'; // Import translation hook
+import { useTranslations } from 'next-intl';
 import styles from './RegisterForm.module.css';
 import { callApi } from '../../helper';
 import { signIn } from 'next-auth/react';
@@ -11,24 +11,146 @@ import { redirect } from 'next/navigation';
 import { useLocale } from 'next-intl';
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
+import toast from 'react-hot-toast';
 
 const RegisterForm = () => {
   const [redirection, setRedirection] = useState(false);
   const [requestError, setRequestError] = useState('');
   const [countries, setCountries] = useState([]);
-  const [selectedCountryCode, setSelectedCountryCode] = useState('971'); // Track phone code
-  const [phoneNumber, setPhoneNumber] = useState(`+971`); // Track the phone number input
-  const t = useTranslations('Register'); // Initialize translations
-  const locale = useLocale(); // Get the current locale
-
+  const [selectedCountryId, setSelectedCountryId] = useState(227); // Default country set to UAE (227)
+  const [selectedCountryCode, setSelectedCountryCode] = useState('971');
+  const [phoneNumber, setPhoneNumber] = useState(`+971`);
+  const [loading, setLoading] = useState(false); // Loader state
+  const t = useTranslations('Register');
+  const locale = useLocale();
+  const isArabic = locale === 'ar';
   const {
     register,
     formState: { errors },
     handleSubmit,
-    setValue, // This will be used to programmatically set phone number
+    setValue,
   } = useForm();
 
+  const cityOptions = {
+    63: isArabic
+      ? [
+          'القاهرة',
+          'الإسكندرية',
+          'الجيزة',
+          'شبرا الخيمة',
+          'بورسعيد',
+          'السويس',
+          'المنصورة',
+          'طنطا',
+          'أسيوط',
+          'الفيوم',
+          'الإسماعيلية',
+          'الزقازيق',
+          'أسوان',
+          'دمياط',
+          'الغردقة',
+          'الأقصر',
+          'بني سويف',
+          'قنا',
+          'سوهاج',
+          'المنيا',
+        ]
+      : [
+          'Cairo',
+          'Alexandria',
+          'Giza',
+          'Shubra El Kheima',
+          'Port Said',
+          'Suez',
+          'Mansoura',
+          'Tanta',
+          'Asyut',
+          'Fayoum',
+          'Ismailia',
+          'Zagazig',
+          'Aswan',
+          'Damietta',
+          'Hurghada',
+          'Luxor',
+          'Beni Suef',
+          'Qena',
+          'Sohag',
+          'Minya',
+        ],
+    227: isArabic
+      ? [
+          'أبوظبي',
+          'دبي',
+          'الشارقة',
+          'عجمان',
+          'أم القيوين',
+          'الفجيرة',
+          'رأس الخيمة',
+          'خورفكان',
+          'كلباء',
+          'دبا الحصن',
+          'العين',
+        ]
+      : [
+          'Abu Dhabi',
+          'Dubai',
+          'Sharjah',
+          'Ajman',
+          'Umm Al Quwain',
+          'Fujairah',
+          'Ras Al Khaimah',
+          'Khor Fakkan',
+          'Kalba',
+          'Dibba Al-Hisn',
+          'Al Ain',
+        ],
+    188: isArabic
+      ? [
+          'الرياض',
+          'جدة',
+          'مكة',
+          'المدينة المنورة',
+          'الدمام',
+          'الخبر',
+          'الطائف',
+          'تبوك',
+          'حائل',
+          'أبها',
+          'نجران',
+          'جازان',
+          'القصيم',
+          'الجبيل',
+          'ينبع',
+          'الباحة',
+          'الخرج',
+          'الهفوف',
+          'خميس مشيط',
+        ]
+      : [
+          'Riyadh',
+          'Jeddah',
+          'Makkah',
+          'Madinah',
+          'Dammam',
+          'Al Khobar',
+          'Taif',
+          'Tabouk',
+          'Hail',
+          'Abha',
+          'Najran',
+          'Jazan',
+          'Al Qassim',
+          'Al Jubayl',
+          'Yanbu',
+          'Al Bahah',
+          'Al Kharj',
+          'Al Hofuf',
+          'Khamis Mushait',
+        ],
+  };
+
   const onSubmit = async (payload) => {
+    setLoading(true); // Start loader
     try {
       const { year, month } = payload;
 
@@ -49,8 +171,14 @@ const RegisterForm = () => {
 
       const birthday = `${year}-${monthNumbers[month] || '01'}-01`;
       payload.birthday = birthday;
-      payload.phone = phoneNumber;
-      payload.city = 'Dubai';
+      payload.phone = '+' + phoneNumber;
+
+      // Add the selected city only for Egypt, UAE, or KSA
+      if ([63, 227, 188].includes(parseInt(selectedCountryId))) {
+        payload.city = payload.city || cityOptions[selectedCountryId][0];
+      } else {
+        delete payload.city; // Remove city if not Egypt, UAE, or KSA
+      }
 
       const res = await callApi({
         type: 'post',
@@ -67,14 +195,26 @@ const RegisterForm = () => {
 
         if (error) {
           setRequestError(t('emailExists'));
+          toast.error(t('emailExists')); // Show toast on error
         } else {
           setRedirection(true);
         }
       } else {
-        setRequestError(res.message);
+        if (res.message === 'The email has already been taken.') {
+          setRequestError(t('emailExists'));
+          toast.error(t('emailExists'));
+        } else if (res.message === 'The phone has already been taken.') {
+          setRequestError(t('mobileExists'));
+          toast.error(t('mobileExists'));
+        } else {
+          toast.error(res.message);
+        }
       }
     } catch (error) {
       setRequestError(t('emailExists'));
+      toast.error(t('emailExists'));
+    } finally {
+      setLoading(false); // Stop loader after submission
     }
   };
 
@@ -82,10 +222,6 @@ const RegisterForm = () => {
     if (redirection) {
       redirect('/email-verification');
     }
-
-    return () => {
-      setRedirection(false);
-    };
   }, [redirection]);
 
   async function getCountries() {
@@ -101,30 +237,31 @@ const RegisterForm = () => {
     getCountries();
   }, []);
 
-  // Handle country selection and set phone code
   const handleCountryChange = (e) => {
-    const selectedCountryId = e.target.value;
+    const countryId = e.target.value;
+    setSelectedCountryId(countryId);
+
     const selectedCountry = countries.find(
-      (country) => country.id == selectedCountryId,
+      (country) => country.id == countryId,
     );
     if (selectedCountry) {
       setSelectedCountryCode(selectedCountry.phone_code);
-      setPhoneNumber(`+${selectedCountry.phone_code}`); // Update phone number with the new country code
+      setPhoneNumber(`+${selectedCountry.phone_code}`);
       setValue('phone', `+${selectedCountry.phone_code}`);
     }
   };
 
-  // Handle phone number change
-  const handlePhoneNumberChange = (e) => {
-    setValue('phone', e.target.value); // Update phone using setValue
-    console.log(e.target.value);
-  };
-
   return (
-    <div className={styles.formContainer}>
+    <div
+      className={styles.formContainer}
+      style={{ opacity: loading ? 0.5 : 1 }} // Adjust opacity while loading
+    >
       <h2 className={styles.title}>{t('signUpTitle')}</h2>
-      <br />
-      <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className={styles.form}
+        disabled={loading} // Disable form when loading
+      >
         {requestError && (
           <p role='alert' className={styles.error}>
             {requestError}
@@ -137,6 +274,7 @@ const RegisterForm = () => {
             }`}
             {...register('firstname', { required: t('firstNameRequired') })}
             placeholder={t('firstName')}
+            disabled={loading} // Disable input when loading
           />
           <input
             className={`${styles.inputHalf} ${
@@ -144,6 +282,7 @@ const RegisterForm = () => {
             }`}
             {...register('lastname', { required: t('lastNameRequired') })}
             placeholder={t('lastName')}
+            disabled={loading} // Disable input when loading
           />
         </div>
         {errors.firstname && (
@@ -152,6 +291,7 @@ const RegisterForm = () => {
         {errors.lastname && (
           <p className={styles.error}>{errors.lastname.message}</p>
         )}
+
         <input
           className={`${styles.input} ${
             errors.email ? styles.errorBorder : ''
@@ -161,8 +301,10 @@ const RegisterForm = () => {
             pattern: { value: /^\S+@\S+$/i, message: t('invalidEmail') },
           })}
           placeholder={t('email')}
+          disabled={loading} // Disable input when loading
         />
         {errors.email && <p className={styles.error}>{errors.email.message}</p>}
+
         <input
           className={`${styles.input} ${
             errors.password ? styles.errorBorder : ''
@@ -176,20 +318,13 @@ const RegisterForm = () => {
           })}
           type='password'
           placeholder={t('password')}
+          disabled={loading} // Disable input when loading
         />
         {errors.password && (
           <p className={styles.error}>{errors.password.message}</p>
         )}
+
         <label className={styles.label}>{t('phone')}</label>
-        {/* <PhoneNumberInput
-          className={`${styles.input} ${
-            errors.phone ? styles.errorBorder : ''
-          }`}
-          {...register('phone', { required: t('phoneRequired') })}
-          placeholder={`${t('phone')} (+${selectedCountryCode})`}
-          defaultCountry='AE' // Set the default country to UAE
-          onChange={(value) => setValue('phone', value)} // Update form state with the formatted value
-        /> */}
         <div dir='ltr'>
           <PhoneInput
             inputClass={styles.react_tel_input_custom}
@@ -205,20 +340,11 @@ const RegisterForm = () => {
             value={phoneNumber}
             jumpCursorToEnd={true}
             onChange={(value) => setPhoneNumber(value)}
+            disabled={loading} // Disable phone input when loading
           />
         </div>
-        {/* <input
-          dir='ltr'
-          onChange={handlePhoneNumberChange}
-          defaultValue={phoneNumber}
-          // Handle phone number changes
-          className={`${styles.input} ${
-            errors.phone ? styles.errorBorder : ''
-          }`}
-          {...register('phone', { required: t('phoneRequired') })}
-          placeholder={`${t('phone')} (+${selectedCountryCode})`} // Display phone with code
-        /> */}
         {errors.phone && <p className={styles.error}>{errors.phone.message}</p>}
+
         <div className={styles.genderContainer}>
           <label className={styles.label}>{t('genderLabel')}</label>
           <div>
@@ -227,6 +353,7 @@ const RegisterForm = () => {
               value='female'
               {...register('gender', { required: t('genderRequired') })}
               className={styles.radioInput}
+              disabled={loading} // Disable input when loading
             />
             {t('female')}
           </div>
@@ -236,6 +363,7 @@ const RegisterForm = () => {
               value='male'
               {...register('gender', { required: t('genderRequired') })}
               className={styles.radioInput}
+              disabled={loading} // Disable input when loading
             />
             {t('male')}
           </div>
@@ -243,12 +371,15 @@ const RegisterForm = () => {
         {errors.gender && (
           <p className={styles.error}>{errors.gender.message}</p>
         )}
+
         <div className={styles.dateOfBirthContainer}>
           <select
             className={`${styles.inputHalf} ${
               errors.month ? styles.errorBorder : ''
             }`}
-            {...register('month')}>
+            {...register('month')}
+            disabled={loading} // Disable input when loading
+          >
             <option value=''>{t('month')}</option>
             <option value='January'>{t('january')}</option>
             <option value='February'>{t('february')}</option>
@@ -267,9 +398,10 @@ const RegisterForm = () => {
             className={`${styles.inputHalf} ${
               errors.year ? styles.errorBorder : ''
             }`}
-            {...register('year')}>
+            {...register('year')}
+            disabled={loading} // Disable input when loading
+          >
             <option value=''>{t('year')}</option>
-            {/* Year options */}
             {Array.from({ length: 100 }, (_, i) => (
               <option key={i} value={2022 - i}>
                 {2022 - i}
@@ -277,45 +409,59 @@ const RegisterForm = () => {
             ))}
           </select>
         </div>
+
         <select
           className={`${styles.input} ${
             errors.country_id ? styles.errorBorder : ''
           }`}
           {...register('country_id', { required: t('countryRequired') })}
-          onChange={handleCountryChange} // Capture country selection
+          onChange={handleCountryChange}
+          value={selectedCountryId}
+          disabled={loading} // Disable input when loading
         >
           <option value=''>{t('citizenship')}</option>
           {countries.map((country) => (
-            <option
-              selected={country.id === 227}
-              key={country.id}
-              value={country.id}>
-              {/* Show flag and name based on locale */}
-              <img
-                src={country.icon}
-                alt={`${country.name_en} flag`}
-                style={{ width: '20px', marginRight: '8px' }}
-              />
+            <option key={country.id} value={country.id}>
               {locale === 'en' ? country.name_en : country.name_ar}
             </option>
           ))}
         </select>
+
+        {selectedCountryId &&
+          [63, 227, 188].includes(parseInt(selectedCountryId)) && (
+            <select
+              className={`${styles.input} ${
+                errors.city ? styles.errorBorder : ''
+              }`}
+              {...register('city', { required: t('cityRequired') })}
+              disabled={loading} // Disable input when loading
+            >
+              <option value=''>{t('selectCity')}</option>
+              {cityOptions[selectedCountryId].map((city, index) => (
+                <option key={index} value={city}>
+                  {city}
+                </option>
+              ))}
+            </select>
+          )}
+
         <div className={styles.termsContainer}>
           <label>
             <input
               type='checkbox'
               {...register('terms', { required: t('acceptTerms') })}
               className={styles.checkbox}
+              disabled={loading} // Disable input when loading
             />
             {t('acceptTermsText')} <Link href='/terms'>{t('terms')}</Link>
           </label>
-          <br />
           <br />
           <label>
             <input
               type='checkbox'
               {...register('privacy', { required: t('acceptPrivacy') })}
               className={styles.checkbox}
+              disabled={loading} // Disable input when loading
             />
             {t('acceptPrivacyText')} <Link href='/privacy'>{t('privacy')}</Link>
           </label>
@@ -324,9 +470,13 @@ const RegisterForm = () => {
         {errors.privacy && (
           <p className={styles.error}>{errors.privacy.message}</p>
         )}
-        <br />
-        <button className={styles.button} type='submit'>
-          {t('signUp')}
+
+        <button
+          className={styles.button}
+          type='submit'
+          disabled={loading} // Disable button when loading
+        >
+          {loading ? t('loading') : t('signUp')} {/* Show loader text */}
         </button>
       </form>
       <p className={styles.loginLink}>

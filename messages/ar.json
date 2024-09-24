@@ -8,7 +8,8 @@
         "loginFailed": "فشل تسجيل الدخول، يرجى التحقق من بريدك الإلكتروني أو كلمة المرور",
         "validEmailOrPhone": "يرجى إدخال بريد إلكتروني أو رقم هاتف صالح",
         "forgotPassword": "هل نسيت كلمة المرور؟",
-        "register": "سجل"
+        "register": "سجل",
+        "loading": "..."
     },
     "Register": {
         "signUpTitle": "سجل في فوتلي",
@@ -28,10 +29,12 @@
         "female": "أنثى",
         "male": "ذكر",
         "genderRequired": "الجنس مطلوب",
+        "cityRequired": "المدينة مطلوبة",
         "month": "شهر",
         "year": "سنة",
         "countryRequired": "البلد مطلوب",
-        "citizenship": "ما هي جنسيتك؟",
+        "citizenship": "أين تقيم الآن ؟",
+        "selectCity": "في أي مدينة تسكن ؟",
         "acceptTerms": "يجب أن تقبل الشروط",
         "acceptTermsText": "لقد قرأت وأقبل",
         "terms": "الشروط والأحكام",
@@ -41,7 +44,8 @@
         "signUp": "سجل",
         "alreadyHaveAccount": "هل لديك حساب بالفعل؟",
         "logIn": "تسجيل الدخول",
-        "emailExists": "البريد الإلكتروني / رقم الهاتف موجود بالفعل",
+        "emailExists": "البريد الإلكتروني موجود بالفعل",
+        "mobileExists": "رقم الهاتف موجود بالفعل",
         "january": "يناير",
         "february": "فبراير",
         "march": "مارس",
@@ -53,14 +57,16 @@
         "september": "سبتمبر",
         "october": "أكتوبر",
         "november": "نوفمبر",
-        "december": "ديسمبر"
+        "december": "ديسمبر",
+        "loading": "..."
     },
     "ForgotPassword": {
         "forgotPasswordTitle": "هل نسيت كلمة المرور؟",
         "emailRequired": "البريد الإلكتروني مطلوب",
         "invalidEmail": "عنوان البريد الإلكتروني غير صالح",
         "emailPlaceholder": "أدخل بريدك الإلكتروني",
-        "resetPasswordButton": "إعادة تعيين كلمة المرور"
+        "resetPasswordButton": "إعادة تعيين كلمة المرور",
+        "loading": "..."
     },
     "OtpVerification": {
         "enterCode": "أدخل الرمز المكون من 6 أرقام المرسل إلى",
@@ -69,7 +75,8 @@
         "otpVerified": "تم التحقق من الرمز بنجاح!",
         "invalidOtp": "رمز غير صالح. حاول مرة أخرى.",
         "submit": "إرسال",
-        "resendOtp": "إعادة إرسال الرمز"
+        "resendOtp": "إعادة إرسال الرمز",
+        "loading": "..."
     },
     "HeroBanner": {
         "heroImageAlt": "صورة البطل",

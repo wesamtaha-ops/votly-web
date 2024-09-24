@@ -8,7 +8,8 @@
         "loginFailed": "Login failed, please check your email or password",
         "validEmailOrPhone": "Please enter a valid email or phone number",
         "forgotPassword": "Forgot your password?",
-        "register": "Register"
+        "register": "Register",
+        "loading": "..."
     },
     "Register": {
         "signUpTitle": "Sign up for Votly",
@@ -31,7 +32,9 @@
         "month": "Month",
         "year": "Year",
         "countryRequired": "Country is required",
-        "citizenship": "What's your citizenship?",
+        "cityRequired": "City is required",
+        "citizenship": "Where do you live?",
+        "selectCity": "Select City",
         "acceptTerms": "You must accept the terms",
         "acceptTermsText": "I accept the",
         "terms": "Terms and Conditions",
@@ -53,14 +56,16 @@
         "september": "September",
         "october": "October",
         "november": "November",
-        "december": "December"
+        "december": "December",
+        "loading": "..."
     },
     "ForgotPassword": {
         "forgotPasswordTitle": "Forgot your password?",
         "emailRequired": "Email is required",
         "invalidEmail": "Invalid email address",
         "emailPlaceholder": "Enter your email",
-        "resetPasswordButton": "Reset Password"
+        "resetPasswordButton": "Reset Password",
+        "loading": "..."
     },
     "OtpVerification": {
         "enterCode": "Enter the 6-digit code sent to",
@@ -69,7 +74,8 @@
         "otpVerified": "OTP verified successfully!",
         "invalidOtp": "Invalid OTP. Please try again.",
         "submit": "Submit",
-        "resendOtp": "Resend Code"
+        "resendOtp": "Resend Code",
+        "loading": "..."
     },
     "HeroBanner": {
         "heroImageAlt": "Hero Image",

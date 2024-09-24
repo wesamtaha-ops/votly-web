@@ -9,6 +9,7 @@ import { Toaster } from 'react-hot-toast';
 import { NextIntlClientProvider } from 'next-intl';
 import arMessages from './../../../messages/ar.json';
 import enMessages from './../../../messages/en.json';
+import Head from 'next/head';
 
 const inter = Inter({ subsets: ['latin'] });
 const almarai = Almarai({
@@ -31,15 +32,17 @@ export default function RootLayout({ children }) {
 
   return (
     <html lang={locale} dir={isRTL ? 'rtl' : 'ltr'}>
-      <link rel='preconnect' href='https://fonts.googleapis.com'></link>
-      <link
-        rel='preconnect'
-        href='https://fonts.gstatic.com'
-        crossorigin></link>
-      <link
-        href='https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&display=swap'
-        rel='stylesheet'></link>
-      {/* Set the direction dynamically */}
+      <Head>
+        <link rel='preconnect' href='https://fonts.googleapis.com'></link>
+        <link
+          rel='preconnect'
+          href='https://fonts.gstatic.com'
+          crossorigin></link>
+        <link
+          href='https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&display=swap'
+          rel='stylesheet'></link>
+        {/* Set the direction dynamically */}
+      </Head>
       <body className={isRTL ? almarai.className : inter.className}>
         <SessionProvider>
           <NextIntlClientProvider locale={locale} messages={messages[locale]}>
