@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import styles from './LoginForm.module.css';
 import { useForm } from 'react-hook-form';
@@ -11,7 +11,6 @@ import Button from '../Shared/Button';
 import toast from 'react-hot-toast'; // Import toast for notifications
 
 const Login = () => {
-  const [requestError, setRequestError] = useState('');
   const [loading, setLoading] = useState(false); // Loader state
   const searchParams = useSearchParams();
   const t = useTranslations('Login'); // Initialize translations
@@ -21,29 +20,41 @@ const Login = () => {
     formState: { errors },
     handleSubmit,
     setError,
+    clearErrors,
+    resetField,
   } = useForm();
 
   const onSubmit = async (payload) => {
     setLoading(true); // Start loading
+    clearErrors(); // Clear any previous errors before a new request
+
     try {
-      const { error } = await signIn('credentials', {
+      const result = await signIn('credentials', {
         email: payload.email,
         password: payload.password,
         redirect: false,
       });
 
-      if (error) {
+      if (result.error) {
         setError('submit', {
           message: t('loginFailed'),
         });
         toast.error(t('loginFailed')); // Show error toast
+        setTimeout(() => {
+          clearErrors(); // Clear the error after 5 seconds
+        }, 3000);
       } else {
         const callbackUrl = searchParams.get('callbackUrl');
         window.location.href = callbackUrl ? callbackUrl : '/';
       }
     } catch (error) {
-      setRequestError(t('loginFailed'));
+      setError('submit', {
+        message: t('loginFailed'),
+      });
       toast.error(t('loginFailed')); // Show error toast
+      setTimeout(() => {
+        clearErrors(); // Clear the error after 5 seconds
+      }, 3000);
     } finally {
       setLoading(false); // Stop loading
     }
@@ -84,9 +95,10 @@ const Login = () => {
           onSubmit={handleSubmit(onSubmit)}
           onKeyPress={handleKeyPress} // Listen for "Enter" keypress
         >
-          {requestError && (
+          {/* Display request error */}
+          {errors.submit && (
             <p role='alert' className={styles.error}>
-              {requestError}
+              {errors.submit.message}
             </p>
           )}
 
