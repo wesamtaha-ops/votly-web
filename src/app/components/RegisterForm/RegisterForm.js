@@ -50,6 +50,7 @@ const RegisterForm = () => {
       const birthday = `${year}-${monthNumbers[month] || '01'}-01`;
       payload.birthday = birthday;
       payload.phone = phoneNumber;
+      payload.city = 'Dubai';
 
       const res = await callApi({
         type: 'post',
