@@ -7,7 +7,7 @@ import toast from "react-hot-toast";
 import { useSession } from "next-auth/react";
 import { callApi } from "../../helper";
 import { useRouter } from "next/navigation";
-import { useTranslations } from "next-intl"; // Import for translations
+import { useLocale, useTranslations } from "next-intl"; // Import for translations
 import {
   auth,
   RecaptchaVerifier,
@@ -26,6 +26,7 @@ const OtpVerification = ({ contactInfo, type }) => {
   const [loading, setLoading] = useState(false); // Loader state
   const [timer, setTimer] = useState(0); // Timer state
   const { data: session, update: updateSession } = useSession();
+  const lang = useLocale(); // Get the current locale
   const router = useRouter();
 
   const reloadSession = () => {
@@ -72,23 +73,28 @@ const OtpVerification = ({ contactInfo, type }) => {
   useEffect(() => {
     const storedTime = localStorage.getItem("otpResendTime");
     const currentTime = new Date().getTime();
+
     if (storedTime && currentTime < storedTime) {
-      // Calculate remaining time
       const remainingTime = Math.ceil((storedTime - currentTime) / 1000);
       setTimer(remainingTime);
+    }
 
-      // Start countdown
-      const interval = setInterval(() => {
-        const newTime = remainingTime - 1;
-        setTimer(newTime);
-        if (newTime <= 0) {
-          clearInterval(interval);
+    const interval = setInterval(() => {
+      const storedTime = localStorage.getItem("otpResendTime");
+      if (storedTime) {
+        const currentTime = new Date().getTime();
+        const remainingTime = Math.ceil((storedTime - currentTime) / 1000);
+
+        if (remainingTime > 0) {
+          setTimer(remainingTime);
+        } else {
+          setTimer(0);
           localStorage.removeItem("otpResendTime");
         }
-      }, 1000);
+      }
+    }, 1000);
 
-      return () => clearInterval(interval);
-    }
+    return () => clearInterval(interval);
   }, []);
 
   const resendOtp = async () => {
