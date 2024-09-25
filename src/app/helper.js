@@ -54,8 +54,6 @@ export async function callApi({
 }
 
 export async function callVotlyApi({ type, url, data = [], userToken, lang }) {
-  console.log("url123", url);
-  console.log("lang123", lang);
   const response = await axios(`${process.env.BACKEND_BASE_URL_API}${url}`, {
     method: type,
     data,
