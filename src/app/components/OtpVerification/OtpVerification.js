@@ -107,6 +107,7 @@ const OtpVerification = ({ contactInfo, type }) => {
           type: "post",
           url: "resendOtp",
           userToken: session?.id,
+          lang: lang,
         });
         toast.success(t("otpSent"));
       } else {
