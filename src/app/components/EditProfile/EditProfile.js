@@ -18,6 +18,7 @@ const EditProfile = ({ user, userToken, updateSession }) => {
       'https://t3.ftcdn.net/jpg/05/16/27/58/360_F_516275801_f3Fsp17x6HQK0xQgDQEELoTuERO4SsWV.jpg',
   );
   const [imageFile, setImageFile] = useState();
+  const [loading, setLoading] = useState(false); // Add loading state
 
   const t = useTranslations('EditProfile'); // Initialize translations
 
@@ -56,41 +57,52 @@ const EditProfile = ({ user, userToken, updateSession }) => {
   };
 
   const onSubmitMainInfo = async (data) => {
-    const res = await callApi({
-      type: 'post',
-      url: 'profileUpdate',
-      data: data,
-      userToken: userToken,
-    });
+    setLoading(true); // Start loading
+    try {
+      const res = await callApi({
+        type: 'post',
+        url: 'profileUpdate',
+        data: data,
+        userToken: userToken,
+      });
 
-    if (res.status == '1') {
-      await updateSession({ user: res.user });
-      reloadSession();
-      toast(t('profileUpdated'));
-    } else {
-      toast(t('somethingWentWrong'));
+      if (res.status == '1') {
+        await updateSession({ user: res.user });
+        reloadSession();
+        toast(t('profileUpdated'));
+      } else {
+        toast(t('somethingWentWrong'));
+      }
+    } finally {
+      setLoading(false); // Stop loading
     }
   };
 
   const onSubmitPassword = async (data) => {
-    const res = await callApi({
-      type: 'post',
-      url: 'passwordUpdate',
-      data: {
-        password: data.password,
-        email: user.email,
-      },
-      userToken: userToken,
-    });
+    setLoading(true); // Start loading
+    try {
+      const res = await callApi({
+        type: 'post',
+        url: 'passwordUpdate',
+        data: {
+          password: data.password,
+          email: user.email,
+        },
+        userToken: userToken,
+      });
 
-    if (res.status == '1') {
-      toast(t('passwordUpdated'));
-    } else {
-      toast(t('somethingWentWrong'));
+      if (res.status == '1') {
+        toast(t('passwordUpdated'));
+      } else {
+        toast(t('somethingWentWrong'));
+      }
+    } finally {
+      setLoading(false); // Stop loading
     }
   };
 
   const onSubmitProfileImage = async (data) => {
+    setLoading(true); // Start loading
     try {
       const formData = new FormData();
       formData.append('image', imageFile);
@@ -113,6 +125,8 @@ const EditProfile = ({ user, userToken, updateSession }) => {
       }
     } catch (error) {
       toast(t('somethingWentWrong'));
+    } finally {
+      setLoading(false); // Stop loading
     }
   };
 
@@ -127,6 +141,7 @@ const EditProfile = ({ user, userToken, updateSession }) => {
 
   return (
     <div className={styles.editProfileContainer}>
+      {loading && <div className={styles.loader}>Loading...</div>} {/* Loader */}
       <h2 className={styles.title}>{t('editProfile')}</h2>
 
       <div className={styles.cardsGrid}>
@@ -145,6 +160,7 @@ const EditProfile = ({ user, userToken, updateSession }) => {
                 {...register('firstname', {
                   required: t('firstNameRequired'),
                 })}
+                disabled={loading} // Disable input during loading
               />
               {errors.firstname && (
                 <p className={styles.error}>{errors.firstname.message}</p>
@@ -158,6 +174,7 @@ const EditProfile = ({ user, userToken, updateSession }) => {
                   errors.lastname ? styles.errorBorder : ''
                 }`}
                 {...register('lastname', { required: t('lastNameRequired') })}
+                disabled={loading} // Disable input during loading
               />
               {errors.lastname && (
                 <p className={styles.error}>{errors.lastname.message}</p>
@@ -171,6 +188,7 @@ const EditProfile = ({ user, userToken, updateSession }) => {
                   errors.username ? styles.errorBorder : ''
                 }`}
                 {...register('username', { required: t('usernameRequired') })}
+                disabled={loading} // Disable input during loading
               />
               {errors.username && (
                 <p className={styles.error}>{errors.username.message}</p>
@@ -190,6 +208,7 @@ const EditProfile = ({ user, userToken, updateSession }) => {
                     message: t('invalidEmail'),
                   },
                 })}
+                disabled={loading} // Disable input during loading
               />
               {errors.email && (
                 <p className={styles.error}>{errors.email.message}</p>
@@ -203,6 +222,7 @@ const EditProfile = ({ user, userToken, updateSession }) => {
                   errors.phone ? styles.errorBorder : ''
                 }`}
                 {...register('phone', { required: t('phoneRequired') })}
+                disabled={loading} // Disable input during loading
               />
               {errors.phone && (
                 <p className={styles.error}>{errors.phone.message}</p>
@@ -217,12 +237,17 @@ const EditProfile = ({ user, userToken, updateSession }) => {
                   errors.birthday ? styles.errorBorder : ''
                 }`}
                 {...register('birthday')}
+                disabled={loading} // Disable input during loading
               />
             </div>
 
             <div className={styles.formGroup}>
               <label>{t('gender')}</label>
-              <select className={styles.input} {...register('gender')}>
+              <select
+                className={styles.input}
+                {...register('gender')}
+                disabled={loading} // Disable input during loading
+              >
                 <option value='male'>{t('male')}</option>
                 <option value='female'>{t('female')}</option>
               </select>
@@ -235,6 +260,7 @@ const EditProfile = ({ user, userToken, updateSession }) => {
                   errors.bio ? styles.errorBorder : ''
                 }`}
                 {...register('bio')}
+                disabled={loading} // Disable input during loading
               />
             </div>
 
@@ -242,6 +268,7 @@ const EditProfile = ({ user, userToken, updateSession }) => {
               style={{ fontFamily: 'Almarai' }}
               title={t('saveChanges')}
               onClick={handleSubmit(onSubmitMainInfo)}
+              disabled={loading} // Disable button during loading
             />
           </form>
         </div>
@@ -260,7 +287,7 @@ const EditProfile = ({ user, userToken, updateSession }) => {
             </div>
           </div>
           <Link href='/complete-profile'>
-            <button className={styles.button}>
+            <button className={styles.button} disabled={loading}>
               {user.is_profile_completed === 1
                 ? t('editCompleteProfile')
                 : t('completeProfile')}
@@ -285,6 +312,7 @@ const EditProfile = ({ user, userToken, updateSession }) => {
                 className={styles.fileInput}
                 {...profileImageRegister('profileImage')}
                 onChange={handleImageChange}
+                disabled={loading} // Disable input during loading
               />
               <span className={styles.editIcon}>✎</span>
             </label>
@@ -299,6 +327,7 @@ const EditProfile = ({ user, userToken, updateSession }) => {
             }}
             title={t('updateImage')}
             onClick={profileImageHandleSubmit(onSubmitProfileImage)}
+            disabled={loading} // Disable button during loading
           />
         </div>
 
@@ -322,6 +351,7 @@ const EditProfile = ({ user, userToken, updateSession }) => {
                     message: t('passwordMinLength'),
                   },
                 })}
+                disabled={loading} // Disable input during loading
               />
               {passwordErrors.password && (
                 <p className={styles.error}>
@@ -343,6 +373,7 @@ const EditProfile = ({ user, userToken, updateSession }) => {
                     value === passwordWatch('password') ||
                     t('passwordMismatch'),
                 })}
+                disabled={loading} // Disable input during loading
               />
               {passwordErrors.confirmPassword && (
                 <p className={styles.error}>
@@ -355,6 +386,7 @@ const EditProfile = ({ user, userToken, updateSession }) => {
               style={{ fontFamily: 'Almarai' }}
               title={t('changePassword')}
               onClick={passwordHandleSubmit(onSubmitPassword)}
+              disabled={loading} // Disable button during loading
             />
           </form>
         </div>
