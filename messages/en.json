@@ -1,323 +1,324 @@
 {
-    "Login": {
-        "logIn": "Log in",
-        "emailOrPhone": "Phone number or email",
-        "emailRequired": "Email Address is required",
-        "password": "Password",
-        "passwordRequired": "Password is required",
-        "loginFailed": "Login failed, please check your email or password",
-        "validEmailOrPhone": "Please enter a valid email or phone number",
-        "forgotPassword": "Forgot your password?",
-        "register": "Register",
-        "loading": "..."
+  "Login": {
+    "logIn": "Log in",
+    "emailOrPhone": "Phone number or email",
+    "emailRequired": "Email Address is required",
+    "password": "Password",
+    "passwordRequired": "Password is required",
+    "loginFailed": "Login failed, please check your email or password",
+    "validEmailOrPhone": "Please enter a valid email or phone number",
+    "forgotPassword": "Forgot your password?",
+    "register": "Register",
+    "loading": "..."
+  },
+  "Register": {
+    "signUpTitle": "Sign up for Votly",
+    "email": "Email",
+    "emailRequired": "Email is required",
+    "invalidEmail": "Invalid email address",
+    "password": "Password",
+    "passwordRequired": "Password is required",
+    "passwordMinLength": "Password must be at least 6 characters",
+    "firstName": "First name",
+    "firstNameRequired": "First name is required",
+    "lastName": "Last name",
+    "lastNameRequired": "Last name is required",
+    "phone": "Phone",
+    "phoneRequired": "Phone is required",
+    "genderLabel": "Are you…?",
+    "female": "Female",
+    "male": "Male",
+    "genderRequired": "Gender is required",
+    "month": "Month",
+    "year": "Year",
+    "countryRequired": "Country is required",
+    "cityRequired": "City is required",
+    "citizenship": "Where do you live?",
+    "selectCity": "Select City",
+    "acceptTerms": "You must accept the terms",
+    "acceptTermsText": "I accept the",
+    "terms": "Terms and Conditions",
+    "acceptPrivacy": "You must acknowledge the privacy policy",
+    "acceptPrivacyText": "I acknowledge the",
+    "privacy": "Privacy Policy",
+    "signUp": "Sign up",
+    "alreadyHaveAccount": "Already have an account?",
+    "logIn": "Log in",
+    "emailExists": "Email is already exist",
+    "mobileExists": "Mobile number is already exist",
+    "january": "January",
+    "february": "February",
+    "march": "March",
+    "april": "April",
+    "may": "May",
+    "june": "June",
+    "july": "July",
+    "august": "August",
+    "september": "September",
+    "october": "October",
+    "november": "November",
+    "december": "December",
+    "loading": "..."
+  },
+  "ForgotPassword": {
+    "forgotPasswordTitle": "Forgot your password?",
+    "emailRequired": "Email is required",
+    "invalidEmail": "Invalid email address",
+    "emailPlaceholder": "Enter your email",
+    "resetPasswordButton": "Reset Password",
+    "loading": "..."
+  },
+  "OtpVerification": {
+    "enterCode": "Enter the 6-digit code sent to",
+    "otpSent": "OTP has been sent successfully",
+    "enterValidOtp": "Enter valid otp",
+    "otpVerified": "OTP verified successfully!",
+    "invalidOtp": "Invalid OTP. Please try again.",
+    "submit": "Submit",
+    "resendOtp": "Resend Code",
+    "resendOtpIn": "Resend OTP in",
+    "loading": "..."
+  },
+  "HeroBanner": {
+    "heroImageAlt": "Hero Image",
+    "title": "Make Your Voice Heard, Shape the Future",
+    "description": "Influence the future of society, brands, and the world around you with Votly. Share your opinions and earn rewards in return.",
+    "ctaButton": "Join Us Today",
+    "ctaButtonLogin": "Login",
+    "ctaButtonDashboard": "Get Started Now"
+  },
+  "InfoSection": {
+    "title": "Share Your Views, Earn Rewards",
+    "impactAlt": "Impact",
+    "impactTitle": "Make an Impact",
+    "impactDescription": "Your input answers pressing questions and influences key decisions.",
+    "differenceAlt": "Difference",
+    "differenceTitle": "See the Difference You Can Make",
+    "differenceDescription": "Your opinion matters.",
+    "rewardsAlt": "Rewards",
+    "rewardsTitle": "Earn Rewards That Matter to You",
+    "rewardsDescription": "Choose from a variety of rewards, including gift cards."
+  },
+  "FeaturesList": {
+    "title": "Unlocking Benefits for Individuals, Corporates, and Governments",
+    "subtitle": "VOTLY offers a versatile platform that caters to the unique needs of individuals, businesses, and government entities...",
+    "feature1": {
+      "title": "Market and Research Tool",
+      "description": "Ideal for market research and various studies, empowering users to gather valuable data and insights to drive informed decisions."
     },
-    "Register": {
-        "signUpTitle": "Sign up for Votly",
-        "email": "Email",
-        "emailRequired": "Email is required",
-        "invalidEmail": "Invalid email address",
-        "password": "Password",
-        "passwordRequired": "Password is required",
-        "passwordMinLength": "Password must be at least 6 characters",
-        "firstName": "First name",
-        "firstNameRequired": "First name is required",
-        "lastName": "Last name",
-        "lastNameRequired": "Last name is required",
-        "phone": "Phone",
-        "phoneRequired": "Phone is required",
-        "genderLabel": "Are you…?",
-        "female": "Female",
-        "male": "Male",
-        "genderRequired": "Gender is required",
-        "month": "Month",
-        "year": "Year",
-        "countryRequired": "Country is required",
-        "cityRequired": "City is required",
-        "citizenship": "Where do you live?",
-        "selectCity": "Select City",
-        "acceptTerms": "You must accept the terms",
-        "acceptTermsText": "I accept the",
-        "terms": "Terms and Conditions",
-        "acceptPrivacy": "You must acknowledge the privacy policy",
-        "acceptPrivacyText": "I acknowledge the",
-        "privacy": "Privacy Policy",
-        "signUp": "Sign up",
-        "alreadyHaveAccount": "Already have an account?",
-        "logIn": "Log in",
-        "emailExists": "Email is already exist",
-        "mobileExists": "Mobile number is already exist",
-        "january": "January",
-        "february": "February",
-        "march": "March",
-        "april": "April",
-        "may": "May",
-        "june": "June",
-        "july": "July",
-        "august": "August",
-        "september": "September",
-        "october": "October",
-        "november": "November",
-        "december": "December",
-        "loading": "..."
+    "feature2": {
+      "title": "Individuals",
+      "description": "Engage with a diverse community, sharing opinions and gaining insights into current trends and public sentiment."
     },
-    "ForgotPassword": {
-        "forgotPasswordTitle": "Forgot your password?",
-        "emailRequired": "Email is required",
-        "invalidEmail": "Invalid email address",
-        "emailPlaceholder": "Enter your email",
-        "resetPasswordButton": "Reset Password",
-        "loading": "..."
+    "feature3": {
+      "title": "Corporates",
+      "description": "Conduct efficient market research, identify consumer preferences, and boost brand engagement through interactive content."
     },
-    "OtpVerification": {
-        "enterCode": "Enter the 6-digit code sent to",
-        "otpSent": "OTP has been sent successfully",
-        "enterValidOtp": "Enter valid otp",
-        "otpVerified": "OTP verified successfully!",
-        "invalidOtp": "Invalid OTP. Please try again.",
-        "submit": "Submit",
-        "resendOtp": "Resend Code",
-        "loading": "..."
+    "feature4": {
+      "title": "Governments",
+      "description": "Gauge public opinion, encourage civic participation, and gather insights for data-driven decision-making."
     },
-    "HeroBanner": {
-        "heroImageAlt": "Hero Image",
-        "title": "Make Your Voice Heard, Shape the Future",
-        "description": "Influence the future of society, brands, and the world around you with Votly. Share your opinions and earn rewards in return.",
-        "ctaButton": "Join Us Today",
-        "ctaButtonLogin": "Login",
-        "ctaButtonDashboard": "Get Started Now"
+    "feature5": {
+      "title": "Collaborative Environment",
+      "description": "Foster partnerships between individuals, businesses, and governments to drive innovation and positive change."
     },
-    "InfoSection": {
-        "title": "Share Your Views, Earn Rewards",
-        "impactAlt": "Impact",
-        "impactTitle": "Make an Impact",
-        "impactDescription": "Your input answers pressing questions and influences key decisions.",
-        "differenceAlt": "Difference",
-        "differenceTitle": "See the Difference You Can Make",
-        "differenceDescription": "Your opinion matters.",
-        "rewardsAlt": "Rewards",
-        "rewardsTitle": "Earn Rewards That Matter to You",
-        "rewardsDescription": "Choose from a variety of rewards, including gift cards."
+    "feature6": {
+      "title": "Comprehensive Research Platform",
+      "description": "Combining AI-generated content, user-created polls, and advanced analytics, VOTLY offers a powerful solution for diverse research needs."
     },
-    "FeaturesList": {
-        "title": "Unlocking Benefits for Individuals, Corporates, and Governments",
-        "subtitle": "VOTLY offers a versatile platform that caters to the unique needs of individuals, businesses, and government entities...",
-        "feature1": {
-            "title": "Market and Research Tool",
-            "description": "Ideal for market research and various studies, empowering users to gather valuable data and insights to drive informed decisions."
-        },
-        "feature2": {
-            "title": "Individuals",
-            "description": "Engage with a diverse community, sharing opinions and gaining insights into current trends and public sentiment."
-        },
-        "feature3": {
-            "title": "Corporates",
-            "description": "Conduct efficient market research, identify consumer preferences, and boost brand engagement through interactive content."
-        },
-        "feature4": {
-            "title": "Governments",
-            "description": "Gauge public opinion, encourage civic participation, and gather insights for data-driven decision-making."
-        },
-        "feature5": {
-            "title": "Collaborative Environment",
-            "description": "Foster partnerships between individuals, businesses, and governments to drive innovation and positive change."
-        },
-        "feature6": {
-            "title": "Comprehensive Research Platform",
-            "description": "Combining AI-generated content, user-created polls, and advanced analytics, VOTLY offers a powerful solution for diverse research needs."
-        },
-        "imageAlt": "Votly Mobile Interface"
+    "imageAlt": "Votly Mobile Interface"
+  },
+  "FAQ": {
+    "title": "Frequently Asked Questions",
+    "imageAlt": "FAQ Illustration",
+    "faq1": {
+      "question": "What is Votly?",
+      "answer": "Votly is a social polling app that allows users to create, discover, and participate in AI-generated and user-created polls, fostering a community for sharing opinions and insights."
     },
-    "FAQ": {
-        "title": "Frequently Asked Questions",
-        "imageAlt": "FAQ Illustration",
-        "faq1": {
-            "question": "What is Votly?",
-            "answer": "Votly is a social polling app that allows users to create, discover, and participate in AI-generated and user-created polls, fostering a community for sharing opinions and insights."
-        },
-        "faq2": {
-            "question": "How do I create a poll on Votly?",
-            "answer": "To create a poll, simply log into your account, navigate to the 'Create Poll' section, and follow the instructions to set up your poll."
-        },
-        "faq3": {
-            "question": "How does the AI-generated content feature work?",
-            "answer": "Our AI technology converts news articles and trending topics into interactive polls, allowing users to engage with content in a new way."
-        },
-        "faq4": {
-            "question": "How does Votly's personalized feed algorithm work?",
-            "answer": "Votly's algorithm curates a personalized feed of polls based on your past interactions, preferences, and interests."
-        },
-        "faq5": {
-            "question": "How can I earn and redeem coins in Votly?",
-            "answer": "You can earn coins by participating in polls, completing surveys, and engaging with the community. Coins can be redeemed for rewards such as gift cards, cash transfers, or donations to charities."
-        },
-        "faq6": {
-            "question": "How do I share my polls with friends or on social media?",
-            "answer": "Once you create a poll, you can easily share it with your friends via social media platforms or through a direct link."
-        },
-        "faq7": {
-            "question": "Can I use Votly for market research or other types of research?",
-            "answer": "Yes, Votly is an excellent platform for market research. Businesses and researchers can create targeted polls to gather insights from a diverse audience."
-        },
-        "faq8": {
-            "question": "How does Votly ensure data privacy and security?",
-            "answer": "Votly takes data privacy and security seriously. We use industry-standard encryption and follow strict privacy policies to protect your data."
-        }
+    "faq2": {
+      "question": "How do I create a poll on Votly?",
+      "answer": "To create a poll, simply log into your account, navigate to the 'Create Poll' section, and follow the instructions to set up your poll."
     },
-    "Footer": {
-        "title": "VOTLY",
-        "description": "Votly is a social app on a mission to bring the polling industry into the 21st century.",
-        "usefulLinks": "Useful Links",
-        "link1": {
-            "href": "/about",
-            "title": "About Us"
-        },
-        "link2": {
-            "href": "/privacy",
-            "title": "Privacy Policy"
-        },
-        "link3": {
-            "href": "/cookies",
-            "title": "Cookies Policy"
-        },
-        "link4": {
-            "href": "/terms",
-            "title": "Terms and Conditions"
-        },
-        "downloadApp": "Download Our App",
-        "googlePlay": "Google Play",
-        "appStore": "App Store",
-        "copyright": "© 2024 The Blockchain Labs. All Rights Reserved."
+    "faq3": {
+      "question": "How does the AI-generated content feature work?",
+      "answer": "Our AI technology converts news articles and trending topics into interactive polls, allowing users to engage with content in a new way."
     },
-    "Header": {
-        "surveys": "Surveys",
-        "rewards": "Rewards",
-        "myProfile": "My Profile",
-        "login": "Login",
-        "register": "Register",
-        "logout": "Logout",
-        "language": "Language"
+    "faq4": {
+      "question": "How does Votly's personalized feed algorithm work?",
+      "answer": "Votly's algorithm curates a personalized feed of polls based on your past interactions, preferences, and interests."
     },
-    "Surveys": {
-        "earnBySurveys": "Earn money by completing surveys",
-        "surveyDescription": "Paid surveys are a convenient side hustle for anyone who wants to earn a little extra. Earn points for each survey you complete and use them to get cash or gift cards.",
-        "mins": "mins",
-        "currency": "$",
-        "takeSurvey": "Take Survey",
-        "timeIconAlt": "Time Icon",
-        "priceIconAlt": "Price Icon"
+    "faq5": {
+      "question": "How can I earn and redeem coins in Votly?",
+      "answer": "You can earn coins by participating in polls, completing surveys, and engaging with the community. Coins can be redeemed for rewards such as gift cards, cash transfers, or donations to charities."
     },
-    "Profile": {
-        "myProfile": "My Profile",
-        "mainInfo": "Main Information",
-        "firstName": "First Name",
-        "lastName": "Last Name",
-        "username": "Username",
-        "email": "Email",
-        "phone": "Phone",
-        "birthday": "Birthday",
-        "gender": "Gender",
-        "male": "Male",
-        "female": "Female",
-        "bio": "Bio",
-        "editProfile": "Edit Profile",
-        "profileCompletion": "Profile Completion",
-        "profileCompletionPercentage": "Complete",
-        "completeProfile": "Complete Profile",
-        "editCompleteProfile": "Edit Personal Data",
-        "profileImage": "Profile Image",
-        "profileImageAlt": "Profile Image"
+    "faq6": {
+      "question": "How do I share my polls with friends or on social media?",
+      "answer": "Once you create a poll, you can easily share it with your friends via social media platforms or through a direct link."
     },
-    "EditProfile": {
-        "editProfile": "Edit Profile",
-        "mainInfo": "Main Information",
-        "firstName": "First Name",
-        "firstNameRequired": "First name is required",
-        "lastName": "Last Name",
-        "lastNameRequired": "Last name is required",
-        "username": "Username",
-        "usernameRequired": "Username is required",
-        "email": "Email",
-        "emailRequired": "Email is required",
-        "invalidEmail": "Invalid email address",
-        "phone": "Phone",
-        "phoneRequired": "Phone number is required",
-        "birthday": "Birthday",
-        "gender": "Gender",
-        "male": "Male",
-        "female": "Female",
-        "bio": "Bio",
-        "saveChanges": "Save Changes",
-        "profileCompletion": "Profile Completion",
-        "profileCompletionPercentage": "Complete",
-        "completeProfile": "Complete Profile",
-        "editCompleteProfile": "Edit Personal Data",
-        "changeProfileImage": "Change Profile Image",
-        "profileImage": "Profile Image",
-        "updateImage": "Update Image",
-        "changePassword": "Change Password",
-        "newPassword": "New Password",
-        "confirmPassword": "Confirm Password",
-        "confirmPasswordRequired": "Please confirm your password",
-        "passwordRequired": "Password is required",
-        "passwordMinLength": "Password must be at least 6 characters",
-        "passwordMismatch": "Passwords do not match",
-        "passwordUpdated": "Password has been updated successfully",
-        "profileUpdated": "Profile has been updated successfully",
-        "profileImageUpdated": "Profile image has been updated successfully",
-        "somethingWentWrong": "Something went wrong! Please try again later."
+    "faq7": {
+      "question": "Can I use Votly for market research or other types of research?",
+      "answer": "Yes, Votly is an excellent platform for market research. Businesses and researchers can create targeted polls to gather insights from a diverse audience."
     },
-    "Rewards": {
-        "yourBalance": "Your Balance",
-        "minimumPoints": "Minimum Points required",
-        "filterByCategory": "Filter by Category",
-        "allCategories": "All Categories",
-        "chooseGift": "Choose your Gift",
-        "featuredRewards": "Featured Rewards",
-        "price": "Value",
-        "redeem": "Redeem",
-        "notEnoughBalance": "Not Enough Balance",
-        "submitting": "Submitting ...",
-        "redeemTitle": "Do you want to redeem?",
-        "redeemed": "Redeemed! you will receive your reward on your email",
-        "noRedeem": "No redeem",
-        "noRewardsAvailable": "No rewards available",
-        "noRewardsAvailableTitle": "No rewards available yet in your country",
-        "noRewardsMessage": "We're currently working to bring rewards to your location. Please check back soon!",
-        "fashion": "Fashion & Accessories",
-        "jewellery": "Jewellery",
-        "kidsFun": "Kids & Fun",
-        "beautyCosmetics": "Beauty & Cosmetics",
-        "mobileRecharge": "Mobile Recharge",
-        "restaurantsCafes": "Restaurants & Cafes",
-        "hotelsTravel": "Hotels & Travel",
-        "spasFitness": "Spas & Fitness",
-        "experiencesEntertainment": "Experiences & Entertainment",
-        "electronics": "Electronics",
-        "hypermarkets": "Hypermarkets",
-        "cinemas": "Cinemas",
-        "shoppingMalls": "Shopping Malls",
-        "hobbiesMore": "Hobbies & More",
-        "sportswearEquipment": "Sportswear & Equipment",
-        "gaming": "Gaming",
-        "softwareSubscriptions": "Software Subscriptions",
-        "onlineShopping": "Online Shopping",
-        "foodDelivery": "Food Delivery",
-        "homeGarden": "Home & Garden",
-        "digitalEntertainment": "Digital Entertainment"
-    },
-    "ProfileCompletionForm": {
-        "beforeContinue": "Before you continue...",
-        "moreDetails": "We need a few more details to complete your profile",
-        "complete": "Complete",
-        "nationality": "Nationality",
-        "residence": "Residence",
-        "householdIncome": "Household Income",
-        "lessThan1500": "Less than 1500 [currency] per month",
-        "5000To10000": "5000 - 10000 [currency] per month",
-        "10000To20000": "10000 - 20000 [currency] per month",
-        "moreThan20000": "More than 20000 [currency] per month",
-        "preferNotToSay": "Prefer not to say",
-        "submitting": "Submitting...",
-        "submit": "Submit"
+    "faq8": {
+      "question": "How does Votly ensure data privacy and security?",
+      "answer": "Votly takes data privacy and security seriously. We use industry-standard encryption and follow strict privacy policies to protect your data."
     }
+  },
+  "Footer": {
+    "title": "VOTLY",
+    "description": "Votly is a social app on a mission to bring the polling industry into the 21st century.",
+    "usefulLinks": "Useful Links",
+    "link1": {
+      "href": "/about",
+      "title": "About Us"
+    },
+    "link2": {
+      "href": "/privacy",
+      "title": "Privacy Policy"
+    },
+    "link3": {
+      "href": "/cookies",
+      "title": "Cookies Policy"
+    },
+    "link4": {
+      "href": "/terms",
+      "title": "Terms and Conditions"
+    },
+    "downloadApp": "Download Our App",
+    "googlePlay": "Google Play",
+    "appStore": "App Store",
+    "copyright": "© 2024 The Blockchain Labs. All Rights Reserved."
+  },
+  "Header": {
+    "surveys": "Surveys",
+    "rewards": "Rewards",
+    "myProfile": "My Profile",
+    "login": "Login",
+    "register": "Register",
+    "logout": "Logout",
+    "language": "Language"
+  },
+  "Surveys": {
+    "earnBySurveys": "Earn money by completing surveys",
+    "surveyDescription": "Paid surveys are a convenient side hustle for anyone who wants to earn a little extra. Earn points for each survey you complete and use them to get cash or gift cards.",
+    "mins": "mins",
+    "currency": "$",
+    "takeSurvey": "Take Survey",
+    "timeIconAlt": "Time Icon",
+    "priceIconAlt": "Price Icon"
+  },
+  "Profile": {
+    "myProfile": "My Profile",
+    "mainInfo": "Main Information",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "username": "Username",
+    "email": "Email",
+    "phone": "Phone",
+    "birthday": "Birthday",
+    "gender": "Gender",
+    "male": "Male",
+    "female": "Female",
+    "bio": "Bio",
+    "editProfile": "Edit Profile",
+    "profileCompletion": "Profile Completion",
+    "profileCompletionPercentage": "Complete",
+    "completeProfile": "Complete Profile",
+    "editCompleteProfile": "Edit Personal Data",
+    "profileImage": "Profile Image",
+    "profileImageAlt": "Profile Image"
+  },
+  "EditProfile": {
+    "editProfile": "Edit Profile",
+    "mainInfo": "Main Information",
+    "firstName": "First Name",
+    "firstNameRequired": "First name is required",
+    "lastName": "Last Name",
+    "lastNameRequired": "Last name is required",
+    "username": "Username",
+    "usernameRequired": "Username is required",
+    "email": "Email",
+    "emailRequired": "Email is required",
+    "invalidEmail": "Invalid email address",
+    "phone": "Phone",
+    "phoneRequired": "Phone number is required",
+    "birthday": "Birthday",
+    "gender": "Gender",
+    "male": "Male",
+    "female": "Female",
+    "bio": "Bio",
+    "saveChanges": "Save Changes",
+    "profileCompletion": "Profile Completion",
+    "profileCompletionPercentage": "Complete",
+    "completeProfile": "Complete Profile",
+    "editCompleteProfile": "Edit Personal Data",
+    "changeProfileImage": "Change Profile Image",
+    "profileImage": "Profile Image",
+    "updateImage": "Update Image",
+    "changePassword": "Change Password",
+    "newPassword": "New Password",
+    "confirmPassword": "Confirm Password",
+    "confirmPasswordRequired": "Please confirm your password",
+    "passwordRequired": "Password is required",
+    "passwordMinLength": "Password must be at least 6 characters",
+    "passwordMismatch": "Passwords do not match",
+    "passwordUpdated": "Password has been updated successfully",
+    "profileUpdated": "Profile has been updated successfully",
+    "profileImageUpdated": "Profile image has been updated successfully",
+    "somethingWentWrong": "Something went wrong! Please try again later."
+  },
+  "Rewards": {
+    "yourBalance": "Your Balance",
+    "minimumPoints": "Minimum Points required",
+    "filterByCategory": "Filter by Category",
+    "allCategories": "All Categories",
+    "chooseGift": "Choose your Gift",
+    "featuredRewards": "Featured Rewards",
+    "price": "Value",
+    "redeem": "Redeem",
+    "notEnoughBalance": "Not Enough Balance",
+    "submitting": "Submitting ...",
+    "redeemTitle": "Do you want to redeem?",
+    "redeemed": "Redeemed! you will receive your reward on your email",
+    "noRedeem": "No redeem",
+    "noRewardsAvailable": "No rewards available",
+    "noRewardsAvailableTitle": "No rewards available yet in your country",
+    "noRewardsMessage": "We're currently working to bring rewards to your location. Please check back soon!",
+    "fashion": "Fashion & Accessories",
+    "jewellery": "Jewellery",
+    "kidsFun": "Kids & Fun",
+    "beautyCosmetics": "Beauty & Cosmetics",
+    "mobileRecharge": "Mobile Recharge",
+    "restaurantsCafes": "Restaurants & Cafes",
+    "hotelsTravel": "Hotels & Travel",
+    "spasFitness": "Spas & Fitness",
+    "experiencesEntertainment": "Experiences & Entertainment",
+    "electronics": "Electronics",
+    "hypermarkets": "Hypermarkets",
+    "cinemas": "Cinemas",
+    "shoppingMalls": "Shopping Malls",
+    "hobbiesMore": "Hobbies & More",
+    "sportswearEquipment": "Sportswear & Equipment",
+    "gaming": "Gaming",
+    "softwareSubscriptions": "Software Subscriptions",
+    "onlineShopping": "Online Shopping",
+    "foodDelivery": "Food Delivery",
+    "homeGarden": "Home & Garden",
+    "digitalEntertainment": "Digital Entertainment"
+  },
+  "ProfileCompletionForm": {
+    "beforeContinue": "Before you continue...",
+    "moreDetails": "We need a few more details to complete your profile",
+    "complete": "Complete",
+    "nationality": "Nationality",
+    "residence": "Residence",
+    "householdIncome": "Household Income",
+    "lessThan1500": "Less than 1500 [currency] per month",
+    "5000To10000": "5000 - 10000 [currency] per month",
+    "10000To20000": "10000 - 20000 [currency] per month",
+    "moreThan20000": "More than 20000 [currency] per month",
+    "preferNotToSay": "Prefer not to say",
+    "submitting": "Submitting...",
+    "submit": "Submit"
+  }
 }
