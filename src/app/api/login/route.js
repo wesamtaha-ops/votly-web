@@ -8,6 +8,7 @@ export async function POST(req) {
     type: "post",
     url: "v2/login",
     data: payload,
+    lang: payload.lang,
   });
 
   return NextResponse.json(res);

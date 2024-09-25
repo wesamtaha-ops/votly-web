@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useTranslations } from "next-intl"; // Import for translations
+import { useLocale, useTranslations } from "next-intl"; // Import for translations
 import styles from "./ForgotPassword.module.css";
 import { callApi } from "../../helper";
 import toast from "react-hot-toast";
@@ -13,6 +13,7 @@ const ForgotPassword = () => {
   const [sentMode, setSentMode] = useState(false); // Email sent mode
   const [otpSent, setOtpSent] = useState(false); // OTP sent mode
   const [otpVerified, setOtpVerified] = useState(false); // OTP verified mode
+  const lang = useLocale(); // Get the current locale
   const router = useRouter();
 
   // Form handling
@@ -26,12 +27,13 @@ const ForgotPassword = () => {
 
   // Handle email submission
   const onSubmitEmail = async (data) => {
-    const res = await callApi({
+    await callApi({
       type: "post",
       url: "forget",
       data: {
         email: data["email"],
       },
+      lang: lang,
     });
 
     setSentMode(true);

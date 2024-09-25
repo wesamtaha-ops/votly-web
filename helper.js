@@ -16,7 +16,13 @@ export async function redirectIfEmailPhoneNotVerified(session) {
   }
 }
 
-export async function callApi({ type, url, data = [], userToken }) {
+export async function callApi({
+  type,
+  url,
+  data = [],
+  userToken,
+  lang = "en",
+}) {
   const response = await axios(
     `${process.env.NEXT_PUBLIC_BASE_URL_API}${url}`,
     {
@@ -31,13 +37,20 @@ export async function callApi({ type, url, data = [], userToken }) {
         Pragma: "no-cache",
         Expires: "0",
         userToken: userToken,
+        lang: lang,
       },
     }
   );
   return response.data;
 }
 
-export async function callVotlyApi({ type, url, data = [], userToken }) {
+export async function callVotlyApi({
+  type,
+  url,
+  data = [],
+  userToken,
+  lang = "en",
+}) {
   const response = await axios(`${process.env.BACKEND_BASE_URL_API}${url}`, {
     method: type,
     data,
@@ -48,6 +61,7 @@ export async function callVotlyApi({ type, url, data = [], userToken }) {
       Authorization: `Bearer ${userToken}`,
       Pragma: "no-cache",
       Expires: "0",
+      Language: lang,
     },
   });
   return response.data;

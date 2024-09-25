@@ -11,14 +11,13 @@ export const authOptions = {
       name: "credentials",
       credentials: {},
       authorize: async (credentials) => {
-        console.log("Base URL:", process.env.NEXT_PUBLIC_BASE_URL_API);
-
         try {
           const res = await axios.post(
             `${process.env.NEXT_PUBLIC_BASE_URL_API}login`,
             {
               email: credentials.email,
               password: credentials.password,
+              lang: credentials.lang,
             },
             {
               "User-Agent":
@@ -61,8 +60,6 @@ export const authOptions = {
           headers: { userToken: token.id },
         }
       );
-
-      console.log("session update", response.data);
 
       session.user = response.data;
 
