@@ -16,6 +16,8 @@ const Rewards = () => {
   const [showRewards, setShowRewards] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState('');
   const [submitting, setSubmitting] = useState(false);
+  const [loading, setLoading] = useState(true); // New loading state
+
   const t = useTranslations('Rewards'); // Initialize translations
   const locale = useLocale(); // Get the current locale
 
@@ -55,6 +57,7 @@ const Rewards = () => {
   }
 
   async function fetchData() {
+    setLoading(true); // Start loading
     const response = await callApi({
       type: 'get',
       url: 'order',
@@ -64,6 +67,7 @@ const Rewards = () => {
     if (response.status == 200) {
       setRewards(response.data);
     }
+    setLoading(false); // Stop loading once data is fetched
   }
 
   const reloadSession = () => {
@@ -134,130 +138,140 @@ const Rewards = () => {
 
   return (
     <div className={styles.rewardsContainer}>
-      <div className={styles.balanceBanner}>
-        <h2>
-          {t('yourBalance')}: {userBalance.toFixed(2)} {usedCurrency}
-        </h2>
-      </div>
-      {showRewards ? (
+      {loading ? (
+        <div className={styles.spinner}></div> // Display the spinner while loading
+      ) : (
         <>
-          <div className={styles.filterContainer}>
-            <label htmlFor='categoryFilter' className={styles.filterLabel}>
-              {t('filterByCategory')}:
-            </label>
-            <select
-              id='categoryFilter'
-              value={selectedCategory}
-              onChange={(e) => setSelectedCategory(e.target.value)}
-              className={styles.filterSelect}>
-              <option value=''>{t('allCategories')}</option>
-              {categories.map((category) => (
-                <option key={category.id} value={category.id}>
-                  {category.name}
-                </option>
-              ))}
-            </select>
+          <div className={styles.balanceBanner}>
+            <h2>
+              {t('yourBalance')}: {userBalance.toFixed(2)} {usedCurrency}
+            </h2>
           </div>
-
-          <h2 className={styles.title}>{t('chooseGift')}</h2>
-
-          {filteredFeaturedRewards.length > 0 && (
-            <div>
-              <h3 className={styles.featuredTitle}>{t('featuredRewards')}</h3>
-              <div className={styles.rewardsGrid}>
-                {filteredFeaturedRewards.map((reward, ind) => (
-                  <div
-                    key={'re' + ind}
-                    className={styles.rewardCard}
-                    style={{ backgroundColor: '#fffeef' }}>
-                    <img
-                      src={reward.brand_image}
-                      alt={reward.brand_en}
-                      className={styles.rewardImage}
-                    />
-                    <h3>
-                      {locale == 'en' ? reward.brand_en : reward.brand_ar}
-                    </h3>
-                    <p className={styles.rewardPrice}>
-                      {t('price')}
-                      {'  '} {reward.value_in_votly}
-                      {'  '}
-                      {usedCurrency}
-                    </p>
-                    <button
-                      className={styles.redeemButton}
-                      onClick={async () => {
-                        setSubmitting(true);
-                        await handleRedeem(reward.provider_origin_id);
-                      }}
-                      disabled={
-                        !(
-                          minimum_points_to_redeem < userPoints &&
-                          userBalance >= reward.value_in_votly
-                        ) || submitting
-                      }>
-                      {submitting
-                        ? t('submitting')
-                        : minimum_points_to_redeem < userPoints &&
-                          userBalance >= reward.value_in_votly
-                        ? t('redeem')
-                        : t('notEnoughBalance')}
-                    </button>
-                  </div>
-                ))}
+          {showRewards ? (
+            <>
+              <div className={styles.filterContainer}>
+                <label htmlFor='categoryFilter' className={styles.filterLabel}>
+                  {t('filterByCategory')}:
+                </label>
+                <select
+                  id='categoryFilter'
+                  value={selectedCategory}
+                  onChange={(e) => setSelectedCategory(e.target.value)}
+                  className={styles.filterSelect}>
+                  <option value=''>{t('allCategories')}</option>
+                  {categories.map((category) => (
+                    <option key={category.id} value={category.id}>
+                      {category.name}
+                    </option>
+                  ))}
+                </select>
               </div>
+
+              <h2 className={styles.title}>{t('chooseGift')}</h2>
+
+              {filteredFeaturedRewards.length > 0 && (
+                <div>
+                  <h3 className={styles.featuredTitle}>
+                    {t('featuredRewards')}
+                  </h3>
+                  <div className={styles.rewardsGrid}>
+                    {filteredFeaturedRewards.map((reward, ind) => (
+                      <div
+                        key={'re' + ind}
+                        className={styles.rewardCard}
+                        style={{ backgroundColor: '#fffeef' }}>
+                        <img
+                          src={reward.brand_image}
+                          alt={reward.brand_en}
+                          className={styles.rewardImage}
+                        />
+                        <h3>
+                          {locale == 'en' ? reward.brand_en : reward.brand_ar}
+                        </h3>
+                        <p className={styles.rewardPrice}>
+                          {t('price')} {'  '}
+                          {reward.value_in_votly} {'  '}
+                          {usedCurrency}
+                        </p>
+                        <button
+                          className={styles.redeemButton}
+                          onClick={async () => {
+                            setSubmitting(true);
+                            await handleRedeem(reward.provider_origin_id);
+                          }}
+                          disabled={
+                            !(
+                              minimum_points_to_redeem < userPoints &&
+                              userBalance >= reward.value_in_votly
+                            ) || submitting
+                          }>
+                          {submitting
+                            ? t('submitting')
+                            : minimum_points_to_redeem < userPoints &&
+                              userBalance >= reward.value_in_votly
+                            ? t('redeem')
+                            : t('notEnoughBalance')}
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              <div>
+                <br />
+                <div className={styles.rewardsGrid}>
+                  {filteredNonFeaturedRewards.map((reward, ind) => (
+                    <div key={'reward' + ind} className={styles.rewardCard}>
+                      <img
+                        src={reward.brand_image}
+                        alt={reward.brand_en}
+                        className={styles.rewardImage}
+                      />
+                      <h3>
+                        {locale == 'en' ? reward.brand_en : reward.brand_ar}
+                      </h3>
+                      <p className={styles.rewardPrice}>
+                        {t('price')} {'  '}
+                        {reward.value_in_votly} {'  '}
+                        {usedCurrency}
+                      </p>
+                      <button
+                        className={styles.redeemButton}
+                        onClick={handleRedeem}
+                        disabled={
+                          !(
+                            minimum_points_to_redeem < userPoints &&
+                            userBalance >= reward.value_in_votly
+                          )
+                        }>
+                        {minimum_points_to_redeem < userPoints &&
+                        userBalance >= reward.value_in_votly
+                          ? t('redeem')
+                          : t('notEnoughBalance')}
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </>
+          ) : (
+            <div className={styles.noRewardsMessage}>
+              <img
+                src='https://www.deeluxe.fr/img/cms/Homepage%202024/Reassurance/Paiement-securis%C3%A9-png.png'
+                width={250}
+                style={{ marginBottom: -50 }}
+                alt={t('noRewardsAvailable')}
+              />
+              <h2>{t('noRewardsAvailableTitle')}</h2>
+              <p>{t('noRewardsMessage')}</p>
             </div>
           )}
-
-          <div>
-            <br />
-            <div className={styles.rewardsGrid}>
-              {filteredNonFeaturedRewards.map((reward, ind) => (
-                <div key={'reward' + ind} className={styles.rewardCard}>
-                  <img
-                    src={reward.brand_image}
-                    alt={reward.brand_en}
-                    className={styles.rewardImage}
-                  />
-                  <h3> {locale == 'en' ? reward.brand_en : reward.brand_ar}</h3>
-                  <p className={styles.rewardPrice}>
-                    {t('price')} {'  '} {reward.value_in_votly}
-                    {'  '}
-                    {usedCurrency}
-                  </p>
-                  <button
-                    className={styles.redeemButton}
-                    onClick={handleRedeem}
-                    disabled={
-                      !(
-                        minimum_points_to_redeem < userPoints &&
-                        userBalance >= reward.value_in_votly
-                      )
-                    }>
-                    {minimum_points_to_redeem < userPoints &&
-                    userBalance >= reward.value_in_votly
-                      ? t('redeem')
-                      : t('notEnoughBalance')}
-                  </button>
-                </div>
-              ))}
-            </div>
-          </div>
         </>
-      ) : (
-        <div className={styles.noRewardsMessage}>
-          <img
-            src='https://www.deeluxe.fr/img/cms/Homepage%202024/Reassurance/Paiement-securis%C3%A9-png.png'
-            width={250}
-            style={{ marginBottom: -50 }}
-            alt={t('noRewardsAvailable')}
-          />
-          <h2>{t('noRewardsAvailableTitle')}</h2>
-          <p>{t('noRewardsMessage')}</p>
-        </div>
       )}
     </div>
   );
+
 };
 
 export default Rewards;
