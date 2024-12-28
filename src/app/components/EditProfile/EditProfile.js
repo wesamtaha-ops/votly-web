@@ -138,12 +138,12 @@ const EditProfile = ({ user, userToken, updateSession }) => {
       setImageFile(event.target.files[0]);
     }
   };
-
+ 
   return (
     <div className={styles.editProfileContainer}>
-      {loading && <div className={styles.loader}>Loading...</div>} {/* Loader */}
+      {loading && <div className={styles.loader}>Loading...</div>}{' '}
+      {/* Loader */}
       <h2 className={styles.title}>{t('editProfile')}</h2>
-
       <div className={styles.cardsGrid}>
         {/* Main Information Card */}
         <div className={`${styles.card} ${styles.mainInfoCard}`}>
