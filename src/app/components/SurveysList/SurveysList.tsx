@@ -5,6 +5,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { callApi } from "../../helper";
 import { useSession } from "next-auth/react";
 import styles from "./SurveysList.module.css";
+import { useSearchParams } from "next/navigation";
 
 const SurveysList = () => {
   const { data: session } = useSession();
@@ -14,6 +15,9 @@ const SurveysList = () => {
   const userToken = session?.id;
   const [surveys, setSurveys] = useState([]);
   const [loading, setLoading] = useState(true); // New loading state
+
+  const searchParams = useSearchParams();
+  const status = searchParams.get("status");
 
   // Simulate data loading
   useEffect(() => {
@@ -36,6 +40,18 @@ const SurveysList = () => {
 
   return (
     <div className={styles.surveysContainer}>
+      {status == "success" && (
+        <p role="alert" className={styles.success}>
+          You have finished the survey successfully
+        </p>
+      )}
+
+      {["out", "terminate", "full"].includes(status) && (
+        <p role="alert" className={styles.error}>
+          You haven't finished the survey successfully!
+        </p>
+      )}
+
       {loading ? (
         <div className={styles.spinner}></div> // Show spinner while loading
       ) : (
