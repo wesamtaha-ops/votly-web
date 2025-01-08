@@ -33,7 +33,7 @@ const SurveysList = () => {
     });
 
     if (response.status == 200) {
-      setSurveys(response.data);
+      if (response.data.length > 0) setSurveys(response?.data);
     }
     setLoading(false); // Stop loading once data is fetched
   }
