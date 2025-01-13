@@ -185,10 +185,10 @@ const ProfileCompletionForm = ({ profile, onSubmit }) => {
                 justifyContent: 'space-between',
                 width: 'inherit',
               }}>
-              <Typography variant='h4' component='h1' gutterBottom>
+              <Typography variant='h4' component='h1' style={{color: '#fff'}} gutterBottom>
                 {t('beforeContinue')}
               </Typography>
-              <Typography variant='h6' component='h4' gutterBottom>
+              <Typography variant='h6' component='h4' style={{color: '#fff'}} gutterBottom>
                 {t('moreDetails')}
               </Typography>
             </div>

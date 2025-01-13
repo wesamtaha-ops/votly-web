@@ -138,7 +138,7 @@ const EditProfile = ({ user, userToken, updateSession }) => {
       setImageFile(event.target.files[0]);
     }
   };
- 
+
   return (
     <div className={styles.editProfileContainer}>
       {loading && <div className={styles.loader}>Loading...</div>}{' '}
@@ -265,10 +265,10 @@ const EditProfile = ({ user, userToken, updateSession }) => {
             </div>
 
             <Button
-              style={{ fontFamily: 'Almarai' }}
               title={t('saveChanges')}
               onClick={handleSubmit(onSubmitMainInfo)}
               disabled={loading} // Disable button during loading
+              className={styles.button}
             />
           </form>
         </div>
@@ -282,8 +282,10 @@ const EditProfile = ({ user, userToken, updateSession }) => {
               style={{
                 width: user.is_profile_completed === 1 ? '100%' : '50%',
               }}>
-              <span> {user.is_profile_completed === 1 ? '100%' : '50%'} </span>
-              {t('profileCompletionPercentage')}
+              <span className={styles.progressText}>
+                {user.is_profile_completed === 1 ? '100%' : '50%'}{' '}
+                {t('profileCompletionPercentage')}
+              </span>
             </div>
           </div>
           <Link href='/complete-profile'>
@@ -319,12 +321,7 @@ const EditProfile = ({ user, userToken, updateSession }) => {
           </form>
 
           <Button
-            style={{
-              fontFamily: 'Almarai',
-              marginTop: 10,
-              minWidth: '100%',
-              selfAlign: 'center',
-            }}
+            className={styles.button}
             title={t('updateImage')}
             onClick={profileImageHandleSubmit(onSubmitProfileImage)}
             disabled={loading} // Disable button during loading
@@ -383,7 +380,7 @@ const EditProfile = ({ user, userToken, updateSession }) => {
             </div>
 
             <Button
-              style={{ fontFamily: 'Almarai' }}
+              className={styles.button}
               title={t('changePassword')}
               onClick={passwordHandleSubmit(onSubmitPassword)}
               disabled={loading} // Disable button during loading

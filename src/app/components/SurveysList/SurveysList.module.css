@@ -5,12 +5,12 @@
   border-radius: var(--border-radius);
   line-height: 40px;
   margin-bottom: 0;
-  padding-top: 5%;
+  padding-top: 2%;
 }
 
 .title {
-  font-size: 34px;
-  margin-bottom: 40px;
+  font-size: 30px;
+  margin-bottom: 10px;
   color: #1f3e55;
   text-align: center;
   line-height: 50px;
@@ -45,7 +45,7 @@
 }
 
 .surveyDescription {
-  margin-bottom: 20px;
+  margin-bottom: 40px;
   font-size: 16px;
   color: var(--text-color-secondary);
   text-align: center;
@@ -126,4 +126,185 @@
   font-size: 14px;
   text-align: left;
   margin-bottom: 20px;
+}
+
+.noSurveys {
+  text-align: center;
+  padding: 3rem 1rem;
+  background: white;
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  margin: 0rem auto;
+  max-width: 500px;
+}
+
+.noSurveysIcon {
+  font-size: 4rem;
+  color: #3182ce;
+  margin-bottom: 1.5rem;
+  opacity: 0.8;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.noSurveysTitle {
+  color: #2d3748;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.noSurveysText {
+  color: #4a5568;
+  line-height: 1.6;
+  font-size: 1.1rem;
+}
+
+[dir='rtl'] .noSurveys {
+  text-align: center;
+}
+
+.filterContainer {
+  margin: 0rem auto;
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  max-width: 800px;
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+}
+
+.filterButtons {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  position: relative;
+}
+
+.filterButton {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 2rem;
+  border-radius: 12px;
+  border: 0px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.07);
+  font-weight: 300;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+    background: linear-gradient(100deg, #dddddd, #f2f2f2);
+font-family: Almarai, sans-serif !important;
+}
+
+.filterButton::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    45deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+  transform: translateX(-100%);
+  transition: transform 0.6s;
+}
+
+.filterButton:hover::before {
+  transform: translateX(100%);
+}
+
+.filterButton:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.filterButton.active {
+  background: linear-gradient(135deg, #ff0080, #7928ca);
+  border-color: transparent;
+  box-shadow: 0 8px 16px rgba(255, 0, 128, 0.2),
+    0 0 0 2px rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+  color: white;
+}
+
+.filterIcon {
+  font-size: 1.2rem;
+  transition: transform 0.3s ease;
+}
+
+.filterButton:hover .filterIcon {
+  transform: rotate(15deg);
+}
+
+.surveyCount {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  height: 28px;
+  padding: 0 10px;
+  border-radius: 14px;
+  background: rgba(0, 0, 0, 0.3);
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin-left: 0.75rem;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.filterButton:hover .surveyCount {
+  background: rgba(0, 0, 0, 0.4);
+  transform: scale(1.05);
+}
+
+.answeredCard {
+  opacity: 0.7;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.answeredCard .takeSurveyButton {
+  background: #4a5568;
+  cursor: not-allowed;
+}
+
+.answeredCard .takeSurveyButton:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+/* RTL Support */
+[dir='rtl'] .surveyCount {
+  margin-left: 0;
+  margin-right: 0.5rem;
+}
+
+/* Responsive Design */
+@media (max-width: 640px) {
+  .filterButtons {
+    flex-direction: column;
+  }
+
+  .filterButton {
+    width: 100%;
+    justify-content: center;
+  }
 }

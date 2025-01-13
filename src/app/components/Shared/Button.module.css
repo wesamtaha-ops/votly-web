@@ -7,6 +7,7 @@
   font-size: 18px;
   cursor: pointer;
   transition: background 0.3s ease;
+  background: linear-gradient(to right, #4299e1, #3182ce);
 }
 
 .button:disabled {

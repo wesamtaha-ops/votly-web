@@ -1,141 +1,314 @@
 .profileContainer {
   max-width: 1200px;
-  margin: 20px auto;
-  padding: 0 15px;
-  border-radius: var(--border-radius);
-    padding-top: 5%;
+  margin: 2rem auto;
+  padding: 0 1.5rem;
+  min-height: 100vh;
+  padding-bottom: 5rem;
+  padding-top: 3rem;
 
 }
 
 .title {
-  font-size: 24px;
-  margin-bottom: 20px;
-  color: var(--text-color);
-  text-align: center;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 1.65rem;
+  color: #1a202c;
+  margin-bottom: 2.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+.titleIcon {
+  color: #4299e1;
+  font-size: 1.75rem;
 }
 
 .cardsGrid {
   display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 20px;
+  grid-template-columns: 1fr 2fr;
+  gap: 2rem;
 }
 
-/* Card Styles */
+.leftColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.mainInfoCard {
+  height: 100%;
+}
+
+.profileImageCard {
+  flex-shrink: 0;
+}
+
+.profileCompletionCard {
+  flex-shrink: 0;
+}
+
+.rightColumn {
+  grid-column: 1;
+}
+
 .card {
-  background-color: white;
-  border-radius: var(--border-radius);
-  padding: 20px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  background: white;
+  border-radius: 1.5rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  padding: 2rem;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  position: relative;
+  overflow: hidden;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(to right, #4299e1, #48bb78);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.card:hover::before {
+  opacity: 1;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #e2e8f0;
 }
 
 .cardTitle {
-  font-size: 20px;
-  margin-bottom: 15px;
-  color: var(--text-color);
-  padding: 20px;
-  padding-bottom: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 1.5rem;
+  color: #2d3748;
+  margin: 0;
+  font-weight: 600;
 }
 
-.infoGroup {
-  font-size: 16px;
-  line-height: 1.8;
-  color: var(--text-color);
-  line-height: 3.6;
-  padding: 20px;
-  padding-top: 10;
+.infoGrid {
+  display: grid;
+  gap: 1.5rem;
 }
 
-.button {
-  margin-top: 20px;
-  padding: 10px;
-  background-color: var(--primary-color);
-  color: white;
+.infoItem {
+  padding: 1rem;
+  border-radius: 1rem;
+  background: #f7fafc;
+  transition: all 0.2s ease;
+}
+
+.infoItem:hover {
+  background: #edf2f7;
+  transform: translateX(4px);
+}
+
+.infoItemHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.fieldIcon {
+  color: #4299e1;
+  font-size: 1rem;
+}
+
+.infoLabel {
+  font-weight: 600;
+  color: #4a5568;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.infoValue {
+  color: #2d3748;
+  font-size: 1rem;
+  display: block;
+  padding-left: 1.5rem;
+}
+
+.editButton, .completeButton {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.75rem;
   border: none;
-  border-radius: 10px;
-  font-size: 16px;
+  background: linear-gradient(to right, #4299e1, #3182ce);
+  color: white;
   cursor: pointer;
-  transition: background-color 0.3s ease;
-  font-family: 'Almarai', sans-serif;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
-.button:hover {
-  background-color: #0056b3;
+.editButton:hover, .completeButton:hover {
+  background: linear-gradient(to right, #3182ce, #2c5282);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.progressBarWrapper {
+  margin: 2rem 0;
 }
 
 .progressBarContainer {
-  background-color: #ddd;
-  border-radius: 20px;
+  background-color: #edf2f7;
+  border-radius: 1rem;
   overflow: hidden;
-  height: 20px;
-  margin-bottom: 10px;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .progressBar {
-  background-color: var(--primary-color);
-  height: 100%;
-  text-align: center;
-  color: white;
-  font-size: 14px;
-  line-height: 20px;
+  height: 1.75rem;
+  background: linear-gradient(to right, #4299e1, #48bb78);
+  border-radius: 1rem;
+  transition: width 1s ease;
+  position: relative;
+  overflow: hidden;
 }
 
-/* Profile Image Styles */
+.progressBar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.2) 25%,
+    transparent 25%,
+    transparent 50%,
+    rgba(255, 255, 255, 0.2) 50%,
+    rgba(255, 255, 255, 0.2) 75%,
+    transparent 75%,
+    transparent
+  );
+  background-size: 1rem 1rem;
+  animation: progressStripes 1s linear infinite;
+}
+
+@keyframes progressStripes {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 1rem 0;
+  }
+}
+
+.progressText {
+  display: block;
+  padding: 0.25rem 1rem;
+  color: white;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 1;
+}
+
+.profileImageWrapper {
+  display: flex;
+  justify-content: center;
+  padding: 1.5rem 0;
+}
+
 .profileImageContainer {
-  width: 150px;
-  height: 150px;
-  margin: 0 auto;
+  position: relative;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 4px solid #e2e8f0;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.profileImageContainer:hover {
+  border-color: #4299e1;
+  transform: scale(1.05);
 }
 
 .profileImage {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 50%;
-  border: 4px solid #ddd;
+  transition: transform 0.3s ease;
 }
 
-/* Grid-specific classes */
-.mainInfoCard {
-  grid-row: span 3;
+.imageOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
-.profileCompletionCard {
-  grid-row: auto;
+.profileImageContainer:hover .imageOverlay {
+  opacity: 1;
 }
 
-.profileImageCard {
-  grid-row: auto;
+.cameraIcon {
+  color: white;
+  font-size: 2rem;
 }
 
-/* Media Queries for Mobile Responsiveness */
-@media (max-width: 768px) {
+/* Responsive Design */
+@media (max-width: 1024px) {
   .cardsGrid {
     grid-template-columns: 1fr;
   }
-
-  .card {
-    padding: 15px;
+  
+  .leftColumn {
+    gap: 1rem;
   }
+}
 
-  .title {
-    font-size: 20px;
-  }
+/* RTL Support */
+[dir="rtl"] .cardHeader,
+[dir="rtl"] .title,
 
-  .cardTitle {
-    font-size: 18px;
-  }
 
-  .infoGroup {
-    font-size: 14px;
-  }
+[dir="rtl"] .editButton,
+[dir="rtl"] .completeButton {
+  font-family: 'Almarai', sans-serif;
+}
 
-  .button {
-    font-size: 14px;
-    padding: 8px;
-  }
+[dir="rtl"] .infoItem:hover {
+  transform: translateX(-4px);
+}
 
-  .profileImageContainer {
-    width: 120px;
-    height: 120px;
-  }
+[dir="rtl"] .infoValue {
+  padding-right: 1.5rem;
+  padding-left: 0;
 }
