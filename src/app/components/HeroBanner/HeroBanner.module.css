@@ -110,10 +110,9 @@
 
 /* Keep existing styles but update colors */
 .heroTitle {
-  background: linear-gradient(to right, #FF0080, #7928CA);
+  background: linear-gradient(to right, #2cccbb, #1dabe8);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: none;
 }
 
 /* Add data visualization elements */
@@ -174,6 +173,7 @@
   color: #ffffff;
   letter-spacing: -0.02em;
   text-shadow: 0 0 40px rgba(255, 107, 107, 0.3);
+  
 }
 
 .heroDescription {
@@ -207,8 +207,7 @@
   font-size: 1.1rem;
   position: relative;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border: 0px;
+  border: 0px solid rgba(255, 255, 255, 0.1);
 }
 
 .ctaButton::after {
