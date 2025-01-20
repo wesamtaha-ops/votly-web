@@ -6,7 +6,7 @@ export async function GET(req) {
 
   const res = await callVotlyApi({
     type: "get",
-    url: "v2/survery?status=completed,active",
+    url: "v2/balance",
     data: {},
     userToken: userToken,
   });
