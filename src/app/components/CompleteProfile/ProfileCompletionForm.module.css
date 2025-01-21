@@ -22,7 +22,7 @@
 }
 
 .twoRowMobile::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -78,11 +78,11 @@
 }
 
 .formField :global(.MuiInputLabel-root) {
-  font-family: 'Almarai', sans-serif;
+  font-family: "Almarai", sans-serif;
 }
 
 .formField :global(.MuiMenuItem-root) {
-  font-family: 'Almarai', sans-serif;
+  font-family: "Almarai", sans-serif;
 }
 
 /* Progress Circle Styles */
@@ -100,6 +100,7 @@
   justify-content: center;
   align-items: center;
   min-height: 400px;
+  margin: auto;
 }
 
 /* RTL Support */
@@ -181,7 +182,7 @@
   transition: all 0.3s ease;
   margin-top: 1rem;
   width: 100%;
-  font-family: 'Almarai', sans-serif !important;
+  font-family: "Almarai", sans-serif !important;
 }
 
 .submitButton:hover {

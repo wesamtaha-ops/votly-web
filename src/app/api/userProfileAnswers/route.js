@@ -16,7 +16,7 @@ export async function GET(req) {
 
 export async function POST(req) {
   const userToken = req.headers.get("userToken");
-  const payload = req.body;
+  const payload = await req.json();
 
   const res = await callVotlyApi({
     type: "post",
