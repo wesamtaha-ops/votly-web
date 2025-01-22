@@ -14,6 +14,7 @@ import { useLocale, useTranslations } from "next-intl"; // Import for translatio
 import { callApi } from "../../helper";
 import { useSession } from "next-auth/react";
 import toast from "react-hot-toast";
+import { Router } from "next/router";
 
 const ProfileCompletionForm = ({ profile, onSubmit }) => {
   const t = useTranslations("ProfileCompletionForm"); // Initialize translations
@@ -79,7 +80,7 @@ const ProfileCompletionForm = ({ profile, onSubmit }) => {
         acc[item.id] = answer?.id;
         return acc;
       }, {});
-
+      console.log(fields);
       setAllLoaded(true);
       setAllFields(fields);
     }
@@ -117,7 +118,7 @@ const ProfileCompletionForm = ({ profile, onSubmit }) => {
     });
 
     toast("Profile Updated successfully!");
-
+    window.location.href = "/surveys";
     setSubmitting(false);
   };
 
@@ -127,7 +128,7 @@ const ProfileCompletionForm = ({ profile, onSubmit }) => {
         <CircularProgress className={styles.spinner} /> // Show spinner while data is loading
       ) : (
         <>
-          <div className={styles.twoRowMobile} /* Add the class here */>
+          <div className={styles.twoRowMobile}>
             <div
               style={{
                 display: "flex",
@@ -167,21 +168,29 @@ const ProfileCompletionForm = ({ profile, onSubmit }) => {
 
           {allLoaded && (
             <div className={styles.form}>
-              {questions.map((question, index) => (
-                <TextField
-                  select
-                  label={question.text}
-                  variant="outlined"
-                  fullWidth
-                  className={styles.formField}
-                  value={allFields[question.id]}
-                  onChange={(e) => handleElChange(question.id, e.target.value)}
-                >
-                  {question.answers.map((answer) => (
-                    <MenuItem value={answer.id}>{answer.label}</MenuItem>
-                  ))}
-                </TextField>
-              ))}
+              {questions.map((question, index) => {
+                const selectedAnswer = question.answers.find(
+                  (answer) => answer.id === allFields[question.id]
+                );
+                return (
+                  <TextField
+                    key={question.id}
+                    select
+                    label={question.text}
+                    variant="outlined"
+                    fullWidth
+                    className={styles.formField}
+                    value={allFields[question.id] || ''}
+                    onChange={(e) => handleElChange(question.id, e.target.value)}
+                  >
+                    {question.answers.map((answer) => (
+                      <MenuItem key={answer.id} value={answer.id}>
+                        {answer.label}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                );
+              })}
 
               <Button
                 type="submit"

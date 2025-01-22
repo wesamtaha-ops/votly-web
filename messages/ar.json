@@ -217,7 +217,9 @@
     "filterByStatus": "تصفية حسب الحالة",
     "allSurveys": "جميع الاستطلاعات",
     "availableReward": "المكافأة المتاحة",
-    "estimatedTime": "الوقت المتوقع"
+    "estimatedTime": "الوقت المتوقع",
+    "serviceNotAvailable": "الخدمة غير متوفرة",
+    "serviceNotAvailableInCountry": "نعتذر، هذه الخدمة غير متوفرة حالياً في بلدك. نحن نعمل على توسيع تغطيتنا لتشمل المزيد من المناطق قريباً."
   },
   "Profile": {
     "myProfile": "ملفي الشخصي",

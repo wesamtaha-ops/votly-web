@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import styles from './EditProfile.module.css';
 import Link from 'next/link';
-import { callApi } from '../../helper';
+import { callApi, isUserCountryAllowed } from '../../helper';
 import toast from 'react-hot-toast';
 import Button from '../Shared/Button';
 import axios from 'axios';
@@ -273,29 +273,30 @@ const EditProfile = ({ user, userToken, updateSession }) => {
           </form>
         </div>
 
-        {/* Profile Completion Card */}
-        <div className={`${styles.card} ${styles.profileCompletionCard}`}>
-          <h3 className={styles.cardTitle}>{t('profileCompletion')}</h3>
-          <div className={styles.progressBarContainer}>
-            <div
-              className={styles.progressBar}
-              style={{
-                width: user.is_profile_completed === 1 ? '100%' : '50%',
-              }}>
-              <span className={styles.progressText}>
-                {user.is_profile_completed === 1 ? '100%' : '50%'}{' '}
-                {t('profileCompletionPercentage')}
-              </span>
+        {isUserCountryAllowed(user) && (
+          <div className={`${styles.card} ${styles.profileCompletionCard}`}>
+            <h3 className={styles.cardTitle}>{t('profileCompletion')}</h3>
+            <div className={styles.progressBarContainer}>
+              <div
+                className={styles.progressBar}
+                style={{
+                  width: user.is_profile_completed === 1 ? '100%' : '50%',
+                }}>
+                <span className={styles.progressText}>
+                  {user.is_profile_completed === 1 ? '100%' : '50%'}{' '}
+                  {t('profileCompletionPercentage')}
+                </span>
+              </div>
             </div>
+            <Link href='/complete-profile'>
+              <button className={styles.button} disabled={loading}>
+                {user.is_profile_completed === 1
+                  ? t('editCompleteProfile')
+                  : t('completeProfile')}
+              </button>
+            </Link>
           </div>
-          <Link href='/complete-profile'>
-            <button className={styles.button} disabled={loading}>
-              {user.is_profile_completed === 1
-                ? t('editCompleteProfile')
-                : t('completeProfile')}
-            </button>
-          </Link>
-        </div>
+        )}
 
         {/* Change Profile Image Card */}
         <div className={`${styles.card} ${styles.changeProfileImageCard}`}>

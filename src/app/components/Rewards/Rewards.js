@@ -159,37 +159,24 @@ const Rewards = () => {
     selectedCategory ? reward.category_id === parseInt(selectedCategory) : true
   );
 
-  async function getUserBalance() {
-    const res = await callApi({
-      type: "get",
-      url: "balance",
-      userToken: userToken,
-    });
-
-    if (res.status == "1") {
-      setUserPoints(res?.externalResponse?.data?.balance ?? 0);
-    }
-  }
-
   // Effects
   useEffect(() => {
     if (
       session?.user?.country_id !== 188 &&
       session?.user?.country_id !== 227
     ) {
+      setLoading(false);
       setShowRewards(false);
     } else {
       fetchData();
-      getUserBalance();
-      // setUserPoints(session?.user?.num_points);
+      setUserPoints(session?.user?.num_points);
       setShowRewards(true);
     }
   }, [userToken, session]);
 
   useEffect(() => {
     if (point_value_in_dollars > 0 && userPoints > 0) {
-      console.log(point_value_in_dollars);
-      setUserBalance(userPoints * point_value_in_dollars);
+      setUserBalance(userPoints / point_value_in_dollars);
     }
   }, [point_value_in_dollars, userPoints]);
 
@@ -246,53 +233,58 @@ const Rewards = () => {
         <div className={styles.spinner}></div>
       ) : (
         <>
-          <div className={styles.balanceSection}>
-            <div className={styles.balanceContent}>
-              <div className={styles.balanceIcon}>
-                <svg
-                  width="48"
-                  height="48"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1.41 16.09V20h-2.67v-1.93c-1.71-.36-3.16-1.46-3.27-3.4h1.96c.1 1.05.82 1.87 2.65 1.87 1.96 0 2.4-.98 2.4-1.59 0-.83-.44-1.61-2.67-2.14-2.48-.6-4.18-1.62-4.18-3.67 0-1.72 1.39-2.84 3.11-3.21V4h2.67v1.95c1.86.45 2.79 1.86 2.85 3.39H14.3c-.05-1.11-.64-1.87-2.22-1.87-1.5 0-2.4.68-2.4 1.64 0 .84.65 1.39 2.67 1.91s4.18 1.39 4.18 3.91c-.01 1.83-1.38 2.83-3.12 3.16z"
-                    fill="currentColor"
-                  />
-                </svg>
+          {showRewards && (
+            <div className={styles.balanceSection}>
+              <div className={styles.balanceContent}>
+                <div className={styles.balanceIcon}>
+                  <svg
+                    width="48"
+                    height="48"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1.41 16.09V20h-2.67v-1.93c-1.71-.36-3.16-1.46-3.27-3.4h1.96c.1 1.05.82 1.87 2.65 1.87 1.96 0 2.4-.98 2.4-1.59 0-.83-.44-1.61-2.67-2.14-2.48-.6-4.18-1.62-4.18-3.67 0-1.72 1.39-2.84 3.11-3.21V4h2.67v1.95c1.86.45 2.79 1.86 2.85 3.39H14.3c-.05-1.11-.64-1.87-2.22-1.87-1.5 0-2.4.68-2.4 1.64 0 .84.65 1.39 2.67 1.91s4.18 1.39 4.18 3.91c-.01 1.83-1.38 2.83-3.12 3.16z"
+                      fill="currentColor"
+                    />
+                  </svg>
+                </div>
+                <div className={styles.balanceDetails}>
+                  <h2 className={styles.balanceTitle}>{t("yourBalance")}</h2>
+                  <p className={styles.balanceAmount}>
+                    <span className={styles.currencySymbol}>
+                      {usedCurrency}
+                    </span>
+                    <span className={styles.amount}>
+                      {userBalance.toFixed(2)}
+                    </span>
+                  </p>
+                </div>
               </div>
-              <div className={styles.balanceDetails}>
-                <h2 className={styles.balanceTitle}>{t("yourBalance")}</h2>
-                <p className={styles.balanceAmount}>
-                  <span className={styles.currencySymbol}>{usedCurrency}</span>
-                  <span className={styles.amount}>
-                    {userBalance.toFixed(2)}
-                  </span>
-                </p>
-              </div>
+              <div className={styles.balanceBackground}></div>
             </div>
-            <div className={styles.balanceBackground}></div>
-          </div>
-
-          <div className={styles.viewToggle}>
-            <button
-              className={`${styles.toggleButton} ${
-                !showHistory ? styles.active : ""
-              }`}
-              onClick={() => setShowHistory(false)}
-            >
-              <FaGift /> {t("availableRewards")}
-            </button>
-            <button
-              className={`${styles.toggleButton} ${
-                showHistory ? styles.active : ""
-              }`}
-              onClick={() => setShowHistory(true)}
-            >
-              <FaHistory /> {t("redeemHistory")}
-            </button>
-          </div>
+          )}
+          {showRewards && (
+            <div className={styles.viewToggle}>
+              <button
+                className={`${styles.toggleButton} ${
+                  !showHistory ? styles.active : ""
+                }`}
+                onClick={() => setShowHistory(false)}
+              >
+                <FaGift /> {t("availableRewards")}
+              </button>
+              <button
+                className={`${styles.toggleButton} ${
+                  showHistory ? styles.active : ""
+                }`}
+                onClick={() => setShowHistory(true)}
+              >
+                <FaHistory /> {t("redeemHistory")}
+              </button>
+            </div>
+          )}
 
           {showHistory ? (
             <div className={styles.historyTableContainer}>
@@ -372,11 +364,13 @@ const Rewards = () => {
             <div className={styles.noRewardsMessage}>
               <img
                 src="https://www.deeluxe.fr/img/cms/Homepage%202024/Reassurance/Paiement-securis%C3%A9-png.png"
-                width={250}
-                style={{ marginBottom: -50 }}
+                width={150}
+                style={{ marginBottom: -60 }}
                 alt={t("noRewardsAvailable")}
               />
-              <h2>{t("noRewardsAvailableTitle")}</h2>
+              <h3 style={{ marginBottom: -40 }}>
+                {t("noRewardsAvailableTitle")}
+              </h3>
               <p>{t("noRewardsMessage")}</p>
             </div>
           )}

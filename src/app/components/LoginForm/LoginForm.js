@@ -31,7 +31,7 @@ const Login = () => {
 
     try {
       const result = await signIn("credentials", {
-        email: payload.email,
+        email: payload.email.toLowerCase(),
         password: payload.password,
         lang: lang,
         redirect: false,
@@ -47,7 +47,7 @@ const Login = () => {
         }, 3000);
       } else {
         const callbackUrl = searchParams.get("callbackUrl");
-        window.location.href = callbackUrl ? callbackUrl : "/";
+        window.location.href = callbackUrl ? callbackUrl : "/surveys";
       }
     } catch (error) {
       setError("submit", {
