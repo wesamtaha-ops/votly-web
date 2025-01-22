@@ -3,28 +3,29 @@
 import styles from './Profile.module.css';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
-import { 
-  FaUser, 
-  FaEdit, 
-  FaCheckCircle, 
-  FaCamera, 
-  FaEnvelope, 
-  FaPhone, 
-  FaBirthdayCake, 
-  FaVenusMars 
+import {
+  FaUser,
+  FaEdit,
+  FaCheckCircle,
+  FaCamera,
+  FaEnvelope,
+  FaPhone,
+  FaBirthdayCake,
+  FaVenusMars,
 } from 'react-icons/fa';
 import { motion } from 'framer-motion';
+import { isUserCountryAllowed } from '../../helper';
 
 const Profile = ({ user }) => {
   const t = useTranslations('Profile');
-  
+
   const calculateCompletionPercentage = () => {
     return user.is_profile_completed === 1 ? '100%' : '50%';
   };
 
   const cardVariants = {
     hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0 }
+    visible: { opacity: 1, y: 0 },
   };
 
   const getIconForField = (field) => {
@@ -32,7 +33,7 @@ const Profile = ({ user }) => {
       email: <FaEnvelope className={styles.fieldIcon} />,
       phone: <FaPhone className={styles.fieldIcon} />,
       birthday: <FaBirthdayCake className={styles.fieldIcon} />,
-      gender: <FaVenusMars className={styles.fieldIcon} />
+      gender: <FaVenusMars className={styles.fieldIcon} />,
     };
     return icons[field] || null;
   };
@@ -80,44 +81,44 @@ const Profile = ({ user }) => {
               </div>
             </div>
           </motion.div>
-
-          {/* Profile Completion Card */}
-          <motion.div
-            className={`${styles.card} ${styles.profileCompletionCard}`}
-            variants={cardVariants}
-            initial='hidden'
-            animate='visible'
-            transition={{ duration: 0.3, delay: 0.2 }}>
-            <div className={styles.cardHeader}>
-              <h3 className={styles.cardTitle}>
-                <FaCheckCircle className={styles.titleIcon} />
-                {t('profileCompletion')}
-              </h3>
-            </div>
-
-            <div className={styles.progressBarWrapper}>
-              <div className={styles.progressBarContainer}>
-                <motion.div
-                  className={styles.progressBar}
-                  initial={{ width: 0 }}
-                  animate={{ width: calculateCompletionPercentage() }}
-                  transition={{ duration: 1, ease: 'easeOut' }}>
-                  <span className={styles.progressText}>
-                    {calculateCompletionPercentage()}{' '}
-                    {t('profileCompletionPercentage')}
-                  </span>
-                </motion.div>
+          {isUserCountryAllowed(user) && (
+            <motion.div
+              className={`${styles.card} ${styles.profileCompletionCard}`}
+              variants={cardVariants}
+              initial='hidden'
+              animate='visible'
+              transition={{ duration: 0.3, delay: 0.2 }}>
+              <div className={styles.cardHeader}>
+                <h3 className={styles.cardTitle}>
+                  <FaCheckCircle className={styles.titleIcon} />
+                  {t('profileCompletion')}
+                </h3>
               </div>
-            </div>
 
-            <Link href='/complete-profile'>
-              <button className={styles.completeButton}>
-                {user.is_profile_completed === 1
-                  ? t('editCompleteProfile')
-                  : t('completeProfile')}
-              </button>
-            </Link>
-          </motion.div>
+              <div className={styles.progressBarWrapper}>
+                <div className={styles.progressBarContainer}>
+                  <motion.div
+                    className={styles.progressBar}
+                    initial={{ width: 0 }}
+                    animate={{ width: calculateCompletionPercentage() }}
+                    transition={{ duration: 1, ease: 'easeOut' }}>
+                    <span className={styles.progressText}>
+                      {calculateCompletionPercentage()}{' '}
+                      {t('profileCompletionPercentage')}
+                    </span>
+                  </motion.div>
+                </div>
+              </div>
+
+              <Link href='/complete-profile'>
+                <button className={styles.completeButton}>
+                  {user.is_profile_completed === 1
+                    ? t('editCompleteProfile')
+                    : t('completeProfile')}
+                </button>
+              </Link>
+            </motion.div>
+          )}
         </div>
 
         {/* Main Information Card */}

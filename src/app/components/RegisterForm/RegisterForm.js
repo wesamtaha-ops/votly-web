@@ -257,32 +257,32 @@ const RegisterForm = () => {
       className={styles.formContainer}
       style={{ opacity: loading ? 0.5 : 1 }} // Adjust opacity while loading
     >
-      <h2 className={styles.title}>{t("signUpTitle")}</h2>
+      <h2 className={styles.title}>{t('signUpTitle')}</h2>
       <form
         onSubmit={handleSubmit(onSubmit)}
         className={styles.form}
         disabled={loading} // Disable form when loading
       >
         {requestError && (
-          <p role="alert" className={styles.error}>
+          <p role='alert' className={styles.error}>
             {requestError}
           </p>
         )}
         <div className={styles.nameContainer}>
           <input
             className={`${styles.inputHalf} ${
-              errors.firstname ? styles.errorBorder : ""
+              errors.firstname ? styles.errorBorder : ''
             }`}
-            {...register("firstname", { required: t("firstNameRequired") })}
-            placeholder={t("firstName")}
+            {...register('firstname', { required: t('firstNameRequired') })}
+            placeholder={t('firstName')}
             disabled={loading} // Disable input when loading
           />
           <input
             className={`${styles.inputHalf} ${
-              errors.lastname ? styles.errorBorder : ""
+              errors.lastname ? styles.errorBorder : ''
             }`}
-            {...register("lastname", { required: t("lastNameRequired") })}
-            placeholder={t("lastName")}
+            {...register('lastname', { required: t('lastNameRequired') })}
+            placeholder={t('lastName')}
             disabled={loading} // Disable input when loading
           />
         </div>
@@ -295,49 +295,49 @@ const RegisterForm = () => {
 
         <input
           className={`${styles.input} ${
-            errors.email ? styles.errorBorder : ""
+            errors.email ? styles.errorBorder : ''
           }`}
-          {...register("email", {
-            required: t("emailRequired"),
-            pattern: { value: /^\S+@\S+$/i, message: t("invalidEmail") },
+          {...register('email', {
+            required: t('emailRequired'),
+            pattern: { value: /^\S+@\S+$/i, message: t('invalidEmail') },
           })}
-          placeholder={t("email")}
+          placeholder={t('email')}
           disabled={loading} // Disable input when loading
         />
         {errors.email && <p className={styles.error}>{errors.email.message}</p>}
 
         <input
           className={`${styles.input} ${
-            errors.password ? styles.errorBorder : ""
+            errors.password ? styles.errorBorder : ''
           }`}
-          {...register("password", {
-            required: t("passwordRequired"),
+          {...register('password', {
+            required: t('passwordRequired'),
             minLength: {
               value: 6,
-              message: t("passwordMinLength"),
+              message: t('passwordMinLength'),
             },
           })}
-          type="password"
-          placeholder={t("password")}
+          type='password'
+          placeholder={t('password')}
           disabled={loading} // Disable input when loading
         />
         {errors.password && (
           <p className={styles.error}>{errors.password.message}</p>
         )}
 
-        <label className={styles.label}>{t("phone")}</label>
-        <div dir="ltr">
+        <label className={styles.label}>{t('phone')}</label>
+        <div dir='ltr'>
           <PhoneInput
             inputClass={styles.react_tel_input_custom}
             inputProps={{
-              preferredCountries: ["AE", "SA", "KW", "QA", "BH", "OM"],
-              name: "phone",
+              preferredCountries: ['AE', 'SA', 'KW', 'QA', 'BH', 'OM'],
+              name: 'phone',
               autoFormat: true,
               required: true,
               countryCodeEditable: false,
               enableSearch: true,
             }}
-            country={"AE"}
+            country={'AE'}
             value={phoneNumber}
             jumpCursorToEnd={true}
             onChange={(value) => setPhoneNumber(value)}
@@ -347,26 +347,26 @@ const RegisterForm = () => {
         {errors.phone && <p className={styles.error}>{errors.phone.message}</p>}
 
         <div className={styles.genderContainer}>
-          <label className={styles.label}>{t("genderLabel")}</label>
+          <label className={styles.label}>{t('genderLabel')}</label>
           <div>
             <input
-              type="radio"
-              value="female"
-              {...register("gender", { required: t("genderRequired") })}
+              type='radio'
+              value='female'
+              {...register('gender', { required: t('genderRequired') })}
               className={styles.radioInput}
               disabled={loading} // Disable input when loading
             />
-            {t("female")}
+            {t('female')}
           </div>
           <div>
             <input
-              type="radio"
-              value="male"
-              {...register("gender", { required: t("genderRequired") })}
+              type='radio'
+              value='male'
+              {...register('gender', { required: t('genderRequired') })}
               className={styles.radioInput}
               disabled={loading} // Disable input when loading
             />
-            {t("male")}
+            {t('male')}
           </div>
         </div>
         {errors.gender && (
@@ -376,36 +376,36 @@ const RegisterForm = () => {
         <div className={styles.dateOfBirthContainer}>
           <select
             className={`${styles.inputHalf} ${
-              errors.month ? styles.errorBorder : ""
+              errors.month ? styles.errorBorder : ''
             }`}
-            {...register("month")}
+            {...register('month')}
             disabled={loading} // Disable input when loading
           >
-            <option value="">{t("month")}</option>
-            <option value="January">{t("january")}</option>
-            <option value="February">{t("february")}</option>
-            <option value="March">{t("march")}</option>
-            <option value="April">{t("april")}</option>
-            <option value="May">{t("may")}</option>
-            <option value="June">{t("june")}</option>
-            <option value="July">{t("july")}</option>
-            <option value="August">{t("august")}</option>
-            <option value="September">{t("september")}</option>
-            <option value="October">{t("october")}</option>
-            <option value="November">{t("november")}</option>
-            <option value="December">{t("december")}</option>
+            <option value=''>{t('month')}</option>
+            <option value='January'>{t('january')}</option>
+            <option value='February'>{t('february')}</option>
+            <option value='March'>{t('march')}</option>
+            <option value='April'>{t('april')}</option>
+            <option value='May'>{t('may')}</option>
+            <option value='June'>{t('june')}</option>
+            <option value='July'>{t('july')}</option>
+            <option value='August'>{t('august')}</option>
+            <option value='September'>{t('september')}</option>
+            <option value='October'>{t('october')}</option>
+            <option value='November'>{t('november')}</option>
+            <option value='December'>{t('december')}</option>
           </select>
           <select
             className={`${styles.inputHalf} ${
-              errors.year ? styles.errorBorder : ""
+              errors.year ? styles.errorBorder : ''
             }`}
-            {...register("year")}
+            {...register('year')}
             disabled={loading} // Disable input when loading
           >
-            <option value="">{t("year")}</option>
+            <option value=''>{t('year')}</option>
             {Array.from({ length: 100 }, (_, i) => (
-              <option key={i} value={2022 - i}>
-                {2022 - i}
+              <option key={i} value={2010 - i}>
+                {2010 - i}
               </option>
             ))}
           </select>
@@ -413,17 +413,17 @@ const RegisterForm = () => {
 
         <select
           className={`${styles.input} ${
-            errors.country_id ? styles.errorBorder : ""
+            errors.country_id ? styles.errorBorder : ''
           }`}
-          {...register("country_id", { required: t("countryRequired") })}
+          {...register('country_id', { required: t('countryRequired') })}
           onChange={handleCountryChange}
           value={selectedCountryId}
           disabled={loading} // Disable input when loading
         >
-          <option value="">{t("citizenship")}</option>
+          <option value=''>{t('citizenship')}</option>
           {countries.map((country) => (
             <option key={country.id} value={country.id}>
-              {locale === "en" ? country.name_en : country.name_ar}
+              {locale === 'en' ? country.name_en : country.name_ar}
             </option>
           ))}
         </select>
@@ -432,12 +432,12 @@ const RegisterForm = () => {
           [63, 227, 188].includes(parseInt(selectedCountryId)) && (
             <select
               className={`${styles.input} ${
-                errors.city ? styles.errorBorder : ""
+                errors.city ? styles.errorBorder : ''
               }`}
-              {...register("city", { required: t("cityRequired") })}
+              {...register('city', { required: t('cityRequired') })}
               disabled={loading} // Disable input when loading
             >
-              <option value="">{t("selectCity")}</option>
+              <option value=''>{t('selectCity')}</option>
               {cityOptions[selectedCountryId].map((city, index) => (
                 <option key={index} value={city}>
                   {city}
@@ -449,22 +449,22 @@ const RegisterForm = () => {
         <div className={styles.termsContainer}>
           <label>
             <input
-              type="checkbox"
-              {...register("terms", { required: t("acceptTerms") })}
+              type='checkbox'
+              {...register('terms', { required: t('acceptTerms') })}
               className={styles.checkbox}
               disabled={loading} // Disable input when loading
             />
-            {t("acceptTermsText")} <Link href="/terms">{t("terms")}</Link>
+            {t('acceptTermsText')} <Link href='/terms'>{t('terms')}</Link>
           </label>
           <br />
           <label>
             <input
-              type="checkbox"
-              {...register("privacy", { required: t("acceptPrivacy") })}
+              type='checkbox'
+              {...register('privacy', { required: t('acceptPrivacy') })}
               className={styles.checkbox}
               disabled={loading} // Disable input when loading
             />
-            {t("acceptPrivacyText")} <Link href="/privacy">{t("privacy")}</Link>
+            {t('acceptPrivacyText')} <Link href='/privacy'>{t('privacy')}</Link>
           </label>
         </div>
         {errors.terms && <p className={styles.error}>{errors.terms.message}</p>}
@@ -474,16 +474,16 @@ const RegisterForm = () => {
 
         <button
           className={styles.button}
-          type="submit"
+          type='submit'
           disabled={loading} // Disable button when loading
         >
-          {loading ? t("loading") : t("signUp")} {/* Show loader text */}
+          {loading ? t('loading') : t('signUp')} {/* Show loader text */}
         </button>
       </form>
       <p className={styles.loginLink}>
-        {t("alreadyHaveAccount")}{" "}
-        <Link href="/login" className={styles.link}>
-          {t("logIn")}
+        {t('alreadyHaveAccount')}{' '}
+        <Link href='/login' className={styles.link}>
+          {t('logIn')}
         </Link>
       </p>
     </div>

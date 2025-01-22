@@ -217,7 +217,9 @@
     "filterByStatus": "Filter by Status",
     "allSurveys": "All Surveys",
     "availableReward": "Available Reward",
-    "estimatedTime": "Estimated Time"
+    "estimatedTime": "Estimated Time",
+    "serviceNotAvailable": "Service Not Available",
+    "serviceNotAvailableInCountry": "We apologize, but this service is not yet available in your country. We're working on expanding our coverage to more regions soon."
   },
   "Profile": {
     "myProfile": "My Profile",

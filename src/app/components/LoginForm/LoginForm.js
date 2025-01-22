@@ -47,7 +47,7 @@ const Login = () => {
         }, 3000);
       } else {
         const callbackUrl = searchParams.get("callbackUrl");
-        window.location.href = callbackUrl ? callbackUrl : "/";
+        window.location.href = callbackUrl ? callbackUrl : "/surveys";
       }
     } catch (error) {
       setError("submit", {
