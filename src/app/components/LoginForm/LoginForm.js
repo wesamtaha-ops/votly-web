@@ -31,7 +31,7 @@ const Login = () => {
 
     try {
       const result = await signIn("credentials", {
-        email: payload.email,
+        email: payload.email.toLowerCase(),
         password: payload.password,
         lang: lang,
         redirect: false,

@@ -189,7 +189,7 @@ const RegisterForm = () => {
 
       if (res.status == 1) {
         const { error } = await signIn("credentials", {
-          email: payload.email,
+          email: payload.email.toLowerCase(),
           password: payload.password,
           redirect: false,
         });
