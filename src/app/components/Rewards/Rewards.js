@@ -9,37 +9,6 @@ import { useLocale, useTranslations } from "next-intl";
 import { FaHistory, FaGift, FaClock, FaDollarSign } from "react-icons/fa";
 import Image from "next/image";
 
-const dummyHistory = [
-  {
-    created_at: "2024-03-15",
-    value_in_votly: 100,
-    brand_en: "Amazon Gift Card",
-    brand_ar: "بطاقة هدايا أمازون",
-    status: "completed",
-  },
-  {
-    created_at: "2024-03-10",
-    value_in_votly: 50,
-    brand_en: "Starbucks Voucher",
-    brand_ar: "قسيمة ستاربكس",
-    status: "pending",
-  },
-  {
-    created_at: "2024-03-05",
-    value_in_votly: 200,
-    brand_en: "Nike Store Credit",
-    brand_ar: "رصيد متجر نايكي",
-    status: "completed",
-  },
-  {
-    created_at: "2024-02-28",
-    value_in_votly: 75,
-    brand_en: "Cinema Tickets",
-    brand_ar: "تذاكر سينما",
-    status: "failed",
-  },
-];
-
 const Rewards = () => {
   const { data: session, update: updateSession } = useSession();
   const userToken = session?.id;
@@ -56,6 +25,10 @@ const Rewards = () => {
   const [submitting, setSubmitting] = useState(false);
   const [loading, setLoading] = useState(true);
   const [redeemHistory, setRedeemHistory] = useState([]);
+  const [redeemHistoryLoading, setRedeemHistoryLoading] = useState(false);
+  const [redeemHistoryLoaded, setRedeemHistoryLoaded] = useState(false);
+  const [orderLoading, setOrderLoading] = useState(false);
+  const [orderLoaded, setOrderLoaded] = useState(false);
 
   const [categories] = useState([
     { id: 1, name: t("fashion") },
@@ -96,18 +69,36 @@ const Rewards = () => {
   async function fetchData() {
     setLoading(true);
     try {
-      const rewardsResponse = await callApi({
-        type: "get",
-        url: "order",
-        userToken: userToken,
-      });
+      if (!orderLoading && !orderLoaded) {
+        setOrderLoading(true);
+        const rewardsResponse = await callApi({
+          type: "get",
+          url: "order",
+          userToken: userToken,
+        });
 
-      if (rewardsResponse.status == 200) {
-        setRewards(rewardsResponse.data);
+        if (rewardsResponse.status == 200) {
+          setRewards(rewardsResponse.data);
+        }
+
+        setOrderLoading(false);
+        setOrderLoaded(true);
       }
 
-      // Set dummy history data instead of making API call
-      setRedeemHistory(dummyHistory);
+      if (!redeemHistoryLoading && !redeemHistoryLoaded) {
+        setRedeemHistoryLoading(true);
+
+        const rewardsHistoryResponse = await callApi({
+          type: "get",
+          url: "orderHistory",
+          userToken: userToken,
+        });
+
+        setRedeemHistory(rewardsHistoryResponse?.data?.data ?? []);
+
+        setRedeemHistoryLoading(false);
+        setRedeemHistoryLoaded(true);
+      }
     } catch (error) {
       console.error("Error fetching data:", error);
     } finally {
@@ -312,7 +303,6 @@ const Rewards = () => {
                       <th>{t("date")}</th>
                       <th>{t("amount")}</th>
                       <th>{t("gift")}</th>
-                      <th>{t("status")}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -326,15 +316,6 @@ const Rewards = () => {
                         </td>
                         <td>
                           {locale === "en" ? item.brand_en : item.brand_ar}
-                        </td>
-                        <td>
-                          <span
-                            className={`${styles.status} ${
-                              styles[item.status]
-                            }`}
-                          >
-                            {t(item.status)}
-                          </span>
                         </td>
                       </tr>
                     ))}
