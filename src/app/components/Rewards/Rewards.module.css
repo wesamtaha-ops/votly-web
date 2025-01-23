@@ -30,6 +30,7 @@
   text-align: center;
 }
 
+
 .noRewardsMessage {
   font-size: 24px;
   color: var(--text-color);
@@ -40,7 +41,7 @@
   border-radius: 30px;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
   margin-top: 60px;
-  width: 70%;
+  
 }
 .rewardsGrid {
   display: grid;
