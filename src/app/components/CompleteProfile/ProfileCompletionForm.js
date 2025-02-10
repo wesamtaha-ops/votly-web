@@ -21,6 +21,7 @@ const ProfileCompletionForm = ({ profile, onSubmit }) => {
 
   const { data: session } = useSession();
   const userToken = session?.id;
+  const lang = useLocale();
 
   const [questions, setQuestions] = useState([]);
   const [questionsLoaded, setQuestionsLoaded] = useState(false);
@@ -42,6 +43,7 @@ const ProfileCompletionForm = ({ profile, onSubmit }) => {
         type: "get",
         url: "userProfileQuestions",
         userToken: userToken,
+        lang: lang,
       });
 
       setQuestionsLoading(false);
@@ -180,8 +182,10 @@ const ProfileCompletionForm = ({ profile, onSubmit }) => {
                     variant="outlined"
                     fullWidth
                     className={styles.formField}
-                    value={allFields[question.id] || ''}
-                    onChange={(e) => handleElChange(question.id, e.target.value)}
+                    value={allFields[question.id] || ""}
+                    onChange={(e) =>
+                      handleElChange(question.id, e.target.value)
+                    }
                   >
                     {question.answers.map((answer) => (
                       <MenuItem key={answer.id} value={answer.id}>
