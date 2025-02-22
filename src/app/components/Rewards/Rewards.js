@@ -18,7 +18,7 @@ const Rewards = () => {
   // States
   const [showHistory, setShowHistory] = useState(false);
   const [rewards, setRewards] = useState([]);
-  const [userPoints, setUserPoints] = useState(0);
+  const [userBalanceInDollars, setUserBalanceInDollars] = useState(0);
   const [userBalance, setUserBalance] = useState(0);
   const [showRewards, setShowRewards] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -29,6 +29,7 @@ const Rewards = () => {
   const [redeemHistoryLoaded, setRedeemHistoryLoaded] = useState(false);
   const [orderLoading, setOrderLoading] = useState(false);
   const [orderLoaded, setOrderLoaded] = useState(false);
+  const [conversionRate, setConversionRate] = useState(0);
 
   const [categories] = useState([
     { id: 1, name: t("fashion") },
@@ -55,8 +56,7 @@ const Rewards = () => {
   ]);
 
   // Derived values
-  const minimum_points_to_redeem = rewards?.[0]?.minimum_points_to_redeem;
-  const point_value_in_dollars = rewards?.[0]?.point_value_in_dollars;
+  const minimum_dollars_to_redeem = rewards?.[0]?.minimum_dollars_to_redeem;
   let usedCurrency = rewards?.[0]?.country_currency;
 
   if (usedCurrency == "AED" && locale == "ar") {
@@ -169,16 +169,17 @@ const Rewards = () => {
       setShowRewards(false);
     } else {
       fetchData();
-      setUserPoints(session?.user?.num_points);
+      setUserBalanceInDollars(session?.user?.syno_balance);
       setShowRewards(true);
     }
   }, [userToken, session]);
 
   useEffect(() => {
-    if (point_value_in_dollars > 0 && userPoints > 0) {
-      setUserBalance(userPoints / point_value_in_dollars);
+    if (userBalanceInDollars > 0) {
+      setConversionRate(session?.user?.countryDetails?.conversion_value ?? 0);
+      setUserBalance(userBalanceInDollars * conversionRate);
     }
-  }, [point_value_in_dollars, userPoints]);
+  }, [session, userBalanceInDollars]);
 
   const renderRewardCard = (reward, index, isFeatured = false) => (
     <div
@@ -202,8 +203,8 @@ const Rewards = () => {
         <button
           className={`${styles.redeemButton} ${
             !(
-              minimum_points_to_redeem < userPoints &&
-              userBalance >= reward.value_in_votly
+              userBalanceInDollars >= minimum_dollars_to_redeem &&
+              userBalanceInDollars >= reward.value_in_votly / conversionRate
             ) || submitting
               ? styles.disabled
               : ""
@@ -211,15 +212,15 @@ const Rewards = () => {
           onClick={() => handleRedeem(reward.provider_origin_id)}
           disabled={
             !(
-              minimum_points_to_redeem < userPoints &&
-              userBalance >= reward.value_in_votly
+              userBalanceInDollars >= minimum_dollars_to_redeem &&
+              userBalanceInDollars >= reward.value_in_votly / conversionRate
             ) || submitting
           }
         >
           {submitting
             ? t("submitting")
-            : minimum_points_to_redeem < userPoints &&
-              userBalance >= reward.value_in_votly
+            : userBalanceInDollars >= minimum_dollars_to_redeem &&
+              userBalanceInDollars >= reward.value_in_votly / conversionRate
             ? t("redeem")
             : t("notEnoughBalance")}
         </button>
@@ -304,7 +305,10 @@ const Rewards = () => {
                           {new Date(item.created_at).toLocaleDateString(locale)}
                         </td>
                         <td>
-                          {item.value_in_votly} {usedCurrency}
+                          {(
+                            item.voucher_value_in_dollars * conversionRate
+                          ).toFixed(2)}{" "}
+                          {usedCurrency}
                         </td>
                         <td>
                           {locale === "en" ? item.brand_en : item.brand_ar}
