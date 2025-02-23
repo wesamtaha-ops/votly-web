@@ -179,7 +179,7 @@ const Rewards = () => {
       setConversionRate(session?.user?.countryDetails?.conversion_value ?? 0);
       setUserBalance(userBalanceInDollars * conversionRate);
     }
-  }, [session, userBalanceInDollars]);
+  }, [session, userToken, userBalanceInDollars]);
 
   const renderRewardCard = (reward, index, isFeatured = false) => (
     <div
