@@ -133,6 +133,7 @@ const Rewards = () => {
             await updateSession({ user: response.data.data });
             reloadSession();
             await fetchData(); // Refresh data after successful redeem
+            await fetchBalance(userToken);
             Swal.fire(t("redeemed"), "", "success");
           } else {
             Swal.fire(t("noRedeem"), "", "error");
@@ -159,6 +160,23 @@ const Rewards = () => {
     selectedCategory ? reward.category_id === parseInt(selectedCategory) : true
   );
 
+  const fetchBalance = async (userToken) => {
+    if (userToken) {
+      const response = await callApi({
+        type: "get",
+        url: "balance",
+        userToken: userToken,
+      });
+
+      if (response?.user) {
+        await updateSession({ user: response.user });
+
+        reloadSession();
+        setUserBalanceInDollars(response?.user?.syno_balance);
+      }
+    }
+  };
+
   // Effects
   useEffect(() => {
     if (
@@ -169,10 +187,11 @@ const Rewards = () => {
       setShowRewards(false);
     } else {
       fetchData();
+      fetchBalance(userToken);
       setUserBalanceInDollars(session?.user?.syno_balance);
       setShowRewards(true);
     }
-  }, [userToken, session]);
+  }, [userToken]);
 
   useEffect(() => {
     if (userBalanceInDollars > 0) {
