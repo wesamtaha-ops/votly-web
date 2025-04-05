@@ -277,18 +277,54 @@ font-family: Almarai, sans-serif !important;
 }
 
 .answeredCard {
-  opacity: 0.7;
-  background: rgba(255, 255, 255, 0.05);
+  opacity: 0.85;
+  background: #f8f9fa;
+  position: relative;
+  overflow: hidden;
+}
+
+.answeredCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 50px 50px 0;
+  border-color: transparent #4a5568 transparent transparent;
+}
+
+.answeredCard .surveyTitle {
+  color: #4a5568;
+}
+
+.answeredCard .surveyInfo {
+  opacity: 0.8;
 }
 
 .answeredCard .takeSurveyButton {
   background: #4a5568;
   cursor: not-allowed;
+  opacity: 0.9;
+  position: relative;
 }
 
-.answeredCard .takeSurveyButton:hover {
+.answeredCard .takeSurveyButton::after {
+  content: '✓';
+  position: absolute;
+  right: 10px;
+  font-size: 16px;
+}
+
+[dir='rtl'] .answeredCard .takeSurveyButton::after {
+  right: auto;
+  left: 10px;
+}
+
+.answeredCard:hover {
   transform: none;
-  box-shadow: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 /* RTL Support */

@@ -77,13 +77,24 @@ const ForgotPassword = () => {
     }
   };
 
+  const renderStepIndicator = () => {
+    return (
+      <div className={styles.stepIndicator}>
+        <div className={`${styles.step} ${!sentMode ? styles.stepActive : ''}`} />
+        <div className={`${styles.step} ${sentMode && !otpVerified ? styles.stepActive : ''}`} />
+        <div className={`${styles.step} ${otpVerified ? styles.stepActive : ''}`} />
+      </div>
+    );
+  };
+
   return (
     <div className={styles.formContainer}>
       <h2 className={styles.title}>{t("forgotPasswordTitle")}</h2>
+      {renderStepIndicator()}
 
       {/* Step 1: Email Submission */}
       {!sentMode && (
-        <form onSubmit={handleSubmit(onSubmitEmail)}>
+        <form className={styles.form} onSubmit={handleSubmit(onSubmitEmail)}>
           <input
             className={styles.input}
             {...register("email", {
@@ -95,7 +106,6 @@ const ForgotPassword = () => {
           {errors.email && (
             <p className={styles.error}>{errors.email.message}</p>
           )}
-          <br />
           <button className={styles.button} type="submit">
             {t("resetPasswordButton")}
           </button>
@@ -104,7 +114,7 @@ const ForgotPassword = () => {
 
       {/* Step 2: OTP Submission */}
       {otpSent && !otpVerified && (
-        <form onSubmit={handleSubmit(onSubmitOtp)}>
+        <form className={styles.form} onSubmit={handleSubmit(onSubmitOtp)}>
           <input
             className={styles.input}
             {...register("otp", {
@@ -114,7 +124,6 @@ const ForgotPassword = () => {
             placeholder={t("otpPlaceholder")}
           />
           {errors.otp && <p className={styles.error}>{errors.otp.message}</p>}
-          <br />
           <button className={styles.button} type="submit">
             {t("verifyOtpButton")}
           </button>
@@ -123,7 +132,7 @@ const ForgotPassword = () => {
 
       {/* Step 3: New Password Submission */}
       {otpVerified && (
-        <form onSubmit={handleSubmit(onSubmitNewPassword)}>
+        <form className={styles.form} onSubmit={handleSubmit(onSubmitNewPassword)}>
           <input
             type="password"
             className={styles.input}
@@ -149,7 +158,6 @@ const ForgotPassword = () => {
           {errors.confirmPassword && (
             <p className={styles.error}>{errors.confirmPassword.message}</p>
           )}
-          <br />
           <button className={styles.button} type="submit">
             {t("setNewPasswordButton")}
           </button>

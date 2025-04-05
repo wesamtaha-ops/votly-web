@@ -266,7 +266,8 @@ const OtpVerification = ({ contactInfo, type }) => {
           />
         )}
         <h2 className={styles.title}>
-          {t("enterCode")} <br /> {contactInfo}
+          {t("enterCode")} <br /> 
+          <span className={styles.contactInfo}>{contactInfo}</span>
         </h2>
         <div dir="ltr" className={styles.otpInputs}>
           {otp.map((digit, index) => (

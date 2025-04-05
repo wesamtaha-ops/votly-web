@@ -1,29 +1,30 @@
 .formContainer {
   width: 100%;
   max-width: 500px;
-  margin: 100px auto;
-  padding: 20px;
+  margin: 80px auto;
+  padding: 40px;
   background-color: white;
-  border-radius: var(--border-radius);
-  box-shadow: 0px 10px 30px #1b34fb1f;
-  animation: fadeIn 0.3s ease-in-out;
-  padding: 3%;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(27, 52, 251, 0.1);
+  animation: fadeIn 0.4s ease-in-out;
 }
 
 .react_tel_input_custom {
   position: relative;
-  font-size: 18px !important;
+  font-size: 16px !important;
   letter-spacing: 0.01rem;
   margin-top: 0 !important;
   margin-bottom: 0 !important;
   padding-left: 58px !important;
   margin-left: 0;
-  border: 1px solid #cacaca;
-  border-radius: 5px;
+  border: 2px solid #eef1f6 !important;
+  border-radius: 12px !important;
   line-height: 25px;
-  height: 65px !important;
+  height: 56px !important;
   width: 100% !important;
   outline: none;
+  background-color: #f8fafc !important;
+  transition: all 0.3s ease;
 }
 
 @keyframes fadeIn {
@@ -39,177 +40,192 @@
 }
 
 .title {
-  font-size: 28px;
-  margin-bottom: 20px;
+  font-size: 32px;
+  margin-bottom: 30px;
   color: var(--text-color);
-  font-weight: 600;
+  font-weight: 700;
   text-align: center;
+  font-family: 'Almarai', sans-serif;
 }
 
 .form {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 20px;
+}
+
+.input, .inputHalf {
+  padding: 16px 20px;
+  border: 2px solid #eef1f6;
+  border-radius: 12px;
+  font-size: 16px;
+  color: var(--text-color);
+  transition: all 0.3s ease;
+  font-family: 'Almarai', sans-serif;
+  background-color: #f8fafc;
 }
 
 .input {
-  padding: 18px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 16px;
-  color: var(--text-color);
-  transition: border-color 0.3s ease;
-  font-family: 'Almarai', sans-serif;
-  background-color: #f5f8fa;
+  width: 92%;
 }
 
 .inputHalf {
   width: 48%;
-  padding: 18px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 16px;
-  color: var(--text-color);
-  transition: border-color 0.3s ease;
-  background-color: #f5f8fa;
-  font-family: 'Almarai', sans-serif;
 }
 
-.input:focus,
-.inputHalf:focus {
+.input:focus, .inputHalf:focus {
   border-color: var(--primary-color);
   outline: none;
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
+  box-shadow: 0 0 0 4px rgba(49, 130, 206, 0.1);
+  background-color: white;
+}
+
+.input:hover, .inputHalf:hover {
+  background-color: white;
+  border-color: #cbd5e0;
 }
 
 .errorBorder {
   border-color: red;
 }
 
-.nameContainer,
-.dateOfBirthContainer {
+.nameContainer, .dateOfBirthContainer {
   display: flex;
   justify-content: space-between;
-  gap: 10px;
+  gap: 15px;
 }
 
 .genderContainer {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 20px;
   font-size: 16px;
-  margin-top: 15px;
-  margin-bottom: 15px;
+  padding: 10px 0;
 }
 
 .radioInput {
-  margin-right: 5px;
+  margin-right: 8px;
+  width: 20px;
+  height: 20px;
+  accent-color: var(--primary-color);
 }
 
 .termsContainer {
-  margin-top: 20px;
-  font-size: 14px;
+  margin-top: 10px;
+  font-size: 15px;
   color: var(--text-color);
+  line-height: 1.8;
 }
 
 .checkbox {
-  margin-right: 8px;
-  width: 25px;
-  height: 25px;
-  position: relative;
-  top: 8px;
-  border-radius: 10px;
-  margin-left: 10px;
   margin-right: 10px;
+  width: 20px;
+  height: 20px;
+  position: relative;
+  top: 4px;
+  accent-color: var(--primary-color);
+  border-radius: 6px;
 }
 
 .error {
-  color: red;
+  color: #e53e3e;
   font-size: 14px;
-  margin-top: -10px;
+  margin-top: -15px;
+  margin-bottom: -5px;
 }
 
 .button {
-  padding: 14px;
+  padding: 16px;
   background-color: var(--primary-color);
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 12px;
   font-size: 18px;
-  font-weight: bold;
+  font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  transition: all 0.3s ease;
   font-family: 'Almarai', sans-serif;
+  margin-top: 10px;
 }
 
-.button:hover {
-  background-color: #0056b3;
+.button:hover:not(:disabled) {
+  background-color: #2c5282;
   transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(49, 130, 206, 0.2);
+}
+
+.button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
 }
 
 .loginLink {
-  margin-top: 20px;
-  font-size: 14px;
+  margin-top: 25px;
+  font-size: 15px;
   text-align: center;
-  color: var(--primary-color);
+  color: var(--text-color);
 }
 
 .link {
   color: var(--primary-color);
   text-decoration: none;
+  font-weight: 600;
+  transition: all 0.2s ease;
 }
 
 .link:hover {
+  color: #2c5282;
   text-decoration: underline;
 }
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .formContainer {
-    margin: 50px auto;
-    padding: 10px;
+    margin: 40px auto;
+    padding: 30px;
+    width: 90%;
+  }
+
+  .title {
+    font-size: 28px;
+  }
+
+  .input, .inputHalf {
+    font-size: 16px;
+    padding: 14px 18px;
+  }
+
+  .nameContainer, .dateOfBirthContainer {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .inputHalf {
+    width: 100%;
+  }
+
+  .button {
+    font-size: 16px;
+    padding: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .formContainer {
+    margin: 20px auto;
+    padding: 20px;
+    width: 95%;
   }
 
   .title {
     font-size: 24px;
   }
 
-  .input,
-  .inputHalf {
-    font-size: 14px;
-    padding: 14px;
-    width: 90%;
-  }
-
-  .nameContainer,
-  .dateOfBirthContainer {
-    flex-direction: column;
-    gap: 5px;
+  .input, .inputHalf {
+    padding: 12px 16px;
   }
 
   .button {
-    font-size: 16px;
     padding: 12px;
-  }
-}
-
-@media (max-width: 480px) {
-  .formContainer {
-    margin: 30px auto;
-    padding: 5%;
-    width: 80%;
-  }
-
-  .title {
-    font-size: 20px;
-  }
-
-  .input,
-  .inputHalf {
-    width: 95%;
-  }
-
-  .button {
-    padding: 10px;
   }
 }

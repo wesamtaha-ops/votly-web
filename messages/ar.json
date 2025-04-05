@@ -66,7 +66,18 @@
     "invalidEmail": "عنوان البريد الإلكتروني غير صالح",
     "emailPlaceholder": "أدخل بريدك الإلكتروني",
     "resetPasswordButton": "إعادة تعيين كلمة المرور",
-    "loading": "..."
+    "loading": "...",
+    "otpRequired": "رمز التحقق مطلوب",
+    "otpInvalid": "يجب أن يكون رمز التحقق 6 أرقام",
+    "otpPlaceholder": "أدخل رمز التحقق",
+    "verifyOtpButton": "تحقق من رمز التحقق",
+    "passwordRequired": "كلمة المرور مطلوبة",
+    "passwordMinLength": "يجب أن تكون كلمة المرور 6 أحرف على الأقل",
+    "newPasswordPlaceholder": "أدخل كلمة المرور الجديدة",
+    "confirmPasswordRequired": "يرجى تأكيد كلمة المرور",
+    "confirmPasswordPlaceholder": "تأكيد كلمة المرور الجديدة",
+    "passwordsDoNotMatch": "كلمات المرور غير متطابقة",
+    "setNewPasswordButton": "تعيين كلمة المرور الجديدة"
   },
   "OtpVerification": {
     "enterCode": "أدخل الرمز المكون من 6 أرقام المرسل إلى",
@@ -332,19 +343,14 @@
     "failed": "فشل"
   },
   "ProfileCompletionForm": {
-    "beforeContinue": "قبل أن تكمل...",
-    "moreDetails": "نحتاج إلى المزيد من التفاصيل ",
+    "beforeContinue": "قبل أن تستمر...",
+    "moreDetails": "نحتاج إلى بعض التفاصيل الإضافية لإكمال ملفك الشخصي",
     "complete": "مكتمل",
-    "nationality": "الجنسية",
-    "residence": "الإقامة",
-    "householdIncome": "دخل الأسرة",
-    "lessThan1500": "أقل من 1500 [currency] في الشهر",
-    "5000To10000": "5000 - 10000 [currency] في الشهر",
-    "10000To20000": "10000 - 20000 [currency] في الشهر",
-    "moreThan20000": "أكثر من 20000 [currency] في الشهر",
-    "preferNotToSay": "أفضل عدم القول",
+    "selectOption": "اختر خيارًا",
     "submitting": "جاري الإرسال...",
-    "submit": "إرسال"
+    "submit": "إرسال",
+    "loading": "جاري التحميل...",
+    "profileUpdated": "تم تحديث الملف الشخصي بنجاح!"
   },
   "About": {
     "heroTitle": "تمكين الأصوات، مكافأة الرؤى",

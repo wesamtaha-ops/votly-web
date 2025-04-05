@@ -7,12 +7,24 @@ import { useSession } from 'next-auth/react';
 import styles from './SurveysList.module.css';
 import { useSearchParams } from 'next/navigation';
 import { FaClipboardList, FaFilter, FaGlobe } from 'react-icons/fa';
+import { Session } from 'next-auth';
+
+interface CustomSession extends Session {
+  id?: string;
+  user?: {
+    name?: string;
+    email?: string;
+    image?: string;
+    country_id?: number;
+    [key: string]: any;
+  };
+}
 
 const SurveysList = () => {
-  const { data: session } = useSession();
+  const { data: session, status: sessionStatus } = useSession();
   const t = useTranslations('Surveys');
   const lang = useLocale();
-  const userToken = session?.id;
+  const userToken = (session as CustomSession)?.id;
   const [surveys, setSurveys] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeFilter, setActiveFilter] = useState('active'); // 'active' or 'answered'
@@ -64,7 +76,17 @@ const SurveysList = () => {
     </div>
   );
 
-  if (!isUserCountryAllowed(session?.user)) {
+  // Show loading spinner while session is loading
+  if (sessionStatus === "loading" || loading) {
+    return (
+      <div className={styles.surveysContainer}>
+        <div className={styles.spinner}></div>
+      </div>
+    );
+  }
+
+  // Only check country restriction after session is loaded
+  if (sessionStatus === "authenticated" && !isUserCountryAllowed(session?.user)) {
     return <CountryRestrictionMessage />;
   }
 
@@ -82,100 +104,94 @@ const SurveysList = () => {
         </p>
       )}
 
-      {loading ? (
-        <div className={styles.spinner}></div>
-      ) : (
-        <>
-          {/* Filter Controls */}
-          <div className={styles.filterContainer}>
-            <div className={styles.filterButtons}>
-              <button
-                className={`${styles.filterButton} ${
-                  activeFilter === 'active' ? styles.active : ''
-                }`}
-                onClick={() => setActiveFilter('active')}>
-                <FaFilter className={styles.filterIcon} />
-                {t('activeSurveys')}
-                <span className={styles.surveyCount}>
-                  {surveys.filter((s) => !s.completed).length}
-                </span>
-              </button>
-              <button
-                className={`${styles.filterButton} ${
-                  activeFilter === 'answered' ? styles.active : ''
-                }`}
-                onClick={() => setActiveFilter('answered')}>
-                <FaFilter className={styles.filterIcon} />
-                {t('answeredSurveys')}
-                <span className={styles.surveyCount}>
-                  {surveys.filter((s) => s.completed).length}
-                </span>
-              </button>
-            </div>
-          </div>
-          <h2 className={styles.title}>{t('earnBySurveys')}</h2>
-          <p className={styles.surveyDescription}>{t('surveyDescription')}</p>
+      {/* Filter Controls */}
+      <div className={styles.filterContainer}>
+        <div className={styles.filterButtons}>
+          <button
+            className={`${styles.filterButton} ${
+              activeFilter === 'active' ? styles.active : ''
+            }`}
+            onClick={() => setActiveFilter('active')}>
+            <FaFilter className={styles.filterIcon} />
+            {t('activeSurveys')}
+            <span className={styles.surveyCount}>
+              {surveys.filter((s) => !s.completed).length}
+            </span>
+          </button>
+          <button
+            className={`${styles.filterButton} ${
+              activeFilter === 'answered' ? styles.active : ''
+            }`}
+            onClick={() => setActiveFilter('answered')}>
+            <FaFilter className={styles.filterIcon} />
+            {t('answeredSurveys')}
+            <span className={styles.surveyCount}>
+              {surveys.filter((s) => s.completed).length}
+            </span>
+          </button>
+        </div>
+      </div>
+      <h2 className={styles.title}>{t('earnBySurveys')}</h2>
+      <p className={styles.surveyDescription}>{t('surveyDescription')}</p>
 
-          {filteredSurveys.length > 0 ? (
-            <div className={styles.surveysGrid}>
-              {filteredSurveys.map((survey) => (
-                <div
-                  key={survey.id}
-                  className={`${styles.surveyCard} ${
-                    survey.completed ? styles.answeredCard : ''
-                  }`}>
-                  <h3 className={styles.surveyTitle}>{survey.title}</h3>
-                  <p className={styles.surveyDescription}>
-                    {survey.description}
-                  </p>
-                  <div className={styles.surveyInfo}>
-                    <img
-                      src='https://i.etsystatic.com/36262552/r/il/aa81a7/4191400611/il_570xN.4191400611_23uk.jpg'
-                      alt={t('timeIconAlt')}
-                      className={styles.timeIcon}
-                    />
-                    <span className={styles.duration}>
-                      {survey.duration} {t('mins')}
-                    </span>
-
-                    <img
-                      src='https://i.pinimg.com/564x/a4/91/7a/a4917a4fcb3b1a6b3416e27491d9422b.jpg'
-                      alt={t('priceIconAlt')}
-                      className={styles.timeIcon2}
-                    />
-                    <span className={styles.amount}>
-                      {survey.amount} {survey.currencyIsoCode}
-                    </span>
-                  </div>
-                  <button
-                    className={styles.takeSurveyButton}
-                    onClick={() => {
-                      window.open(survey.link, '_blank');
-                    }}
-                    disabled={survey.completed}>
-                    {survey.completed ? t('surveyCompleted') : t('takeSurvey')}
-                  </button>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div className={styles.noSurveys}>
-              <div className={styles.noSurveysIcon}>
-                <FaClipboardList />
-              </div>
-              <h3 className={styles.noSurveysTitle}>
-                {activeFilter === 'active'
-                  ? t('noActiveSurveys')
-                  : t('noAnsweredSurveys')}
-              </h3>
-              <p className={styles.noSurveysText}>
-                {activeFilter === 'active'
-                  ? t('noActiveSurveysText')
-                  : t('noAnsweredSurveysText')}
+      {filteredSurveys.length > 0 ? (
+        <div className={styles.surveysGrid}>
+          {filteredSurveys.map((survey) => (
+            <div
+              key={survey.id}
+              className={`${styles.surveyCard} ${
+                survey.completed ? styles.answeredCard : ''
+              }`}>
+              <h3 className={styles.surveyTitle}>{survey.title}</h3>
+              <p className={styles.surveyDescription}>
+                {survey.description}
               </p>
+              <div className={styles.surveyInfo}>
+                <img
+                  src='https://i.etsystatic.com/36262552/r/il/aa81a7/4191400611/il_570xN.4191400611_23uk.jpg'
+                  alt={t('timeIconAlt')}
+                  className={styles.timeIcon}
+                />
+                <span className={styles.duration}>
+                  {survey.duration} {t('mins')}
+                </span>
+
+                <img
+                  src='https://i.pinimg.com/564x/a4/91/7a/a4917a4fcb3b1a6b3416e27491d9422b.jpg'
+                  alt={t('priceIconAlt')}
+                  className={styles.timeIcon2}
+                />
+                <span className={styles.amount}>
+                  {survey.amount} {survey.currencyIsoCode}
+                </span>
+              </div>
+              <button
+                className={styles.takeSurveyButton}
+                onClick={() => {
+                  window.open(survey.link, '_blank');
+                }}
+                disabled={survey.completed}>
+                {survey.completed ? t('surveyCompleted') : t('takeSurvey')}
+              </button>
             </div>
-          )}
-        </>
+          ))}
+        </div>
+      ) : (
+        <div className={styles.noSurveys}>
+          <div className={styles.noSurveysIcon}>
+            <FaClipboardList />
+          </div>
+          <h3 className={styles.noSurveysTitle}>
+            {activeFilter === 'active'
+              ? t('noActiveSurveys')
+              : t('noAnsweredSurveys')}
+          </h3>
+          <p className={styles.noSurveysText}>
+            {activeFilter === 'active'
+              ? t('noActiveSurveysText')
+              : t('noAnsweredSurveysText')}
+          </p>
+        </div>
       )}
     </div>
   );

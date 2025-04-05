@@ -17,7 +17,7 @@ export default async function MobileVerificationPage() {
       <Header />
       <div
         style={{
-          marginTop: '100px',
+          marginTop: '50px',
           lineHeight: '40px',
         }}></div>
       <OtpVerification contactInfo={session?.user?.phone} type='mobile' />

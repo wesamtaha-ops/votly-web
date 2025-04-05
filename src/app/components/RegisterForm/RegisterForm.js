@@ -418,7 +418,8 @@ const RegisterForm = () => {
           {...register('country_id', { required: t('countryRequired') })}
           onChange={handleCountryChange}
           value={selectedCountryId}
-          disabled={loading} // Disable input when loading
+          disabled={loading}
+          style={{ width: '100%' }}
         >
           <option value=''>{t('citizenship')}</option>
           {countries.map((country) => (
@@ -427,24 +428,6 @@ const RegisterForm = () => {
             </option>
           ))}
         </select>
-
-        {selectedCountryId &&
-          [63, 227, 188].includes(parseInt(selectedCountryId)) && (
-            <select
-              className={`${styles.input} ${
-                errors.city ? styles.errorBorder : ''
-              }`}
-              {...register('city', { required: t('cityRequired') })}
-              disabled={loading} // Disable input when loading
-            >
-              <option value=''>{t('selectCity')}</option>
-              {cityOptions[selectedCountryId].map((city, index) => (
-                <option key={index} value={city}>
-                  {city}
-                </option>
-              ))}
-            </select>
-          )}
 
         <div className={styles.termsContainer}>
           <label>

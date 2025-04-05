@@ -127,7 +127,9 @@ const ProfileCompletionForm = ({ profile, onSubmit }) => {
   return (
     <div className={styles.container}>
       {!allLoaded ? (
-        <CircularProgress className={styles.spinner} /> // Show spinner while data is loading
+        <div className={styles.spinner}>
+          <CircularProgress />
+        </div>
       ) : (
         <>
           <div className={styles.twoRowMobile}>
@@ -163,7 +165,9 @@ const ProfileCompletionForm = ({ profile, onSubmit }) => {
                 value={completionPercentage}
               />
               <Typography variant="body1" className={styles.progressText}>
-                {Math.round(completionPercentage)}% {t("complete")}
+                {Math.round(completionPercentage)}%
+                <br />
+                {t("complete")}
               </Typography>
             </div>
           </div>
@@ -183,10 +187,22 @@ const ProfileCompletionForm = ({ profile, onSubmit }) => {
                     fullWidth
                     className={styles.formField}
                     value={allFields[question.id] || ""}
-                    onChange={(e) =>
-                      handleElChange(question.id, e.target.value)
-                    }
+                    onChange={(e) => handleElChange(question.id, e.target.value)}
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    SelectProps={{
+                      displayEmpty: true,
+                      renderValue: (value) => {
+                        if (!value) return "";
+                        const answer = question.answers.find(a => a.id === value);
+                        return answer ? answer.label : "";
+                      }
+                    }}
                   >
+                    <MenuItem value="" disabled>
+                      {t("selectOption")}
+                    </MenuItem>
                     {question.answers.map((answer) => (
                       <MenuItem key={answer.id} value={answer.id}>
                         {answer.label}

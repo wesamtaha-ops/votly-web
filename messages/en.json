@@ -66,7 +66,18 @@
     "invalidEmail": "Invalid email address",
     "emailPlaceholder": "Enter your email",
     "resetPasswordButton": "Reset Password",
-    "loading": "..."
+    "loading": "...",
+    "otpRequired": "OTP is required",
+    "otpInvalid": "OTP must be 6 digits",
+    "otpPlaceholder": "Enter OTP",
+    "verifyOtpButton": "Verify OTP",
+    "passwordRequired": "Password is required",
+    "passwordMinLength": "Password must be at least 6 characters",
+    "newPasswordPlaceholder": "Enter new password",
+    "confirmPasswordRequired": "Please confirm your password",
+    "confirmPasswordPlaceholder": "Confirm new password",
+    "passwordsDoNotMatch": "Passwords do not match",
+    "setNewPasswordButton": "Set New Password"
   },
   "OtpVerification": {
     "enterCode": "Enter the 6-digit code sent to",
@@ -335,16 +346,11 @@
     "beforeContinue": "Before you continue...",
     "moreDetails": "We need a few more details to complete your profile",
     "complete": "Complete",
-    "nationality": "Nationality",
-    "residence": "Residence",
-    "householdIncome": "Household Income",
-    "lessThan1500": "Less than 1500 [currency] per month",
-    "5000To10000": "5000 - 10000 [currency] per month",
-    "10000To20000": "10000 - 20000 [currency] per month",
-    "moreThan20000": "More than 20000 [currency] per month",
-    "preferNotToSay": "Prefer not to say",
+    "selectOption": "Select an option",
     "submitting": "Submitting...",
-    "submit": "Submit"
+    "submit": "Submit",
+    "loading": "Loading...",
+    "profileUpdated": "Profile Updated successfully!"
   },
   "About": {
     "heroTitle": "Empowering Voices, Rewarding Insights",
