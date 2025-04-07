@@ -12,6 +12,8 @@ const inter = Inter({ subsets: ['latin'] });
 const almarai = Almarai({
   subsets: ['arabic'],
   weight: ['300', '400', '700', '800'], // Specify the available weights
+  display: 'swap',
+  variable: '--font-almarai',
 });
 
 export default function RootLayout({ children, params }) {
@@ -29,12 +31,7 @@ export default function RootLayout({ children, params }) {
   const isRTL = locale === 'ar';
 
   return (
-    <html lang={locale} dir={isRTL ? 'rtl' : 'ltr'}>
-      <Head>
-        <link rel='preconnect' href='https://fonts.googleapis.com' />
-        <link rel='preconnect' href='https://fonts.gstatic.com' crossOrigin='anonymous' />
-        <link href='https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&display=swap' rel='stylesheet' />
-      </Head>
+    <html lang={locale} dir={isRTL ? 'rtl' : 'ltr'} className={`${almarai.variable}`}>
       <body className={isRTL ? almarai.className : inter.className}>
         <SessionProvider>
           <NextIntlClientProvider locale={locale} messages={messages}>
