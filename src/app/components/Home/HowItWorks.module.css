@@ -1,0 +1,173 @@
+.howItWorks {
+  padding: 6rem 1.5rem;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  overflow: hidden;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.title {
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #2d3748;
+  margin-bottom: 1rem;
+  position: relative;
+  padding-bottom: 1rem;
+}
+
+.title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(90deg, #ff0080, #7928ca);
+  border-radius: 2px;
+}
+
+.subtitle {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #4a5568;
+  max-width: 600px;
+  margin: 0 auto 4rem;
+  line-height: 1.6;
+}
+
+.stepsContainer {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+  position: relative;
+}
+
+.step {
+  background: white;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  text-align: center;
+  position: relative;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.5s ease;
+}
+
+.step.animate {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.stepIconWrapper {
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
+.stepIcon {
+  font-size: 2.5rem;
+  color: #7928ca;
+  background: linear-gradient(135deg, #ff0080, #7928ca);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 1rem;
+}
+
+.connector {
+  position: absolute;
+  top: 50%;
+  right: -2rem;
+  width: 2rem;
+  height: 2px;
+  background: linear-gradient(90deg, #ff0080, #7928ca);
+  transform: translateY(-50%);
+}
+
+[dir="rtl"] .connector {
+  right: auto;
+  left: -2rem;
+}
+
+.stepTitle {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #2d3748;
+  margin-bottom: 1rem;
+}
+
+.stepDescription {
+  font-size: 1rem;
+  color: #4a5568;
+  line-height: 1.6;
+}
+
+/* Hover Effects */
+.step:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .stepsContainer {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .connector {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .howItWorks {
+    padding: 4rem 1rem;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+
+  .subtitle {
+    font-size: 1.1rem;
+    margin-bottom: 3rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .stepsContainer {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .step {
+    padding: 1.5rem;
+  }
+}
+
+/* Animation Keyframes */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* RTL Support */
+[dir="rtl"] .step {
+  text-align: right;
+}
+
+[dir="rtl"] .title::after {
+  right: 50%;
+  left: auto;
+  transform: translateX(50%);
+} 

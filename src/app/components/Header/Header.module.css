@@ -13,6 +13,7 @@
   font-family: 'Almarai', sans-serif;
   padding-right: 1rem;
   padding-left: 1rem;
+  height: 70px;
 }
 
 .logo {
@@ -248,6 +249,7 @@
     box-shadow: none;
     margin: 0.5rem auto;
   }
+
 }
 
 [dir="rtl"] .dropdownMenu {

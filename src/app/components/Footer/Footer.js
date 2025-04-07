@@ -9,9 +9,7 @@ const Footer = () => {
 
   // Create the array manually from individual link keys
   const links = [
-    { href: t('link1.href'), title: t('link1.title') },
     { href: t('link2.href'), title: t('link2.title') },
-    { href: t('link3.href'), title: t('link3.title') },
     { href: t('link4.href'), title: t('link4.title') },
   ];
 

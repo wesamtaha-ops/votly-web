@@ -8,7 +8,7 @@ import { motion } from 'framer-motion';
 import { FaArrowRight } from 'react-icons/fa';
 
 const HeroBanner = () => {
-  const t = useTranslations('HeroBanner');
+  const t = useTranslations('Home');
   const { data: session } = useSession();
 
   return (
@@ -49,8 +49,7 @@ const HeroBanner = () => {
           </defs>
 
           {/* Apply Patterns */}
-          <rect width="100%" height="100%" fill="url(#barChart)" />
-          <rect width="100%" height="100%" fill="url(#pieChart)" />
+          <rect width="100%" height="100%" fill="url(#lineChart)" />
           <rect width="100%" height="100%" fill="url(#scatterPlot)" />
 
           {/* Floating Analytics Icons */}
@@ -90,7 +89,7 @@ const HeroBanner = () => {
         transition={{ duration: 0.8 }}>
         <motion.img
           src='https://votly.app/public/web/logo1.png'
-          alt={t('heroImageAlt')}
+          alt="Votly Logo"
           className={styles.heroImage}
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
@@ -102,7 +101,7 @@ const HeroBanner = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 0.8 }}>
-          {t('title')}
+          {t('heroTitle')}
         </motion.h1>
 
         <motion.p
@@ -110,7 +109,7 @@ const HeroBanner = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5, duration: 0.8 }}>
-          {t('description')}
+          {t('heroSubtitle')}
         </motion.p>
 
         <motion.div
@@ -121,17 +120,17 @@ const HeroBanner = () => {
           {!session?.id ? (
             <>
               <Link href='/register' className={styles.ctaButton}>
-                {t('ctaButton')}
+                {t('getStarted')}
                 <FaArrowRight className={styles.buttonIcon} />
               </Link>
 
               <Link href='/login' className={styles.ctaButton2}>
-                {t('ctaButtonLogin')}
+                {t('login')}
               </Link>
             </>
           ) : (
             <Link href='/surveys' className={styles.ctaButton}>
-              {t('ctaButtonDashboard')}
+              {t('getStarted')}
               <FaArrowRight className={styles.buttonIcon} />
             </Link>
           )}

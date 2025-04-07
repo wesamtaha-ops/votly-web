@@ -108,7 +108,33 @@
     "differenceDescription": "Your opinion matters.",
     "rewardsAlt": "Rewards",
     "rewardsTitle": "Earn Rewards That Matter to You",
-    "rewardsDescription": "Choose from a variety of rewards, including gift cards."
+    "rewardsDescription": "Choose from a variety of rewards, including gift cards.",
+    "opinionTitle": "Why Your Opinion Matters",
+    "opinionDescription": "Your feedback drives innovation. When you participate in Votly Paid Surveys, you influence decisions made by global brands, helping them create better products and services for everyone.",
+    "rewardsList": {
+      "title": "Earn Rewards That Matter to You",
+      "cash": "Cash Rewards: Transfer earnings directly to your PayPal account.",
+      "giftCards": "Gift Cards: Choose from a variety of popular brands like Amazon, Noon, and more.",
+      "exclusive": "Exclusive Offers: Occasionally, enjoy access to special promotions and bonus surveys."
+    },
+    "differenceList": {
+      "title": "Why Your Opinion Matters",
+      "surveys": "Diverse Survey Opportunities: We work with top brands across industries, giving you a variety of engaging surveys to choose from.",
+      "bonus": "Bonus Earning Opportunities: Refer friends and earn extra rewards for each successful referral.",
+      "global": "Global Access: No matter where you are, Votly gives you the power to participate and earn."
+    },
+    "testimonialsTitle": "What Our Members Say",
+    "testimonials": {
+      "title": "Testimonials",
+      "testimonial1": {
+        "text": "I love how easy it is to earn with Votly. I complete surveys during my breaks and redeem rewards every month!",
+        "author": "Aisha, UAE"
+      },
+      "testimonial2": {
+        "text": "Votly paid surveys have become my favorite way to make some extra cash. Simple, fast, and rewarding!",
+        "author": "Mohamed, KSA"
+      }
+    }
   },
   "FeaturesList": {
     "title": "Unlocking Benefits for Individuals, Corporates, and Governments",
@@ -140,39 +166,57 @@
     "imageAlt": "Votly Mobile Interface"
   },
   "FAQ": {
-    "title": "Frequently Asked Questions",
-    "imageAlt": "FAQ Illustration",
+    "title": "Frequently Asked Questions (FAQ)",
+    "imageAlt": "FAQ illustration",
     "faq1": {
-      "question": "What is Votly?",
-      "answer": "Votly is a social polling app that allows users to create, discover, and participate in AI-generated and user-created polls, fostering a community for sharing opinions and insights."
+      "question": "How much can I earn with Votly surveys?",
+      "answer": "Earnings vary based on the survey's length and complexity. On average, surveys pay between $1 to $10, and some special surveys offer even more."
     },
     "faq2": {
-      "question": "How do I create a poll on Votly?",
-      "answer": "To create a poll, simply log into your account, navigate to the 'Create Poll' section, and follow the instructions to set up your poll."
+      "question": "How will I get paid?",
+      "answer": "You can redeem your points for PayPal cash, Amazon gift cards, or other exciting rewards once you reach the minimum threshold."
     },
     "faq3": {
-      "question": "How does the AI-generated content feature work?",
-      "answer": "Our AI technology converts news articles and trending topics into interactive polls, allowing users to engage with content in a new way."
+      "question": "Is my personal information safe?",
+      "answer": "Absolutely. We take privacy seriously. Your data is secure, and we'll never share your information without consent."
     },
     "faq4": {
-      "question": "How does Votly's personalized feed algorithm work?",
-      "answer": "Votly's algorithm curates a personalized feed of polls based on your past interactions, preferences, and interests."
+      "question": "How often will I get survey invitations?",
+      "answer": "That depends on your profile and interests. The more complete your profile, the more relevant surveys you'll receive."
     },
     "faq5": {
-      "question": "How can I earn and redeem coins in Votly?",
-      "answer": "You can earn coins by participating in polls, completing surveys, and engaging with the community. Coins can be redeemed for rewards such as gift cards, cash transfers, or donations to charities."
+      "question": "How long does it take to receive my rewards?",
+      "answer": "Once you redeem, rewards are typically processed within 48 hours. Quick, easy, and reliable."
     },
-    "faq6": {
-      "question": "How do I share my polls with friends or on social media?",
-      "answer": "Once you create a poll, you can easily share it with your friends via social media platforms or through a direct link."
+    "ctaTitle": "Ready to Start Earning?",
+    "ctaDescription": "Don't let your opinions go unheard. Start making your voice count—and earn while doing it.",
+    "ctaButton": "Join Votly Paid Surveys Today",
+    "helpTitle": "Still Have Questions?",
+    "helpDescription": "We're here to help. Contact us and our team will guide you through any questions or concerns.",
+    "contactButton": "Contact Us",
+    "expandIcon": "▼",
+    "collapseIcon": "▲",
+    "register": "/register",
+    "contact": "/contact"
+  },
+  "HowItWorks": {
+    "title": "How It Works",
+    "subtitle": "Join our community and start earning rewards by sharing your valuable opinions in just a few simple steps.",
+    "step1": {
+      "title": "Sign Up for Free",
+      "description": "Create your account in minutes. No hidden fees or commitments."
     },
-    "faq7": {
-      "question": "Can I use Votly for market research or other types of research?",
-      "answer": "Yes, Votly is an excellent platform for market research. Businesses and researchers can create targeted polls to gather insights from a diverse audience."
+    "step2": {
+      "title": "Get Matched with Surveys",
+      "description": "Based on your profile, we'll invite you to participate in surveys that match your interests."
     },
-    "faq8": {
-      "question": "How does Votly ensure data privacy and security?",
-      "answer": "Votly takes data privacy and security seriously. We use industry-standard encryption and follow strict privacy policies to protect your data."
+    "step3": {
+      "title": "Share Your Opinions",
+      "description": "Complete surveys honestly and thoughtfully. Your insights help shape the products and services of the future."
+    },
+    "step4": {
+      "title": "Earn and Redeem Rewards",
+      "description": "Accumulate points for each completed survey and redeem them for PayPal cash, gift cards, or other exciting rewards."
     }
   },
   "Footer": {
@@ -378,5 +422,133 @@
     "surveys": "Surveys Completed",
     "responses": "Total Responses",
     "partners": "Brand Partners"
+  },
+  "Home": {
+    "heroTitle": "Share Your Voice, Earn Rewards!",
+    "heroSubtitle": "At Votly, your opinion matters, and we believe it should be rewarded. Join thousands of people shaping the future by participating in paid surveys. Your insights help brands improve their products, services, and experiences – and you earn real rewards in return!",
+    "getStarted": "Get Started Now",
+    "whyChooseVotly": "Why Choose Votly Paid Surveys?",
+    "feature1Title": "Real Rewards for Real Opinions",
+    "feature1Description": "Every completed survey earns you points that can be redeemed for exciting rewards – from cash via PayPal to e-gift cards from top brands.",
+    "feature2Title": "Flexible Participation",
+    "feature2Description": "Take surveys anytime, anywhere. Whether on your lunch break or while relaxing at home, your opinions can turn into earnings.",
+    "feature3Title": "Fast and Simple Registration",
+    "feature3Description": "Joining is quick and free. Complete your profile, and we'll match you with relevant surveys that suit your interests.",
+    "feature4Title": "Trusted and Secure",
+    "feature4Description": "Your privacy and security are our priorities. We ensure that all data is handled with the highest level of confidentiality.",
+    "howItWorks": "How It Works",
+    "step1Title": "Sign Up for Free",
+    "step1Description": "Create your account in minutes. No hidden fees or commitments.",
+    "step2Title": "Get Matched with Surveys",
+    "step2Description": "Based on your profile, we'll invite you to participate in surveys that match your interests.",
+    "step3Title": "Share Your Opinions",
+    "step3Description": "Complete surveys honestly and thoughtfully. Your insights help shape the products and services of the future.",
+    "step4Title": "Earn and Redeem Rewards",
+    "step4Description": "Accumulate points for each completed survey and redeem them for PayPal cash, gift cards, or other exciting rewards.",
+    "testimonials": "What Our Members Say",
+    "readyToStart": "Ready to Start Earning?",
+    "joinNow": "Join Votly Paid Surveys Now",
+    "login": "Login Now"
+  },
+  "PrivacyPolicy": {
+    "title": "Data and Privacy Policy",
+    "intro": "We at Votly value your privacy and collects personal information only as needed to deliver our services. By accessing or using our site or services, you agree to this Privacy Policy.",
+    "userRights": {
+      "title": "User Rights",
+      "informed": "Right to be informed: You have the right to know how we use your information.",
+      "access": "Right to request access: You can request access to your personal data.",
+      "cancel": "Right to cancel your account: You can cancel your account at any point by requesting by email or using the cancel button on the portal.",
+      "correct": "Right to correct and update: You can request corrections to your personal data and we will review and confirm after 30 days of receiving your request."
+    },
+    "infoCollection": {
+      "title": "The Information We Collect",
+      "nonPersonal": {
+        "title": "Non-Personally Identifiable Information",
+        "description": "Browser type, IP address, operating system, cookies, etc. Used for analyzing usage, diagnosing issues, and improving our services."
+      },
+      "personal": {
+        "title": "Personally Identifiable Information",
+        "description": "Includes name, email, contact info, payment details, etc. Collected when you register, communicate, or engage with our services."
+      }
+    },
+    "infoUsage": {
+      "title": "How We Use Your Information",
+      "communication": "Communication: Sending service updates, surveys, send incentives, or promotional messages.",
+      "verification": "Identity Verification & Fraud Prevention: Verifying identity for security.",
+      "support": "Customer Support: Addressing inquiries, issues, or disputes.",
+      "improvement": "Improvement & Analysis: Improving our services based on feedback and usage."
+    },
+    "dataSharing": {
+      "title": "Sharing Your Data",
+      "outsourcing": "Outsourcing: We may share your information upon confirming with you with third parties for business functions.",
+      "publicForums": "Public Forums: Data you share in public areas will be accessible publicly.",
+      "legal": "Legal Requirements: We may disclose data to comply with legal obligations or protect interests.",
+      "marketing": "Marketing: We may share data with third-party marketers with your consent."
+    },
+    "security": {
+      "title": "Data Security",
+      "responsibility": "Your Responsibility: Protect your personal data and login information.",
+      "measures": "Our Measures: We use encryption for transmission, but security cannot be guaranteed."
+    },
+    "contact": {
+      "title": "Contact & Concerns",
+      "description": "If you have privacy concerns, please contact us. Any disputes are subject to our Terms and conditions which is available on the website."
+    }
+  },
+  "TermsOfUse": {
+    "title": "Terms of Use",
+    "intro": "This Agreement is between Votly Global LLC FZ and you, effective upon your use of the website or the mobile app related to Votly. By using the services, you agree to these terms, which govern participation in free online surveys.",
+    "account": {
+      "title": "Account & Participation",
+      "description": "To participate in surveys, you must register and maintain an accurate profile. Your details will be used to invite you to surveys but won't be shared with third parties. You are responsible for maintaining the confidentiality of your account."
+    },
+    "eligibility": {
+      "title": "Eligibility & Restrictions",
+      "description": "You must be at least 16 years old and reside in one of the eligible Arab countries. You can only maintain one account and any duplicated accounts will be deleted."
+    },
+    "payments": {
+      "title": "Payments",
+      "description": "Rewards can be redeemed once you reach the minimum threshold. Payments will be made through electronic vouchers which you will receive by email."
+    },
+    "privacy": {
+      "title": "Privacy Policy",
+      "description": "Your data is protected by Votly's Privacy Policy. Your account and profile details will not be shared with third parties, and you will not receive unwanted advertisements."
+    },
+    "changes": {
+      "title": "Changes & Termination",
+      "description": "Votly reserves the right to modify the Agreement or terminate your account if you breach any terms. If changes are made, they will be communicated via email or on the Site."
+    },
+    "legal": {
+      "title": "Legal Compliance",
+      "description": "By using the site, you affirm that you comply with the laws of your country. If you're using the services on behalf of an entity, you represent that you have the legal authority to bind that entity."
+    },
+    "ip": {
+      "title": "Intellectual Property",
+      "description": "All content on the Site and services, including trademarks, copyrights, and patents, are owned by Votly or its affiliates. You do not acquire any rights to this intellectual property by using the services."
+    },
+    "warranties": {
+      "title": "Disclaimer of Warranties",
+      "description": "Votly does not guarantee uninterrupted service or error-free access. It is not liable for any technical issues or disruptions to the service."
+    },
+    "thirdParty": {
+      "title": "Third-Party Content",
+      "description": "Votly is not responsible for content or practices of third-party websites linked from the Site. Users should comply with local laws when accessing these sites."
+    },
+    "security": {
+      "title": "Security",
+      "description": "You are responsible for securing your login details and must notify Votly of any unauthorized access to your account."
+    },
+    "liability": {
+      "title": "Liability",
+      "description": "Votly is not liable for service interruptions or any damages arising from its use. The company can modify or discontinue services at any time without notice."
+    },
+    "compliance": {
+      "title": "Compliance with Local Laws",
+      "description": "Users must comply with local laws when using the Site. Votly is not liable for any legal issues arising from access to the site in jurisdictions where it is prohibited."
+    },
+    "miscellaneous": {
+      "title": "Miscellaneous",
+      "description": "If any part of this Agreement is found unenforceable, the rest remains valid. This Agreement is executed in English, with translations having equal validity in case of discrepancies."
+    }
   }
 }

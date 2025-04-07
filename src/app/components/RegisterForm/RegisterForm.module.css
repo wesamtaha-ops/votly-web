@@ -66,7 +66,7 @@
 }
 
 .input {
-  width: 92%;
+  width: 100% !important;
 }
 
 .inputHalf {
@@ -181,51 +181,330 @@
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .formContainer {
-    margin: 40px auto;
-    padding: 30px;
-    width: 90%;
+    width: 85%;
+    margin: 20px auto;
+    padding: 25px 20px;
+    border-radius: 12px;
   }
 
   .title {
-    font-size: 28px;
+    font-size: 24px;
+    margin-bottom: 20px;
   }
 
-  .input, .inputHalf {
+  .form {
+    gap: 15px;
+    width: 90%;
+  }
+
+  .input {
+    width: 100%;
+    padding: 14px 16px;
+    border-radius: 8px;
     font-size: 16px;
-    padding: 14px 18px;
   }
 
-  .nameContainer, .dateOfBirthContainer {
+  .nameContainer,
+  .dateOfBirthContainer {
     flex-direction: column;
-    gap: 20px;
+    gap: 15px;
+    width: 100%;
+  }
+
+  .inputHalf {
+    width: 100%;
+    padding: 14px 16px;
+    border-radius: 8px;
+    font-size: 16px;
+  }
+
+  .genderContainer {
+    padding: 5px 0;
+    gap: 15px;
+    width: 100%;
+  }
+
+  .termsContainer {
+    margin-top: 5px;
+    gap: 10px;
+    width: 100%;
+    font-size: 14px;
+  }
+
+  .button {
+    margin-top: 5px;
+    padding: 14px;
+    font-size: 16px;
+    border-radius: 8px;
+    width: 100%;
+  }
+
+  .loginLink {
+    margin-top: 20px;
+    font-size: 14px;
+    width: 100%;
+  }
+
+  .error {
+    margin-top: -10px;
+    margin-bottom: -10px;
+    font-size: 13px;
+    width: 100%;
+  }
+
+  .react_tel_input_custom {
+    width: 100% !important;
+    padding: 14px 16px !important;
+    padding-left: 50px !important;
+    font-size: 16px !important;
+    border-radius: 8px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .formContainer {
+    width: 85%;
+    margin: 15px auto;
+    padding: 20px 15px;
+  }
+
+  .title {
+    font-size: 22px;
+    margin-bottom: 15px;
+  }
+
+  .form {
+    gap: 12px;
+  }
+
+  .input, 
+  .inputHalf,
+  .react_tel_input_custom {
+    padding: 12px 14px !important;
+  }
+
+  .react_tel_input_custom {
+    padding-left: 45px !important;
+  }
+
+  .button {
+    padding: 12px;
+    font-size: 15px;
+  }
+
+  .loginLink {
+    margin-top: 15px;
+    font-size: 13px;
+  }
+
+  .termsContainer {
+    font-size: 13px;
+  }
+
+  .error {
+    font-size: 12px;
+  }
+}
+
+/* RTL Support */
+[dir="rtl"] .react_tel_input_custom {
+  padding-left: 16px !important;
+  padding-right: 50px !important;
+}
+
+@media (max-width: 480px) {
+  [dir="rtl"] .react_tel_input_custom {
+    padding-right: 45px !important;
+  }
+}
+
+/* Base styles */
+.formContainer {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: white;
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.title {
+  text-align: center;
+  font-size: 2rem;
+  color: #2d3748;
+  margin-bottom: 2rem;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+}
+
+.nameContainer {
+  display: flex;
+  gap: 1rem;
+}
+
+.inputHalf {
+  width: 50%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+}
+
+.error {
+  color: #e53e3e;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+.errorBorder {
+  border-color: #e53e3e;
+}
+
+.button {
+  background: #3182ce;
+  color: white;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.button:hover {
+  background: #2c5282;
+}
+
+.button:disabled {
+  background: #90cdf4;
+  cursor: not-allowed;
+}
+
+.loginLink {
+  text-align: center;
+  margin-top: 1.5rem;
+  color: #4a5568;
+}
+
+.link {
+  color: #3182ce;
+  text-decoration: none;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+.genderContainer {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+.radioInput {
+  margin-right: 0.5rem;
+}
+
+.label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #4a5568;
+}
+
+.dateOfBirthContainer {
+  display: flex;
+  gap: 1rem;
+}
+
+.termsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.checkbox {
+  margin-right: 0.5rem;
+}
+
+/* Custom styles for phone input */
+.react_tel_input_custom {
+  width: 100% !important;
+  padding: 0.75rem 1rem !important;
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 0.5rem !important;
+  font-size: 1rem !important;
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+  .formContainer {
+    margin: 1rem auto;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+    padding: 1.5rem;
+  }
+
+  .title {
+    font-size: 1.75rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .nameContainer {
+    flex-direction: column;
+    gap: 1rem;
   }
 
   .inputHalf {
     width: 100%;
   }
 
+  .dateOfBirthContainer {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .genderContainer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .input,
+  .inputHalf,
+  .react_tel_input_custom {
+    font-size: 16px !important; /* Prevent zoom on iOS */
+    padding: 0.875rem !important;
+  }
+
   .button {
-    font-size: 16px;
-    padding: 14px;
+    padding: 1rem;
+    font-size: 1.125rem;
+  }
+
+  .termsContainer {
+    font-size: 0.875rem;
   }
 }
 
-@media (max-width: 480px) {
-  .formContainer {
-    margin: 20px auto;
-    padding: 20px;
-    width: 95%;
-  }
+/* RTL Support */
+[dir="rtl"] .radioInput {
+  margin-right: 0;
+  margin-left: 0.5rem;
+}
 
-  .title {
-    font-size: 24px;
-  }
-
-  .input, .inputHalf {
-    padding: 12px 16px;
-  }
-
-  .button {
-    padding: 12px;
-  }
+[dir="rtl"] .checkbox {
+  margin-right: 0;
+  margin-left: 0.5rem;
 }

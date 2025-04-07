@@ -2,25 +2,38 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useLocale, useTranslations } from 'next-intl';
 import styles from './FAQ.module.css';
+import { FaArrowRight, FaQuestionCircle } from 'react-icons/fa';
 
 const FAQ = () => {
   const t = useTranslations('FAQ');
   const [activeIndex, setActiveIndex] = useState(null);
-
-  const lang = useLocale(); // Get the current locale
+  const lang = useLocale();
   const isArabic = lang === 'ar';
 
   const faqs = [
-    { question: t('faq1.question'), answer: t('faq1.answer') },
-    { question: t('faq2.question'), answer: t('faq2.answer') },
-    { question: t('faq3.question'), answer: t('faq3.answer') },
-    { question: t('faq4.question'), answer: t('faq4.answer') },
-    { question: t('faq5.question'), answer: t('faq5.answer') },
-    { question: t('faq6.question'), answer: t('faq6.answer') },
-    { question: t('faq7.question'), answer: t('faq7.answer') },
-    { question: t('faq8.question'), answer: t('faq8.answer') },
+    {
+      question: t('faq1.question'),
+      answer: t('faq1.answer')
+    },
+    {
+      question: t('faq2.question'),
+      answer: t('faq2.answer')
+    },
+    {
+      question: t('faq3.question'),
+      answer: t('faq3.answer')
+    },
+    {
+      question: t('faq4.question'),
+      answer: t('faq4.answer')
+    },
+    {
+      question: t('faq5.question'),
+      answer: t('faq5.answer')
+    }
   ];
 
   const toggleAccordion = (index) => {
@@ -45,12 +58,7 @@ const FAQ = () => {
             {faqs.map((faq, index) => (
               <div key={index} className={styles.accordionItem}>
                 <button
-                  className={[
-                    styles.accordionButton,
-                    isArabic
-                      ? styles.accordionButton
-                      : styles.accordionButtonEnglish,
-                  ].join(' ')}
+                  className={styles.accordionButton}
                   onClick={() => toggleAccordion(index)}>
                   {faq.question}
                   <span className={styles.accordionIcon}>
@@ -66,6 +74,28 @@ const FAQ = () => {
               </div>
             ))}
           </div>
+
+          <div className={styles.ctaSection}>
+            <h3 className={styles.ctaTitle}>{t('ctaTitle')}</h3>
+            <p className={styles.ctaDescription}>
+              {t('ctaDescription')}
+            </p>
+            <Link href="/register" className={styles.ctaButton}>
+              {t('ctaButton')}
+              <FaArrowRight className={styles.buttonIcon} />
+            </Link>
+          </div>
+{/* 
+          <div className={styles.helpSection}>
+            <h3 className={styles.helpTitle}>{t('helpTitle')}</h3>
+            <p className={styles.helpDescription}>
+              {t('helpDescription')}
+            </p>
+            <Link href="/contact" className={styles.helpButton}>
+              {t('contactButton')}
+              <FaQuestionCircle className={styles.buttonIcon} />
+            </Link>
+          </div> */}
         </div>
       </div>
     </section>

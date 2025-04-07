@@ -141,8 +141,7 @@ const EditProfile = ({ user, userToken, updateSession }) => {
 
   return (
     <div className={styles.editProfileContainer}>
-      {loading && <div className={styles.loader}>Loading...</div>}{' '}
-      {/* Loader */}
+      {loading && <div className={styles.loader}>Loading...</div>}
       <h2 className={styles.title}>{t('editProfile')}</h2>
       <div className={styles.cardsGrid}>
         {/* Main Information Card */}
@@ -309,24 +308,33 @@ const EditProfile = ({ user, userToken, updateSession }) => {
               alt={t('profileImage')}
               className={styles.profileImage}
             />
+            <div className={styles.profileImageOverlay}>
+              {t('clickToChange')}
+            </div>
             <label className={styles.editImageButton}>
               <input
                 type='file'
+                accept="image/*"
                 className={styles.fileInput}
                 {...profileImageRegister('profileImage')}
                 onChange={handleImageChange}
-                disabled={loading} // Disable input during loading
+                disabled={loading}
               />
               <span className={styles.editIcon}>✎</span>
             </label>
           </form>
 
-          <Button
-            className={styles.button}
-            title={t('updateImage')}
+          <button
+            className={styles.updateImageButton}
             onClick={profileImageHandleSubmit(onSubmitProfileImage)}
-            disabled={loading} // Disable button during loading
-          />
+            disabled={loading || !imageFile}>
+            {loading ? t('updating') : t('updateImage')}
+          </button>
+          {imageFile && (
+            <div className={styles.selectedFileName}>
+              {imageFile.name}
+            </div>
+          )}
         </div>
 
         {/* Change Password Card */}
