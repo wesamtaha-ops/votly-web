@@ -328,20 +328,49 @@ const RegisterForm = () => {
         <label className={styles.label}>{t('phone')}</label>
         <div dir='ltr'>
           <PhoneInput
-            inputClass={styles.react_tel_input_custom}
-            inputProps={{
-              preferredCountries: ['AE', 'SA', 'KW', 'QA', 'BH', 'OM'],
-              name: 'phone',
-              autoFormat: true,
-              required: true,
-              countryCodeEditable: false,
-              enableSearch: true,
-            }}
-            country={'AE'}
+            country={selectedCountryCode.toLowerCase()}
             value={phoneNumber}
-            jumpCursorToEnd={true}
             onChange={(value) => setPhoneNumber(value)}
-            disabled={loading} // Disable phone input when loading
+            inputClass={styles.react_tel_input_custom}
+            containerClass={styles.react_tel_input_container}
+            buttonClass={styles.react_tel_input_button}
+            dropdownClass={styles.react_tel_input_dropdown}
+            searchClass={styles.react_tel_input_search}
+            inputProps={{
+              style: {
+                fontFamily: 'var(--font-almarai)',
+                width: '100%',
+                height: '56px',
+                fontSize: '16px',
+                paddingLeft: '58px',
+                borderRadius: '12px',
+                border: '2px solid #eef1f6',
+                backgroundColor: '#f8fafc',
+              },
+            }}
+            buttonProps={{
+              style: {
+                backgroundColor: '#f8fafc',
+                border: '2px solid #eef1f6',
+                borderRadius: '12px 0 0 12px',
+              },
+            }}
+            dropdownProps={{
+              style: {
+                fontFamily: 'var(--font-almarai)',
+                width: '300px',
+                borderRadius: '12px',
+                boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+              },
+            }}
+            searchProps={{
+              style: {
+                fontFamily: 'var(--font-almarai)',
+                padding: '8px',
+                borderRadius: '8px',
+                border: '1px solid #eef1f6',
+              },
+            }}
           />
         </div>
         {errors.phone && <p className={styles.error}>{errors.phone.message}</p>}

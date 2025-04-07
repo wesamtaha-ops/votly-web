@@ -7,6 +7,7 @@
   border-radius: 16px;
   box-shadow: 0 10px 25px rgba(27, 52, 251, 0.1);
   animation: fadeIn 0.4s ease-in-out;
+  font-family: var(--font-almarai);
 }
 
 .react_tel_input_custom {
@@ -25,6 +26,7 @@
   outline: none;
   background-color: #f8fafc !important;
   transition: all 0.3s ease;
+  font-family: var(--font-almarai) !important;
 }
 
 @keyframes fadeIn {
@@ -45,7 +47,7 @@
   color: var(--text-color);
   font-weight: 700;
   text-align: center;
-  font-family: 'Almarai', sans-serif;
+  font-family: var(--font-almarai);
 }
 
 .form {
@@ -61,7 +63,7 @@
   font-size: 16px;
   color: var(--text-color);
   transition: all 0.3s ease;
-  font-family: 'Almarai', sans-serif;
+  font-family: var(--font-almarai);
   background-color: #f8fafc;
 }
 
@@ -101,6 +103,7 @@
   gap: 20px;
   font-size: 16px;
   padding: 10px 0;
+  font-family: var(--font-almarai);
 }
 
 .radioInput {
@@ -115,6 +118,7 @@
   font-size: 15px;
   color: var(--text-color);
   line-height: 1.8;
+  font-family: var(--font-almarai);
 }
 
 .checkbox {
@@ -132,6 +136,7 @@
   font-size: 14px;
   margin-top: -15px;
   margin-bottom: -5px;
+  font-family: var(--font-almarai);
 }
 
 .button {
@@ -144,7 +149,7 @@
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  font-family: 'Almarai', sans-serif;
+  font-family: var(--font-almarai);
   margin-top: 10px;
 }
 
@@ -164,6 +169,7 @@
   font-size: 15px;
   text-align: center;
   color: var(--text-color);
+  font-family: var(--font-almarai);
 }
 
 .link {
@@ -171,6 +177,7 @@
   text-decoration: none;
   font-weight: 600;
   transition: all 0.2s ease;
+  font-family: var(--font-almarai);
 }
 
 .link:hover {
