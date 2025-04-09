@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import styles from './InfoSection.module.css';
-import { FaPaypal, FaGift, FaStar, FaGlobe, FaUsers, FaAward } from 'react-icons/fa';
+import { FaGift, FaStar, FaGlobe, FaUsers, FaAward } from 'react-icons/fa';
 
 export default function InfoSection() {
   const t = useTranslations('InfoSection');
@@ -21,7 +21,7 @@ export default function InfoSection() {
           </p>
           <div className={styles.cardGrid}>
             <div className={styles.card}>
-              <FaPaypal className={styles.icon} />
+              <FaGift className={styles.icon} />
               <p>{t('rewardsList.cash')}</p>
             </div>
             <div className={styles.card}>

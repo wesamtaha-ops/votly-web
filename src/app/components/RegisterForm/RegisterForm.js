@@ -12,6 +12,7 @@ import { useLocale } from "next-intl";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import toast from "react-hot-toast";
+import { getCookie } from "../../utils/cookies";
 
 const RegisterForm = () => {
   const [redirection, setRedirection] = useState(false);
@@ -172,6 +173,12 @@ const RegisterForm = () => {
       const birthday = `${year}-${monthNumbers[month] || "01"}-01`;
       payload.birthday = birthday;
       payload.phone = "+" + phoneNumber;
+
+      // Add source from cookie if it exists
+      const source = getCookie('source');
+      if (source) {
+        payload.source = source;
+      }
 
       // Add the selected city only for Egypt, UAE, or KSA
       if ([63, 227, 188].includes(parseInt(selectedCountryId))) {

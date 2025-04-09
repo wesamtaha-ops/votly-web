@@ -108,14 +108,14 @@
     "differenceDescription": "Your opinion matters.",
     "rewardsAlt": "Rewards",
     "rewardsTitle": "Earn Rewards That Matter to You",
-    "rewardsDescription": "Choose from a variety of rewards, including gift cards.",
+    "rewardsDescription": "Choose from a variety of rewards, including gift cards and exclusive offers.",
     "opinionTitle": "Why Your Opinion Matters",
     "opinionDescription": "Your feedback drives innovation. When you participate in Votly Paid Surveys, you influence decisions made by global brands, helping them create better products and services for everyone.",
     "rewardsList": {
       "title": "Earn Rewards That Matter to You",
-      "cash": "Cash Rewards: Transfer earnings directly to your PayPal account.",
+      "cash": "Cash Rewards: Redeem your earnings for various gift cards and vouchers.",
       "giftCards": "Gift Cards: Choose from a variety of popular brands like Amazon, Noon, and more.",
-      "exclusive": "Exclusive Offers: Occasionally, enjoy access to special promotions and bonus surveys."
+      "exclusive": "Exclusive Offers: Enjoy special discounts, early access to products, and bonus rewards."
     },
     "differenceList": {
       "title": "Why Your Opinion Matters",
@@ -131,7 +131,7 @@
         "author": "Aisha, UAE"
       },
       "testimonial2": {
-        "text": "Votly paid surveys have become my favorite way to make some extra cash. Simple, fast, and rewarding!",
+        "text": "Votly paid surveys have become my favorite way to earn rewards. Simple, fast, and rewarding!",
         "author": "Mohamed, KSA"
       }
     }
@@ -174,7 +174,7 @@
     },
     "faq2": {
       "question": "How will I get paid?",
-      "answer": "You can redeem your points for PayPal cash, Amazon gift cards, or other exciting rewards once you reach the minimum threshold."
+      "answer": "You can redeem your points for gift cards, vouchers, or other exciting rewards once you reach the minimum threshold."
     },
     "faq3": {
       "question": "Is my personal information safe?",
