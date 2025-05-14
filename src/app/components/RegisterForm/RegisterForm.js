@@ -1,30 +1,30 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
-import Link from "next/link";
-import { useTranslations } from "next-intl";
-import styles from "./RegisterForm.module.css";
-import { callApi } from "../../helper";
-import { signIn } from "next-auth/react";
-import { redirect } from "next/navigation";
-import { useLocale } from "next-intl";
-import PhoneInput from "react-phone-input-2";
-import "react-phone-input-2/lib/style.css";
-import toast from "react-hot-toast";
-import { getCookie } from "../../utils/cookies";
+import { useState, useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import Link from 'next/link';
+import { useTranslations } from 'next-intl';
+import styles from './RegisterForm.module.css';
+import { callApi } from '../../helper';
+import { signIn } from 'next-auth/react';
+import { redirect } from 'next/navigation';
+import { useLocale } from 'next-intl';
+import PhoneInput from 'react-phone-input-2';
+import 'react-phone-input-2/lib/style.css';
+import toast from 'react-hot-toast';
+import { getCookie } from '../../utils/cookies';
 
 const RegisterForm = () => {
   const [redirection, setRedirection] = useState(false);
-  const [requestError, setRequestError] = useState("");
+  const [requestError, setRequestError] = useState('');
   const [countries, setCountries] = useState([]);
   const [selectedCountryId, setSelectedCountryId] = useState(227); // Default country set to UAE (227)
-  const [selectedCountryCode, setSelectedCountryCode] = useState("971");
+  const [selectedCountryCode, setSelectedCountryCode] = useState('971');
   const [phoneNumber, setPhoneNumber] = useState(`+971`);
   const [loading, setLoading] = useState(false); // Loader state
-  const t = useTranslations("Register");
+  const t = useTranslations('Register');
   const locale = useLocale();
-  const isArabic = locale === "ar";
+  const isArabic = locale === 'ar';
   const {
     register,
     formState: { errors },
@@ -32,30 +32,29 @@ const RegisterForm = () => {
     setValue,
   } = useForm();
 
-
   const onSubmit = async (payload) => {
     setLoading(true); // Start loader
     try {
       const { year, month } = payload;
 
       const monthNumbers = {
-        January: "01",
-        February: "02",
-        March: "03",
-        April: "04",
-        May: "05",
-        June: "06",
-        July: "07",
-        August: "08",
-        September: "09",
-        October: "10",
-        November: "11",
-        December: "12",
+        January: '01',
+        February: '02',
+        March: '03',
+        April: '04',
+        May: '05',
+        June: '06',
+        July: '07',
+        August: '08',
+        September: '09',
+        October: '10',
+        November: '11',
+        December: '12',
       };
 
-      const birthday = `${year}-${monthNumbers[month] || "01"}-01`;
+      const birthday = `${year}-${monthNumbers[month] || '01'}-01`;
       payload.birthday = birthday;
-      payload.phone = "+" + phoneNumber;
+      payload.phone = '+' + phoneNumber;
 
       // Add source from cookie if it exists
       const source = getCookie('source');
@@ -63,57 +62,53 @@ const RegisterForm = () => {
         payload.source = source;
       }
 
-   
-
       const res = await callApi({
-        type: "post",
-        url: "register",
+        type: 'post',
+        url: 'register',
         data: payload,
         lang: locale,
       });
 
       if (res.status == 1) {
-        const { error } = await signIn("credentials", {
+        const { error } = await signIn('credentials', {
           email: payload.email.toLowerCase(),
           password: payload.password,
           redirect: false,
         });
 
         if (error) {
-          setRequestError(t("emailExists"));
-          toast.error(t("emailExists")); // Show toast on error
+          setRequestError(t('emailExists'));
+          toast.error(t('emailExists')); // Show toast on error
         } else {
           setRedirection(true);
         }
       } else {
-        if (res.message === "The email has already been taken.") {
-          setRequestError(t("emailExists"));
-          toast.error(t("emailExists"));
-        } else if (res.message === "The phone has already been taken.") {
-          setRequestError(t("mobileExists"));
-          toast.error(t("mobileExists"));
+        if (res.message === 'The email has already been taken.') {
+          setRequestError(t('emailExists'));
+          toast.error(t('emailExists'));
+        } else if (res.message === 'The phone has already been taken.') {
+          setRequestError(t('mobileExists'));
+          toast.error(t('mobileExists'));
         } else {
           toast.error(res.message);
         }
       }
     } catch (error) {
-      setRequestError(t("emailExists"));
-      toast.error(t("emailExists"));
+      setRequestError(t('emailExists'));
+      toast.error(t('emailExists'));
     } finally {
       setLoading(false); // Stop loader after submission
     }
   };
 
   useEffect(() => {
-    if (redirection) {
-      redirect("/email-verification");
-    }
-  }, [redirection]);
+    setSelectedCountryId('227');
+  }, []);
 
   async function getCountries() {
     const res = await callApi({
-      type: "get",
-      url: "countries",
+      type: 'get',
+      url: 'countries',
     });
 
     setCountries(res.data);
@@ -128,7 +123,7 @@ const RegisterForm = () => {
     setSelectedCountryId(countryId);
 
     const selectedCountry = countries.find(
-      (country) => country.id == countryId
+      (country) => country.id == countryId,
     );
     // if (selectedCountry) {
     //   setSelectedCountryCode(selectedCountry.phone_code);
@@ -333,8 +328,7 @@ const RegisterForm = () => {
           onChange={handleCountryChange}
           value={selectedCountryId}
           disabled={loading}
-          style={{ width: '100%' }}
-        >
+          style={{ width: '100%' }}>
           <option value=''>{t('citizenship')}</option>
           {countries.map((country) => (
             <option key={country.id} value={country.id}>
