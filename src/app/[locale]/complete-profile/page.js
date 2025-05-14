@@ -48,7 +48,6 @@ export default function CompleteProfile() {
       }
 
       await updateSession({ user: response.data });
-
       reloadSession();
 
       toast("Profile completed successfully!");

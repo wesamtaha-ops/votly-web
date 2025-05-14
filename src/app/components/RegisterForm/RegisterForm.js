@@ -130,11 +130,11 @@ const RegisterForm = () => {
     const selectedCountry = countries.find(
       (country) => country.id == countryId
     );
-    if (selectedCountry) {
-      setSelectedCountryCode(selectedCountry.phone_code);
-      setPhoneNumber(`+${selectedCountry.phone_code}`);
-      setValue("phone", `+${selectedCountry.phone_code}`);
-    }
+    // if (selectedCountry) {
+    //   setSelectedCountryCode(selectedCountry.phone_code);
+    //   setPhoneNumber(`+${selectedCountry.phone_code}`);
+    //   setValue("phone", `+${selectedCountry.phone_code}`);
+    // }
   };
 
   return (

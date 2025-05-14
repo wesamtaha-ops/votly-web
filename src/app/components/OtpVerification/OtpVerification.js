@@ -197,6 +197,10 @@ const OtpVerification = ({ contactInfo, type }) => {
   const handleSendOtp = async (notify = true) => {
     setLoading(true); // Start loader
     try {
+      // check if contactInfo is a valid phone number
+      if (!/^\+?[1-9]\d{1,14}$/.test(contactInfo)) {
+        return;
+      }
       const confirmationResult = await signInWithPhoneNumber(
         auth,
         contactInfo,
