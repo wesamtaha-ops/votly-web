@@ -227,7 +227,7 @@ const RegisterForm = () => {
                 width: '100%',
                 height: '56px',
                 fontSize: '16px',
-                paddingLeft: '58px',
+                paddingLeft: '58px !important',
                 borderRadius: '12px',
                 border: '2px solid #eef1f6',
                 backgroundColor: '#f8fafc',

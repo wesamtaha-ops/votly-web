@@ -29,6 +29,11 @@
   font-family: var(--font-almarai) !important;
 }
 
+.react-tel-input .form-control {
+  direction: ltr !important;
+  padding-left: 50px !important;
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;
