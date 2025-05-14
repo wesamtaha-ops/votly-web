@@ -54,6 +54,7 @@
   -webkit-text-fill-color: transparent;
   animation: shimmer 2s infinite linear;
   background-size: 200% 100%;
+  direction: ltr;
 }
 
 @keyframes shimmer {
