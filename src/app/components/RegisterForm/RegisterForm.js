@@ -32,123 +32,6 @@ const RegisterForm = () => {
     setValue,
   } = useForm();
 
-  const cityOptions = {
-    63: isArabic
-      ? [
-          "القاهرة",
-          "الإسكندرية",
-          "الجيزة",
-          "شبرا الخيمة",
-          "بورسعيد",
-          "السويس",
-          "المنصورة",
-          "طنطا",
-          "أسيوط",
-          "الفيوم",
-          "الإسماعيلية",
-          "الزقازيق",
-          "أسوان",
-          "دمياط",
-          "الغردقة",
-          "الأقصر",
-          "بني سويف",
-          "قنا",
-          "سوهاج",
-          "المنيا",
-        ]
-      : [
-          "Cairo",
-          "Alexandria",
-          "Giza",
-          "Shubra El Kheima",
-          "Port Said",
-          "Suez",
-          "Mansoura",
-          "Tanta",
-          "Asyut",
-          "Fayoum",
-          "Ismailia",
-          "Zagazig",
-          "Aswan",
-          "Damietta",
-          "Hurghada",
-          "Luxor",
-          "Beni Suef",
-          "Qena",
-          "Sohag",
-          "Minya",
-        ],
-    227: isArabic
-      ? [
-          "أبوظبي",
-          "دبي",
-          "الشارقة",
-          "عجمان",
-          "أم القيوين",
-          "الفجيرة",
-          "رأس الخيمة",
-          "خورفكان",
-          "كلباء",
-          "دبا الحصن",
-          "العين",
-        ]
-      : [
-          "Abu Dhabi",
-          "Dubai",
-          "Sharjah",
-          "Ajman",
-          "Umm Al Quwain",
-          "Fujairah",
-          "Ras Al Khaimah",
-          "Khor Fakkan",
-          "Kalba",
-          "Dibba Al-Hisn",
-          "Al Ain",
-        ],
-    188: isArabic
-      ? [
-          "الرياض",
-          "جدة",
-          "مكة",
-          "المدينة المنورة",
-          "الدمام",
-          "الخبر",
-          "الطائف",
-          "تبوك",
-          "حائل",
-          "أبها",
-          "نجران",
-          "جازان",
-          "القصيم",
-          "الجبيل",
-          "ينبع",
-          "الباحة",
-          "الخرج",
-          "الهفوف",
-          "خميس مشيط",
-        ]
-      : [
-          "Riyadh",
-          "Jeddah",
-          "Makkah",
-          "Madinah",
-          "Dammam",
-          "Al Khobar",
-          "Taif",
-          "Tabouk",
-          "Hail",
-          "Abha",
-          "Najran",
-          "Jazan",
-          "Al Qassim",
-          "Al Jubayl",
-          "Yanbu",
-          "Al Bahah",
-          "Al Kharj",
-          "Al Hofuf",
-          "Khamis Mushait",
-        ],
-  };
 
   const onSubmit = async (payload) => {
     setLoading(true); // Start loader
@@ -180,12 +63,7 @@ const RegisterForm = () => {
         payload.source = source;
       }
 
-      // Add the selected city only for Egypt, UAE, or KSA
-      if ([63, 227, 188].includes(parseInt(selectedCountryId))) {
-        payload.city = payload.city || cityOptions[selectedCountryId][0];
-      } else {
-        delete payload.city; // Remove city if not Egypt, UAE, or KSA
-      }
+   
 
       const res = await callApi({
         type: "post",

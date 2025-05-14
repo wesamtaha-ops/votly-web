@@ -1,25 +1,25 @@
-"use client";
+'use client';
 
-import { useRef, useState, useEffect } from "react";
-import PropTypes from "prop-types";
-import styles from "./OtpVerification.module.css";
-import toast from "react-hot-toast";
-import { useSession } from "next-auth/react";
-import { callApi } from "../../helper";
-import { useRouter } from "next/navigation";
-import { useLocale, useTranslations } from "next-intl"; // Import for translations
+import { useRef, useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import styles from './OtpVerification.module.css';
+import toast from 'react-hot-toast';
+import { useSession } from 'next-auth/react';
+import { callApi } from '../../helper';
+import { useRouter } from 'next/navigation';
+import { useLocale, useTranslations } from 'next-intl'; // Import for translations
 import {
   auth,
   RecaptchaVerifier,
   signInWithPhoneNumber,
   PhoneAuthProvider,
   signInWithCredential,
-} from "../../../../lib/firebase";
+} from '../../../../lib/firebase';
 
 const OtpVerification = ({ contactInfo, type }) => {
-  const t = useTranslations("OtpVerification"); // Initialize translations
+  const t = useTranslations('OtpVerification'); // Initialize translations
   const inputsRef = useRef([]);
-  const [otp, setOtp] = useState(["", "", "", "", "", ""]);
+  const [otp, setOtp] = useState(['', '', '', '', '', '']);
   const [firebaseVerificationId, setFirebaseVerificationId] = useState(null);
   const [smsOtpSent, setSmsOtpSent] = useState(false);
   const [recaptchaVerifier, setRecaptchaVerifier] = useState(null);
@@ -30,7 +30,7 @@ const OtpVerification = ({ contactInfo, type }) => {
   const router = useRouter();
 
   const reloadSession = () => {
-    const event = new Event("visibilitychange");
+    const event = new Event('visibilitychange');
     document.dispatchEvent(event);
   };
 
@@ -60,18 +60,18 @@ const OtpVerification = ({ contactInfo, type }) => {
   const handlePaste = async (event) => {
     event.preventDefault();
     const pasteData = (event.clipboardData || window.clipboardData).getData(
-      "text"
+      'text',
     );
 
     if (/^\d{6}$/.test(pasteData)) {
-      const newOtp = pasteData.split("");
+      const newOtp = pasteData.split('');
       setOtp(newOtp);
       inputsRef.current[5]?.focus();
     }
   };
 
   useEffect(() => {
-    const storedTime = localStorage.getItem("otpResendTime");
+    const storedTime = localStorage.getItem('otpResendTime');
     const currentTime = new Date().getTime();
 
     if (storedTime && currentTime < storedTime) {
@@ -80,7 +80,7 @@ const OtpVerification = ({ contactInfo, type }) => {
     }
 
     const interval = setInterval(() => {
-      const storedTime = localStorage.getItem("otpResendTime");
+      const storedTime = localStorage.getItem('otpResendTime');
       if (storedTime) {
         const currentTime = new Date().getTime();
         const remainingTime = Math.ceil((storedTime - currentTime) / 1000);
@@ -89,7 +89,7 @@ const OtpVerification = ({ contactInfo, type }) => {
           setTimer(remainingTime);
         } else {
           setTimer(0);
-          localStorage.removeItem("otpResendTime");
+          localStorage.removeItem('otpResendTime');
         }
       }
     }, 1000);
@@ -102,21 +102,21 @@ const OtpVerification = ({ contactInfo, type }) => {
     setLoading(true); // Start loader
 
     try {
-      if (type === "email") {
+      if (type === 'email') {
         await callApi({
-          type: "post",
-          url: "resendOtp",
+          type: 'post',
+          url: 'resendOtp',
           userToken: session?.id,
           lang: lang,
         });
-        toast.success(t("otpSent"));
+        toast.success(t('otpSent'));
       } else {
         handleSendOtp();
       }
 
       // Set the timer for 60 seconds and store it in localStorage
       const expiryTime = new Date().getTime() + 60000;
-      localStorage.setItem("otpResendTime", expiryTime);
+      localStorage.setItem('otpResendTime', expiryTime);
       setTimer(60);
 
       // Start countdown
@@ -124,24 +124,24 @@ const OtpVerification = ({ contactInfo, type }) => {
         setTimer((prev) => {
           if (prev <= 1) {
             clearInterval(interval);
-            localStorage.removeItem("otpResendTime");
+            localStorage.removeItem('otpResendTime');
             return 0;
           }
           return prev - 1;
         });
       }, 1000);
     } catch (error) {
-      toast.error(t("otpSendError"));
+      toast.error(t('otpSendError'));
     } finally {
       setLoading(false); // Stop loader
     }
   };
 
   const handleSubmit = async () => {
-    const enteredOtp = otp.join("");
+    const enteredOtp = otp.join('');
 
     if (enteredOtp.length !== 6) {
-      toast.error(t("enterValidOtp"));
+      toast.error(t('enterValidOtp'));
       return;
     }
 
@@ -149,10 +149,10 @@ const OtpVerification = ({ contactInfo, type }) => {
 
     let response;
     try {
-      if (type === "email") {
+      if (type === 'email') {
         response = await callApi({
-          type: "post",
-          url: "emailVerify",
+          type: 'post',
+          url: 'emailVerify',
           data: { code: enteredOtp },
           userToken: session?.id,
         });
@@ -161,21 +161,21 @@ const OtpVerification = ({ contactInfo, type }) => {
       }
 
       if (response.status === 200) {
-        toast.success(t("otpVerified"));
+        toast.success(t('otpVerified'));
         await updateSession({ user: response.data });
         await reloadSession();
         router.push(
-          type === "email"
-            ? "/mobile-verification"
+          type === 'email'
+            ? '/mobile-verification'
             : session?.user?.is_profile_completed
-            ? "/"
-            : "/complete-profile"
+            ? '/'
+            : '/complete-profile',
         );
       } else {
-        toast.error(t("invalidOtp"));
+        toast.error(t('invalidOtp'));
       }
     } catch (error) {
-      toast.error(t("otpVerificationError"));
+      toast.error(t('otpVerificationError'));
     } finally {
       setLoading(false); // Stop loader
     }
@@ -185,10 +185,10 @@ const OtpVerification = ({ contactInfo, type }) => {
     if (!recaptchaVerifier) {
       const localRecaptchaVerifier = new RecaptchaVerifier(
         auth,
-        "recaptcha-container",
+        'recaptcha-container',
         {
-          size: "invisible",
-        }
+          size: 'invisible',
+        },
       );
       setRecaptchaVerifier(localRecaptchaVerifier);
     }
@@ -199,16 +199,16 @@ const OtpVerification = ({ contactInfo, type }) => {
     try {
       const confirmationResult = await signInWithPhoneNumber(
         auth,
-        "+" + contactInfo,
-        recaptchaVerifier
+        contactInfo,
+        recaptchaVerifier,
       );
       setFirebaseVerificationId(confirmationResult.verificationId);
       if (notify) {
-        toast.success(t("otpSentSuccess"));
+        toast.success(t('otpSentSuccess'));
       }
     } catch (error) {
-      console.error("Error sending OTP:", error);
-      toast.error(t("otpSendError"));
+      console.error('Error sending OTP:', error);
+      toast.error(t('otpSendError'));
     } finally {
       setLoading(false); // Stop loader
     }
@@ -216,23 +216,23 @@ const OtpVerification = ({ contactInfo, type }) => {
 
   const handleVerifyOtp = async (otp) => {
     if (!otp || !firebaseVerificationId) {
-      toast.error(t("enterOtp"));
+      toast.error(t('enterOtp'));
       return { status: 400 };
     }
 
     try {
       const credential = PhoneAuthProvider.credential(
         firebaseVerificationId,
-        otp
+        otp,
       );
       await signInWithCredential(auth, credential);
       return await callApi({
-        type: "post",
-        url: "mobileVerify",
+        type: 'post',
+        url: 'mobileVerify',
         userToken: session?.id,
       });
     } catch (error) {
-      console.error("Error verifying OTP:", error);
+      console.error('Error verifying OTP:', error);
       return { status: 400 };
     }
   };
@@ -249,32 +249,32 @@ const OtpVerification = ({ contactInfo, type }) => {
       className={styles.otpContainer}
       style={{ opacity: loading ? 0.5 : 1 }} // Adjust opacity when loading
     >
-      <div id="recaptcha-container"></div>
+      <div id='recaptcha-container'></div>
       <div className={styles.card}>
-        {type === "mobile" && (
+        {type === 'mobile' && (
           <img
-            src="https://static.vecteezy.com/system/resources/previews/025/674/495/non_2x/verification-otp-one-time-password-has-been-send-input-code-with-smartphone-concept-illustration-flat-design-eps10-modern-graphic-element-for-landing-page-empty-state-ui-infographic-icon-vector.jpg"
-            alt="otp"
+            src='https://static.vecteezy.com/system/resources/previews/025/674/495/non_2x/verification-otp-one-time-password-has-been-send-input-code-with-smartphone-concept-illustration-flat-design-eps10-modern-graphic-element-for-landing-page-empty-state-ui-infographic-icon-vector.jpg'
+            alt='otp'
             className={styles.otpImage}
           />
         )}
-        {type === "email" && (
+        {type === 'email' && (
           <img
-            src="https://blog.typingdna.com/wp-content/uploads/2021/11/email_OTP.jpg"
-            alt="otp"
+            src='https://blog.typingdna.com/wp-content/uploads/2021/11/email_OTP.jpg'
+            alt='otp'
             className={styles.otpImage}
           />
         )}
         <h2 className={styles.title}>
-          {t("enterCode")} <br /> 
+          {t('enterCode')} <br />
           <span className={styles.contactInfo}>{contactInfo}</span>
         </h2>
-        <div dir="ltr" className={styles.otpInputs}>
+        <div dir='ltr' className={styles.otpInputs}>
           {otp.map((digit, index) => (
             <input
               key={index}
-              type="text"
-              maxLength="1"
+              type='text'
+              maxLength='1'
               className={styles.otpInput}
               value={digit}
               ref={(el) => (inputsRef.current[index] = el)}
@@ -289,7 +289,7 @@ const OtpVerification = ({ contactInfo, type }) => {
           onClick={handleSubmit}
           disabled={loading} // Disable button when loading
         >
-          {loading ? t("loading") : t("submit")} {/* Show loading text */}
+          {loading ? t('loading') : t('submit')} {/* Show loading text */}
         </button>
         <button
           className={
@@ -298,7 +298,7 @@ const OtpVerification = ({ contactInfo, type }) => {
           onClick={resendOtp}
           disabled={loading || timer > 0} // Disable button when loading
         >
-          {timer > 0 ? `${t("resendOtpIn")} ${timer}s` : t("resendOtp")}
+          {timer > 0 ? `${t('resendOtpIn')} ${timer}s` : t('resendOtp')}
         </button>
       </div>
     </div>
