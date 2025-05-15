@@ -7,7 +7,7 @@ import { useTranslations } from 'next-intl';
 import styles from './RegisterForm.module.css';
 import { callApi } from '../../helper';
 import { signIn } from 'next-auth/react';
-import { redirect } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useLocale } from 'next-intl';
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
@@ -15,6 +15,7 @@ import toast from 'react-hot-toast';
 import { getCookie } from '../../utils/cookies';
 
 const RegisterForm = () => {
+  const router = useRouter();
   const [redirection, setRedirection] = useState(false);
   const [requestError, setRequestError] = useState('');
   const [countries, setCountries] = useState([]);
@@ -33,7 +34,7 @@ const RegisterForm = () => {
   } = useForm();
 
   const onSubmit = async (payload) => {
-    setLoading(true); // Start loader
+    setLoading(true);
     try {
       const { year, month } = payload;
 
@@ -70,18 +71,18 @@ const RegisterForm = () => {
       });
 
       if (res.status == 1) {
-        const { error } = await signIn('credentials', {
+        const loginRes = await signIn('credentials', {
           email: payload.email.toLowerCase(),
           password: payload.password,
           redirect: false,
         });
 
-        if (error) {
+        if (loginRes?.error) {
           setRequestError(t('emailExists'));
-          toast.error(t('emailExists')); // Show toast on error
+          toast.error(t('emailExists'));
         } else {
           setRedirection(true);
-          redirect('/email-verification');
+          router.push('/email-verification');
         }
       } else {
         if (res.message === 'The email has already been taken.') {
@@ -95,10 +96,10 @@ const RegisterForm = () => {
         }
       }
     } catch (error) {
-      setRequestError(t('emailExists'));
-      toast.error(t('emailExists'));
+      setRequestError(error);
+      toast.error(error);
     } finally {
-      setLoading(false); // Stop loader after submission
+      setLoading(false);
     }
   };
 
