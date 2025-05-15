@@ -322,9 +322,9 @@ const RegisterForm = () => {
         </div>
 
         <select
-          className={`${styles.input} ${
-            errors.country_id ? styles.errorBorder : ''
-          }`}
+          // className={`${styles.input} ${
+          //   errors.country_id ? styles.errorBorder : ''
+          // }`}
           {...register('country_id', { required: t('countryRequired') })}
           onChange={handleCountryChange}
           value={selectedCountryId}
