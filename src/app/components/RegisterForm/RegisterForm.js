@@ -81,6 +81,7 @@ const RegisterForm = () => {
           toast.error(t('emailExists')); // Show toast on error
         } else {
           setRedirection(true);
+          redirect('/email-verification');
         }
       } else {
         if (res.message === 'The email has already been taken.') {
