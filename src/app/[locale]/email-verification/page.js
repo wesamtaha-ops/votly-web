@@ -14,14 +14,12 @@ export default async function EmailVerificationPage() {
 
   return (
     <>
-      <Header />
       <div
         style={{
           marginTop: '50px',
           lineHeight: '40px',
         }}></div>
       <OtpVerification contactInfo={session?.user?.email} type='email' />
-      <Footer />
     </>
   );
 }

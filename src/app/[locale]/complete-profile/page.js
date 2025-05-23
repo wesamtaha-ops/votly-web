@@ -59,14 +59,12 @@ export default function CompleteProfile() {
 
   return (
     <>
-      <Header />
       <main className="main-content">
         <ProfileCompletionForm
           profile={profile}
           onSubmit={handleProfileSubmit}
         />
       </main>
-      <Footer />
     </>
   );
 }

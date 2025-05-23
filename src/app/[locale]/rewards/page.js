@@ -18,11 +18,9 @@ export default async function RewardsPage() {
 
   return (
     <>
-      <Header />
       <main className="main-content">
         <Rewards />
       </main>
-      <Footer />
     </>
   );
 }

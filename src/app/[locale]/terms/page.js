@@ -10,7 +10,6 @@ export default function TermsOfUse() {
 
   return (
     <>
-      <Header />
       <div className={styles.container}>
         <div className={styles.content}>
           <h1 className={styles.title}>{t('title')}</h1>

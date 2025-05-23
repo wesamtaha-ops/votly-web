@@ -11,7 +11,6 @@ export default function EditProfilePage() {
 
   return (
     <>
-      <Header />
       <main className="main-content">
         <EditProfile
           user={session?.user ?? {}}
@@ -19,7 +18,6 @@ export default function EditProfilePage() {
           updateSession={updateSession}
         />
       </main>
-      <Footer />
     </>
   );
 }

@@ -1,0 +1,17 @@
+.layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+/* Add margin-top only when header is visible */
+.layout:not(:has(header:not(:first-child))) .main {
+  margin-top: -100px;
+} 

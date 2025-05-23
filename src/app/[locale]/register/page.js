@@ -13,11 +13,9 @@ export default async function RegisterPage() {
 
   return (
     <>
-      <Header />
       <main className="main-content">
         <RegisterForm />
       </main>
-      <Footer />
     </>
   );
 }

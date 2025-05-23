@@ -18,11 +18,9 @@ export default async function SurveysPage() {
 
   return (
     <>
-      <Header />
       <main className="main-content">
         <SurveysList />
       </main>
-      <Footer />
     </>
   );
 }

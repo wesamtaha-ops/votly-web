@@ -14,14 +14,12 @@ export default async function MobileVerificationPage() {
 
   return (
     <>
-      <Header />
       <div
         style={{
           marginTop: '50px',
           lineHeight: '40px',
         }}></div>
       <OtpVerification contactInfo={session?.user?.phone} type='mobile' />
-      <Footer />
     </>
   );
 }

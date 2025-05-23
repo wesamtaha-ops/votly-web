@@ -10,7 +10,6 @@ export default function PrivacyPolicy() {
 
   return (
     <>
-      <Header />
       <div className={styles.container}>
         <div className={styles.content}>
           <h1 className={styles.title}>{t('title')}</h1>
@@ -66,7 +65,6 @@ export default function PrivacyPolicy() {
           </section>
         </div>
       </div>
-      {/* <Footer /> */}
     </>
   );
 } 

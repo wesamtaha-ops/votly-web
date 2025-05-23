@@ -10,11 +10,9 @@ export default function ProfilePage() {
 
   return (
     <>
-      <Header />
       <main className="main-content">
         <Profile user={session?.user ?? {}} />
       </main>
-      <Footer />
     </>
   );
 }

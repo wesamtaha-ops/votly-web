@@ -13,9 +13,7 @@ export default async function LoginPage() {
 
   return (
     <>
-      <Header />
       <Login />
-      <Footer />
     </>
   );
 }

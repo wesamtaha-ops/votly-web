@@ -5,11 +5,9 @@ import Footer from '../../components/Footer/Footer';
 export default function AboutPage() {
   return (
     <>
-      <Header />
       <main className='main-content'>
         <About />
       </main>
-      <Footer />
     </>
   );
 }

@@ -13,11 +13,9 @@ export default async function ForgotPasswordPage() {
 
   return (
     <>
-      <Header />
       <main className="main-content">
         <ForgotPassword />
       </main>
-      <Footer />
     </>
   );
 }

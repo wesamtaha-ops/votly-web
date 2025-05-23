@@ -6,7 +6,7 @@ import { Inter, Almarai } from 'next/font/google'; // Import Almarai font from G
 import { SessionProvider } from 'next-auth/react';
 import { Toaster } from 'react-hot-toast';
 import { NextIntlClientProvider } from 'next-intl';
-import Head from 'next/head';
+import Layout from '../components/Layout/Layout';
 
 const inter = Inter({ subsets: ['latin'] });
 const almarai = Almarai({
@@ -35,9 +35,9 @@ export default function RootLayout({ children, params }) {
       <body className={isRTL ? almarai.className : inter.className}>
         <SessionProvider>
           <NextIntlClientProvider locale={locale} messages={messages}>
-            {children}
+            <Layout>{children}</Layout>
+            <Toaster />
           </NextIntlClientProvider>
-          <Toaster />
         </SessionProvider>
       </body>
     </html>
