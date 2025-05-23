@@ -5,6 +5,7 @@
   min-height: calc(100vh - 400px);
   background-color: #f8f9fa;
   margin-bottom: 2rem;
+  margin-top: 40px;
 }
 
 .content {
@@ -76,4 +77,4 @@
   .section {
     padding: 1rem;
   }
-} 
+}

@@ -74,6 +74,7 @@
 @media (max-width: 768px) {
   .container {
     padding: 1rem;
+    margin-top: 40px;
   }
 
   .content {
@@ -99,4 +100,4 @@
   .section {
     padding: 1rem;
   }
-} 
+}
