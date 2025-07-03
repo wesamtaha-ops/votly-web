@@ -9,7 +9,15 @@
     "validEmailOrPhone": "Please enter a valid email or phone number",
     "forgotPassword": "Forgot your password?",
     "register": "Register",
-    "loading": "..."
+    "loading": "...",
+    "loginOptions": "Login with email or phone number",
+    "phoneFormatHint": "For phone numbers, include country code (e.g., +971XXXXXXXXX)",
+    "emailFormatHint": "Or enter your email address",
+    "phoneExample": "Example: +971501234567",
+    "emailExample": "Example: user@example.com",
+    "mobileTab": "Mobile Number",
+    "emailTab": "Email",
+    "mobilePlaceholder": "+971 Enter Mobile Number"
   },
   "Register": {
     "signUpTitle": "Sign up for Votly",

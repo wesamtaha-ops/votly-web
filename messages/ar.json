@@ -9,7 +9,15 @@
     "validEmailOrPhone": "يرجى إدخال بريد إلكتروني أو رقم هاتف صالح",
     "forgotPassword": "هل نسيت كلمة المرور؟",
     "register": "سجل",
-    "loading": "..."
+    "loading": "...",
+    "loginOptions": "تسجيل الدخول بالبريد الإلكتروني أو رقم الهاتف",
+    "phoneFormatHint": "لأرقام الهاتف، أضف رمز الدولة (مثال: +971XXXXXXXXX)",
+    "emailFormatHint": "أو أدخل عنوان بريدك الإلكتروني",
+    "phoneExample": "مثال: +971501234567",
+    "emailExample": "مثال: user@example.com",
+    "mobileTab": "رقم الجوال",
+    "emailTab": "البريد الإلكتروني",
+    "mobilePlaceholder": "+971 أدخل رقم الجوال"
   },
   "Register": {
     "signUpTitle": "سجل في فوتلي",

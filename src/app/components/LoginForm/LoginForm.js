@@ -9,9 +9,14 @@ import { useSearchParams } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl"; // Import for translations
 import Button from "../Shared/Button";
 import toast from "react-hot-toast"; // Import toast for notifications
+import classNames from "classnames";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
 
 const Login = () => {
   const [loading, setLoading] = useState(false); // Loader state
+  const [loginType, setLoginType] = useState("email"); // 'email' or 'mobile'
+  const [phoneValue, setPhoneValue] = useState("");
   const searchParams = useSearchParams();
   const t = useTranslations("Login"); // Initialize translations
   const lang = useLocale(); // Get the current locale
@@ -23,42 +28,47 @@ const Login = () => {
     setError,
     clearErrors,
     resetField,
+    setValue,
   } = useForm();
 
   const onSubmit = async (payload) => {
-    setLoading(true); // Start loading
-    clearErrors(); // Clear any previous errors before a new request
+    setLoading(true);
+    clearErrors();
+
+    // Prepare login data based on tab
+    let loginPayload = {
+      password: payload.password,
+      lang: lang,
+      redirect: false,
+    };
+
+    if (loginType === "email") {
+      loginPayload.email = payload.email.toLowerCase();
+    } else {
+      let phone = payload.phone;
+      if (phone && !phone.startsWith("+")) {
+        phone = "+" + phone;
+      }
+      loginPayload.email = phone;
+    }
 
     try {
-      const result = await signIn("credentials", {
-        email: payload.email.toLowerCase(),
-        password: payload.password,
-        lang: lang,
-        redirect: false,
-      });
+      const result = await signIn("credentials", loginPayload);
 
       if (result.error) {
-        setError("submit", {
-          message: t("loginFailed"),
-        });
-        toast.error(t("loginFailed")); // Show error toast
-        setTimeout(() => {
-          clearErrors(); // Clear the error after 5 seconds
-        }, 3000);
+        setError("submit", { message: t("loginFailed") });
+        toast.error(t("loginFailed"));
+        setTimeout(() => clearErrors(), 3000);
       } else {
         const callbackUrl = searchParams.get("callbackUrl");
         window.location.href = callbackUrl ? callbackUrl : "/surveys";
       }
     } catch (error) {
-      setError("submit", {
-        message: t("loginFailed"),
-      });
-      toast.error(t("loginFailed")); // Show error toast
-      setTimeout(() => {
-        clearErrors(); // Clear the error after 5 seconds
-      }, 3000);
+      setError("submit", { message: t("loginFailed") });
+      toast.error(t("loginFailed"));
+      setTimeout(() => clearErrors(), 3000);
     } finally {
-      setLoading(false); // Stop loading
+      setLoading(false);
     }
   };
 
@@ -78,11 +88,31 @@ const Login = () => {
     return t("validEmailOrPhone");
   };
 
+  // New: Validate phone number using react-phone-input-2 value
+  const validatePhone = (value) => {
+    // react-phone-input-2 returns only digits if not valid
+    if (!value || value.length < 8 || value.replace(/\D/g, "").length < 8) {
+      return t("validEmailOrPhone");
+    }
+    return true;
+  };
+
   // Handle "Enter" keypress to submit the form
   const handleKeyPress = (event) => {
     if (event.key === "Enter") {
       event.preventDefault(); // Prevent the default form submit behavior
       handleSubmit(onSubmit)(); // Trigger the form submit
+    }
+  };
+
+  // New: handle tab switch
+  const handleTab = (type) => {
+    setLoginType(type);
+    clearErrors();
+    if (type === "email") {
+      setPhoneValue("");
+    } else {
+      resetField("email");
     }
   };
 
@@ -93,10 +123,27 @@ const Login = () => {
     >
       <div className={styles.loginBox}>
         <h2 className={styles.title}>{t("logIn")}</h2>
+        {/* Tabs */}
+        <div className={styles.tabsContainer}>
+          <button
+            type="button"
+            className={classNames(styles.tab, loginType === "mobile" && styles.activeTab)}
+            onClick={() => handleTab("mobile")}
+          >
+            {t("mobileTab") || "Mobile Number"}
+          </button>
+          <button
+            type="button"
+            className={classNames(styles.tab, loginType === "email" && styles.activeTab)}
+            onClick={() => handleTab("email")}
+          >
+            {t("emailTab") || "Email"}
+          </button>
+        </div>
         <form
           className={styles.form}
           onSubmit={handleSubmit(onSubmit)}
-          onKeyPress={handleKeyPress} // Listen for "Enter" keypress
+          onKeyPress={handleKeyPress}
         >
           {/* Display request error */}
           {errors.submit && (
@@ -105,19 +152,52 @@ const Login = () => {
             </p>
           )}
 
-          <input
-            type="text"
-            placeholder={t("emailOrPhone")}
-            className={`${styles.input} ${
-              errors.email ? styles.errorBorder : ""
-            }`}
-            {...register("email", {
-              required: t("emailRequired"),
-              validate: validateEmailOrPhone,
-            })}
-            disabled={loading} // Disable input when loading
-          />
-          {errors.email && (
+          {/* Mobile Number Input */}
+          {loginType === "mobile" && (
+            <div className={styles.inputWrapper}>
+              <PhoneInput
+                country={"ae"}
+                value={phoneValue}
+                onChange={(phone) => {
+                  setPhoneValue(phone);
+                  setValue("phone", phone);
+                }}
+                inputProps={{
+                  name: "phone",
+                  required: true,
+                  autoFocus: false,
+                  disabled: loading,
+                  placeholder: t("mobilePlaceholder") || "+971 Enter Mobile Number",
+                }}
+                inputClass={classNames(styles.phoneInput, errors.phone && styles.errorBorder)}
+                buttonClass={styles.phoneButton}
+                containerClass={styles.phoneContainer}
+                dropdownClass={styles.phoneDropdown}
+                specialLabel=""
+                enableSearch
+              />
+              {errors.phone && (
+                <p role="alert" className={styles.error}>
+                  {errors.phone.message}
+                </p>
+              )}
+            </div>
+          )}
+
+          {/* Email Input */}
+          {loginType === "email" && (
+            <input
+              type="text"
+              placeholder={t("emailOrPhone")}
+              className={classNames(styles.input, errors.email && styles.errorBorder)}
+              {...register("email", {
+                required: t("emailRequired"),
+                validate: validateEmailOrPhone,
+              })}
+              disabled={loading}
+            />
+          )}
+          {loginType === "email" && errors.email && (
             <p role="alert" className={styles.error}>
               {errors.email.message}
             </p>
@@ -126,11 +206,9 @@ const Login = () => {
           <input
             type="password"
             placeholder={t("password")}
-            className={`${styles.input} ${
-              errors.password ? styles.errorBorder : ""
-            }`}
+            className={classNames(styles.input, errors.password && styles.errorBorder)}
             {...register("password", { required: t("passwordRequired") })}
-            disabled={loading} // Disable input when loading
+            disabled={loading}
           />
           {errors.password && (
             <p role="alert" className={styles.error}>
@@ -139,9 +217,9 @@ const Login = () => {
           )}
 
           <Button
-            title={loading ? t("loading") : t("logIn")} // Show "loading..." while submitting
+            title={loading ? t("loading") : t("logIn")}
             style={{ fontFamily: "Almarai", marginTop: 20 }}
-            disabled={loading} // Disable button when loading
+            disabled={loading}
           />
         </form>
         <br />
