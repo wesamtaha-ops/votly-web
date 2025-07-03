@@ -13,6 +13,7 @@ import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
 import toast from 'react-hot-toast';
 import { getCookie } from '../../utils/cookies';
+import { usePathname } from 'next/navigation';
 
 const RegisterForm = () => {
   const router = useRouter();
@@ -32,6 +33,7 @@ const RegisterForm = () => {
     handleSubmit,
     setValue,
   } = useForm();
+  const pathname = usePathname();
 
   const onSubmit = async (payload) => {
     setLoading(true);
@@ -106,6 +108,35 @@ const RegisterForm = () => {
   useEffect(() => {
     setSelectedCountryId('227');
   }, []);
+
+  // Improved refresh logic
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const currentPath = window.location.pathname;
+      const lastRefreshedPath = sessionStorage.getItem('last_refreshed_path');
+
+      // Only refresh if we're on the register page and haven't refreshed for this navigation
+      if (
+        currentPath.includes('/register') &&
+        lastRefreshedPath !== currentPath
+      ) {
+        // Set the flag before refreshing to prevent infinite loops
+        sessionStorage.setItem('last_refreshed_path', currentPath);
+        window.location.reload();
+      }
+      // Always update last_refreshed_path to current path on navigation
+      sessionStorage.setItem('last_refreshed_path', currentPath);
+    }
+  }, [pathname]);
+
+  // Clean up the refresh flag when leaving the register page
+  useEffect(() => {
+    return () => {
+      if (typeof window !== 'undefined' && !pathname.includes('/register')) {
+        sessionStorage.removeItem('last_refreshed_path');
+      }
+    };
+  }, [pathname]);
 
   async function getCountries() {
     const res = await callApi({
