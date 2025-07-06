@@ -57,6 +57,28 @@ const OtpVerification = ({ contactInfo, type }) => {
     }
   };
 
+  const handleKeyDown = (index, event) => {
+    // Handle backspace key
+    if (event.key === 'Backspace') {
+      event.preventDefault();
+      const newOtp = [...otp];
+      
+      // If current input has a value, clear it
+      if (newOtp[index] !== '') {
+        newOtp[index] = '';
+        setOtp(newOtp);
+        return;
+      }
+      
+      // If current input is empty, go to previous input and clear it
+      if (index > 0) {
+        newOtp[index - 1] = '';
+        setOtp(newOtp);
+        inputsRef.current[index - 1]?.focus();
+      }
+    }
+  };
+
   const handlePaste = async (event) => {
     event.preventDefault();
     const pasteData = (event.clipboardData || window.clipboardData).getData(
@@ -283,6 +305,7 @@ const OtpVerification = ({ contactInfo, type }) => {
               value={digit}
               ref={(el) => (inputsRef.current[index] = el)}
               onChange={(e) => handleInputChange(index, e)}
+              onKeyDown={(e) => handleKeyDown(index, e)}
               onPaste={handlePaste} // Add onPaste event listener
               disabled={loading} // Disable input when loading
             />

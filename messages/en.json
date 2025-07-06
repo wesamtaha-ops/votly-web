@@ -85,7 +85,12 @@
     "confirmPasswordRequired": "Please confirm your password",
     "confirmPasswordPlaceholder": "Confirm new password",
     "passwordsDoNotMatch": "Passwords do not match",
-    "setNewPasswordButton": "Set New Password"
+    "setNewPasswordButton": "Set New Password",
+    "resendCode": "Resend Code",
+    "resendCodeIn": "Resend code in",
+    "seconds": "seconds",
+    "otpSentMessage": "OTP has been sent to your email",
+    "resendFailed": "Failed to resend OTP. Please try again."
   },
   "OtpVerification": {
     "enterCode": "Enter the 6-digit code sent to",

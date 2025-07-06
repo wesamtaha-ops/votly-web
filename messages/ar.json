@@ -85,7 +85,12 @@
     "confirmPasswordRequired": "يرجى تأكيد كلمة المرور",
     "confirmPasswordPlaceholder": "تأكيد كلمة المرور الجديدة",
     "passwordsDoNotMatch": "كلمات المرور غير متطابقة",
-    "setNewPasswordButton": "تعيين كلمة المرور الجديدة"
+    "setNewPasswordButton": "تعيين كلمة المرور الجديدة",
+    "resendCode": "إعادة إرسال الرمز",
+    "resendCodeIn": "إعادة إرسال الرمز خلال",
+    "seconds": "ثانية",
+    "otpSentMessage": "تم إرسال رمز التحقق إلى بريدك الإلكتروني",
+    "resendFailed": "فشل في إعادة إرسال رمز التحقق. يرجى المحاولة مرة أخرى."
   },
   "OtpVerification": {
     "enterCode": "أدخل الرمز المكون من 6 أرقام المرسل إلى",

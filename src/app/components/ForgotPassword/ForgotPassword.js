@@ -1,6 +1,6 @@
 "use client"; // Ensure this component is treated as a client-side component
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useLocale, useTranslations } from "next-intl"; // Import for translations
 import styles from "./ForgotPassword.module.css";
@@ -13,6 +13,9 @@ const ForgotPassword = () => {
   const [sentMode, setSentMode] = useState(false); // Email sent mode
   const [otpSent, setOtpSent] = useState(false); // OTP sent mode
   const [otpVerified, setOtpVerified] = useState(false); // OTP verified mode
+  const [countdown, setCountdown] = useState(0); // Countdown timer
+  const [canResend, setCanResend] = useState(false); // Can resend OTP
+  const [userEmail, setUserEmail] = useState(""); // Store user email for resend
   const lang = useLocale(); // Get the current locale
   const router = useRouter();
 
@@ -25,6 +28,19 @@ const ForgotPassword = () => {
     watch,
   } = useForm();
 
+  // Countdown timer effect
+  useEffect(() => {
+    let timer;
+    if (countdown > 0) {
+      timer = setTimeout(() => {
+        setCountdown(countdown - 1);
+      }, 1000);
+    } else if (countdown === 0 && otpSent) {
+      setCanResend(true);
+    }
+    return () => clearTimeout(timer);
+  }, [countdown, otpSent]);
+
   // Handle email submission
   const onSubmitEmail = async (data) => {
     await callApi({
@@ -36,10 +52,33 @@ const ForgotPassword = () => {
       lang: lang,
     });
 
+    setUserEmail(data["email"]);
     setSentMode(true);
     setOtpSent(true);
+    setCountdown(120); // 2 minutes countdown
+    setCanResend(false);
 
-    toast.success("OTP has been sent to your email");
+    toast.success(t("otpSentMessage"));
+  };
+
+  // Handle resend OTP
+  const handleResendOtp = async () => {
+    try {
+      await callApi({
+        type: "post",
+        url: "forget",
+        data: {
+          email: userEmail,
+        },
+        lang: lang,
+      });
+
+      setCountdown(120); // Reset to 2 minutes
+      setCanResend(false);
+      toast.success(t("otpSentMessage"));
+    } catch (error) {
+      toast.error(t("resendFailed"));
+    }
   };
 
   // Handle OTP submission
@@ -75,6 +114,13 @@ const ForgotPassword = () => {
     } else {
       toast.error("Something went wrong! please try again later");
     }
+  };
+
+  // Format countdown time
+  const formatTime = (seconds) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
   };
 
   const renderStepIndicator = () => {
@@ -127,6 +173,24 @@ const ForgotPassword = () => {
           <button className={styles.button} type="submit">
             {t("verifyOtpButton")}
           </button>
+          
+          {/* Resend OTP Section */}
+          <div className={styles.resendSection}>
+            {countdown > 0 ? (
+              <p className={styles.countdownText}>
+                {t("resendCodeIn")} {formatTime(countdown)} {t("seconds")}
+              </p>
+            ) : (
+              <button
+                type="button"
+                className={styles.resendButton}
+                onClick={handleResendOtp}
+                disabled={!canResend}
+              >
+                {t("resendCode")}
+              </button>
+            )}
+          </div>
         </form>
       )}
 
