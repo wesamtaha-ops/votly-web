@@ -265,7 +265,9 @@
     "login": "Login",
     "register": "Register",
     "logout": "Logout",
-    "language": "Language"
+    "language": "Language",
+    "points": "Points",
+    "availableBalance": "Available Balance"
   },
   "Surveys": {
     "earnBySurveys": "Earn By Taking Surveys",

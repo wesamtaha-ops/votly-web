@@ -4,7 +4,7 @@ const require = createRequire(import.meta.url);
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ["votly.app"], // Allow images from votly.app
+    domains: ["votly.app", "votly.io"], // Allow images from votly.app and votly.io
   },
   i18n: {
     locales: ["en", "ar"],

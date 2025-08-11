@@ -6,6 +6,7 @@ import { signOut } from "next-auth/react";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import styles from "./Header.module.css";
+import UserAvatar from "../UserAvatar/UserAvatar";
 
 import { useLocale, useTranslations } from "next-intl"; // Import for translations
 
@@ -51,6 +52,20 @@ const Header = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const closeMenu = () => {
+    setIsMenuOpen(false);
+    setIsDropdownOpen(false);
+  };
+
+  const handleNavigation = (href) => {
+    closeMenu();
+    router.push(href);
+  };
+
+  const isActivePage = (path) => {
+    return pathname === `/${lang}${path}` || pathname === `/${lang}${path}/`;
+  };
+
   return (
     <header className={styles.header}>
       <div className={styles.logo}>
@@ -63,42 +78,73 @@ const Header = () => {
         </Link>
       </div>
       <nav className={`${styles.nav} ${isMenuOpen ? styles.navOpen : ""}`}>
-        <Link href={`/${lang}/surveys`} className={styles.navLink}>
+        <button 
+          className={`${styles.navLink} ${isActivePage('/surveys') ? styles.active : ''}`}
+          onClick={() => handleNavigation(`/${lang}/surveys`)}
+        >
           {t("surveys")}
-        </Link>
-        <Link href={`/${lang}/rewards`} className={styles.navLink}>
+        </button>
+        <button 
+          className={`${styles.navLink} ${isActivePage('/rewards') ? styles.active : ''}`}
+          onClick={() => handleNavigation(`/${lang}/rewards`)}
+        >
           {t("rewards")}
-        </Link>
+        </button>
         {session?.id && (
-          <Link href={`/${lang}/invite-friends`} className={styles.navLink}>
+          <button 
+            className={`${styles.navLink} ${isActivePage('/invite-friends') ? styles.active : ''}`}
+            onClick={() => handleNavigation(`/${lang}/invite-friends`)}
+          >
             {t("inviteFriends")}
-          </Link>
+          </button>
         )}
         {session?.id && (
-          <Link href={`/${lang}/profile`} className={styles.navLink}>
+          <button 
+            className={`${styles.navLink} ${isActivePage('/profile') ? styles.active : ''}`}
+            onClick={() => handleNavigation(`/${lang}/profile`)}
+          >
             {t("myProfile")}
-          </Link>
+          </button>
         )}
 
         {!session?.id ? (
           <>
-            <Link href={`/${lang}/register`} className={styles.navLink}>
+            <button 
+              className={`${styles.navLink} ${isActivePage('/register') ? styles.active : ''}`}
+              onClick={() => handleNavigation(`/${lang}/register`)}
+            >
               {t("register")}
-            </Link>
+            </button>
 
-            <Link href={`/${lang}/login`} className={styles.navLink}>
+            <button 
+              className={`${styles.navLink} ${isActivePage('/login') ? styles.active : ''}`}
+              onClick={() => handleNavigation(`/${lang}/login`)}
+            >
               {t("login")}
-            </Link>
+            </button>
           </>
         ) : (
-          <a
-            href="#"
-            className={styles.navLink}
-            onClick={() => signOut({ callbackUrl: `/${lang}/` })}
-          >
-            {t("logout")}
-          </a>
+          <>
+            <button
+              className={styles.navLink}
+              onClick={(e) => {
+                e.preventDefault();
+                closeMenu();
+                signOut({ callbackUrl: `/${lang}/` });
+              }}
+            >
+              {t("logout")}
+            </button>
+          </>
         )}
+
+
+      </nav>
+
+      {/* Right Side Container */}
+      <div className={styles.rightContainer}>
+        {/* User Avatar - only show if logged in */}
+        {session?.id && <UserAvatar />}
 
         {/* Language switcher dropdown */}
         <div className={styles.languageSwitcher}>
@@ -112,14 +158,19 @@ const Header = () => {
             </ul>
           )}
         </div>
-      </nav>
 
-      {/* Hamburger Menu Button */}
-      <button className={styles.hamburger} onClick={toggleMenu}>
-        <span className={styles.hamburgerBar}></span>
-        <span className={styles.hamburgerBar}></span>
-        <span className={styles.hamburgerBar}></span>
-      </button>
+        {/* Hamburger Menu Button */}
+        <button 
+          className={`${styles.hamburger} ${isMenuOpen ? styles.active : ''}`} 
+          onClick={toggleMenu}
+          aria-label="Toggle navigation menu"
+          aria-expanded={isMenuOpen}
+        >
+          <span className={styles.hamburgerBar}></span>
+          <span className={styles.hamburgerBar}></span>
+          <span className={styles.hamburgerBar}></span>
+        </button>
+      </div>
     </header>
   );
 };

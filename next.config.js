@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ['votly.app'],
+    domains: ['votly.app', 'votly.io'],
   },
   eslint: {
     // Warning: This allows production builds to successfully complete even if
