@@ -70,6 +70,11 @@ const Header = () => {
           {t("rewards")}
         </Link>
         {session?.id && (
+          <Link href={`/${lang}/invite-friends`} className={styles.navLink}>
+            {t("inviteFriends")}
+          </Link>
+        )}
+        {session?.id && (
           <Link href={`/${lang}/profile`} className={styles.navLink}>
             {t("myProfile")}
           </Link>

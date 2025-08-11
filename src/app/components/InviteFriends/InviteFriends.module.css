@@ -1,0 +1,451 @@
+.inviteContainer {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Hero Section */
+.heroSection {
+  text-align: center;
+  margin-bottom: 3rem;
+  padding: 1.5rem;
+
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 16px;
+  color: white;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: white;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.description {
+  font-size: 1.125rem;
+  color: rgba(255, 255, 255, 0.9);
+  text-align: center;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+.rewardBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 1rem 1.5rem;
+  border-radius: 50px;
+  backdrop-filter: blur(10px);
+}
+
+.rewardAmount {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #ffd700;
+}
+
+.rewardText {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* Journey Timeline */
+.journeySection {
+  margin-bottom: 3rem;
+}
+
+.journeyTitle {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #2d3748;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.journeySubtitle {
+  font-size: 1.125rem;
+  color: #718096;
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.timeline {
+  position: relative;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.timelineStep {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  padding: 1rem;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.timelineStep:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.stepIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  color: white;
+  font-size: 1.5rem;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 2;
+}
+
+.step1 { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+.step2 { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+.step3 { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
+.step4 { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); }
+.step5 { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); }
+
+.finalStep {
+  animation: pulse 2s infinite;
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.stepContent {
+  flex: 1;
+}
+
+.stepTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #2d3748;
+  margin-bottom: 0.5rem;
+}
+
+.stepDescription {
+  color: #718096;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.stepNumber {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: #e2e8f0;
+  color: #4a5568;
+  border-radius: 50%;
+  font-weight: 600;
+  font-size: 1.125rem;
+  flex-shrink: 0;
+}
+
+.earnAmount {
+  display: inline-block;
+  background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+  color: #744210;
+  padding: 0.5rem 1rem;
+  border-radius: 25px;
+  font-weight: 700;
+  margin-top: 0.5rem;
+  animation: bounce 1s infinite alternate;
+}
+
+@keyframes bounce {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-3px); }
+}
+
+.timelineConnector {
+  position: absolute;
+  left: calc(1.5rem + 30px);
+  top: calc(100% - 1rem);
+  width: 3px;
+  height: 2rem;
+  background: linear-gradient(to bottom, #e2e8f0, #cbd5e0);
+  z-index: 1;
+}
+
+.timelineStep:last-child .timelineConnector {
+  display: none;
+}
+
+.unlimitedBox {
+  background: linear-gradient(135deg, #d0d8ff 0%, #ece0f9 100%);
+  color: white;
+  padding: 1rem;
+  padding-right: 10rem;
+  padding-left: 10rem;
+  border-radius: 16px;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.unlimitedBox h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 0.6rem;
+}
+
+.unlimitedBox p {
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+.autoRewardNote {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 0.5rem;
+  border-radius: 12px;
+  font-weight: 600;
+  color: #000000;
+}
+
+/* Actions Section */
+.actionsSection {
+  background: #f8fafc;
+  padding: 2rem;
+  border-radius: 16px;
+}
+
+.actionsTitle {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #2d3748;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.linkSection,
+.emailSection,
+.socialSection {
+  margin-bottom: 2rem;
+}
+
+.sectionTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 1rem;
+}
+
+.linkContainer {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.linkInput {
+  flex: 1;
+  padding: 0.75rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  color: #666;
+  background: #f9fafb;
+  min-width: 0;
+}
+
+.copyButton {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: #017bfe;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  font-family: 'Almarai', sans-serif;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  white-space: nowrap;
+}
+
+.copyButton:hover {
+  background: #0056b3;
+}
+
+.copyButton:disabled {
+  background: #28a745;
+  cursor: not-allowed;
+}
+
+
+
+.socialButtons {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.socialButton {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  font-family: 'Almarai', sans-serif;
+  cursor: pointer;
+  transition: transform 0.2s;
+  color: white;
+}
+
+.socialButton:hover {
+  transform: translateY(-2px);
+}
+
+.email {
+  background: #ea4335;
+}
+
+.whatsapp {
+  background: #25d366;
+}
+
+.twitter {
+  background: #1da1f2;
+}
+
+.facebook {
+  background: #1877f2;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .inviteContainer {
+    padding: 1.5rem;
+    margin: 1rem;
+  }
+  
+  .heroSection {
+    padding: 1.5rem;
+  }
+  
+  .title {
+    font-size: 2rem;
+  }
+  
+  .rewardAmount {
+    font-size: 1.5rem;
+  }
+  
+  .journeyTitle {
+    font-size: 1.5rem;
+  }
+  
+  .timelineStep {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+    padding: 1.5rem 1rem;
+  }
+  
+  .stepIcon {
+    width: 50px;
+    height: 50px;
+    font-size: 1.25rem;
+  }
+  
+  .stepNumber {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 30px;
+    height: 30px;
+    font-size: 0.875rem;
+  }
+  
+  .timelineConnector {
+    left: 50%;
+    transform: translateX(-50%);
+    top: calc(100% - 0.5rem);
+    height: 1rem;
+  }
+  
+  .unlimitedBox {
+    padding: 1.5rem;
+  }
+  
+  .actionsSection {
+    padding: 1.5rem;
+  }
+  
+  .linkContainer {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .linkInput {
+    width: 100%;
+  }
+  
+  .copyButton {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .socialButtons {
+    flex-direction: column;
+  }
+  
+  .socialButton {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .title {
+    font-size: 1.75rem;
+  }
+  
+  .rewardAmount {
+    font-size: 1.25rem;
+  }
+  
+  .journeyTitle {
+    font-size: 1.25rem;
+  }
+  
+  .timelineStep {
+    padding: 1rem;
+  }
+  
+  .stepIcon {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+  }
+  
+  .stepTitle {
+    font-size: 1rem;
+  }
+  
+  .stepDescription {
+    font-size: 0.875rem;
+  }
+} 

@@ -65,6 +65,12 @@ const RegisterForm = () => {
         payload.source = source;
       }
 
+      // Add inviterHash from localStorage if it exists
+      const inviterHash = localStorage.getItem('inviterHash');
+      if (inviterHash) {
+        payload.inviterHash = inviterHash;
+      }
+
       const res = await callApi({
         type: 'post',
         url: 'register',
@@ -84,6 +90,13 @@ const RegisterForm = () => {
           toast.error(t('emailExists'));
         } else {
           setRedirection(true);
+          
+          // Clear the inviter hash from localStorage after successful registration
+          const inviterHash = localStorage.getItem('inviterHash');
+          if (inviterHash) {
+            localStorage.removeItem('inviterHash');
+          }
+          
           router.push('/email-verification');
         }
       } else {
