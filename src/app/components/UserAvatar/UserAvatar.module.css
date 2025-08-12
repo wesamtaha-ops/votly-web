@@ -1,47 +1,44 @@
+/* Avatar Container */
 .avatarContainer {
   position: relative;
-  font-family: var(--font-almarai), 'Almarai', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 }
 
+/* Arabic Font Support */
+[dir="rtl"] .avatarContainer,
+.avatarContainer[lang="ar"] {
+  font-family: 'Almarai', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+}
+
+/* Main Avatar Button */
 .avatarButton {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 16px;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem;
+  background: transparent;
+  border: none;
+  border-radius: 50px;
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  min-width: 200px;
-  outline: none;
+  transition: all 0.3s ease;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .avatarButton:hover {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.08));
-  border-color: rgba(255, 255, 255, 0.3);
-  transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-}
-
-.avatarButton:focus {
-  outline: 2px solid #3182ce;
-  outline-offset: 2px;
+  background: rgba(0, 0, 0, 0.04);
 }
 
 .avatarContent {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  width: 100%;
 }
 
+/* User Image */
 .imageContainer {
   position: relative;
-  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
 }
 
 .userImage {
@@ -49,8 +46,8 @@
   height: 40px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  transition: all 0.3s ease;
+  border: 2px solid #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .defaultAvatar {
@@ -62,204 +59,371 @@
   align-items: center;
   justify-content: center;
   color: white;
-  font-size: 18px;
-  border: 2px solid rgba(255, 255, 255, 0.3);
+  font-size: 1.2rem;
+  border: 2px solid #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
+/* Online Indicator */
 .onlineIndicator {
   position: absolute;
   bottom: 2px;
   right: 2px;
-  width: 12px;
-  height: 12px;
+  width: 10px;
+  height: 10px;
   background: #10b981;
   border-radius: 50%;
-  border: 2px solid white;
-  box-shadow: 0 0 0 1px rgba(16, 185, 129, 0.3);
+  border: 2px solid #ffffff;
+  animation: pulse 2s infinite;
 }
 
-.userInfo {
-  flex: 1;
-  text-align: left;
-  min-width: 0;
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(16, 185, 129, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+  }
 }
 
-.userName {
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: #1a202c;
-  margin-bottom: 0.25rem;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-family: var(--font-almarai), 'Almarai', sans-serif;
-}
-
-.userBalance {
+/* Balance Badge - Modern Pill Design */
+.balanceBadge {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  font-size: 0.8rem;
-  color: #4a5568;
+  gap: 0.4rem;
+  padding: 0.5rem 0.75rem;
+  background: linear-gradient(135deg, #f6f8fb, #e9ecef);
+  border-radius: 20px;
+  min-width: 100px;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.08);
+  font-family: inherit;
 }
 
 .walletIcon {
-  font-size: 0.75rem;
-  color: #667eea;
+  color: #fbbf24;
+  font-size: 0.9rem;
 }
 
 .balanceAmount {
-  font-weight: 600;
-  color: #2d3748;
-  font-family: var(--font-almarai), 'Almarai', sans-serif;
+  font-weight: 700;
+  color: #1f2937;
+  font-size: 0.95rem;
 }
 
-.loadingBalance {
-  color: #a0aec0;
+.currencyLabel {
+  font-size: 0.8rem;
+  color: #6b7280;
   font-weight: 500;
-  font-family: var(--font-almarai), 'Almarai', sans-serif;
+  font-family: inherit;
 }
 
+/* Arabic specific font weight adjustments */
+[dir="rtl"] .balanceAmount,
+[dir="rtl"] .currencyLabel {
+  font-weight: 600;
+}
+
+[dir="rtl"] .balanceMainAmount {
+  font-weight: 800;
+}
+
+/* Loading Animation */
+.loadingDots {
+  display: flex;
+  gap: 0.2rem;
+  align-items: center;
+  padding: 0 0.5rem;
+}
+
+.loadingDots span {
+  width: 6px;
+  height: 6px;
+  background: #cbd5e1;
+  border-radius: 50%;
+  animation: loadingBounce 1.4s infinite ease-in-out both;
+}
+
+.loadingDots span:nth-child(1) {
+  animation-delay: -0.32s;
+}
+
+.loadingDots span:nth-child(2) {
+  animation-delay: -0.16s;
+}
+
+@keyframes loadingBounce {
+  0%, 80%, 100% {
+    transform: scale(0);
+    opacity: 0.5;
+  }
+  40% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Dropdown Arrow */
 .dropdownArrow {
+  color: #6b7280;
   font-size: 0.75rem;
-  color: #4a5568;
   transition: transform 0.3s ease;
-  flex-shrink: 0;
+  margin-left: 0.25rem;
 }
 
 .dropdownArrow.rotated {
   transform: rotate(180deg);
 }
 
-/* Dropdown Styles */
+/* Backdrop */
 .backdrop {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 999;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  animation: fadeIn 0.2s ease;
 }
 
+/* Dropdown Menu */
 .dropdown {
   position: absolute;
   top: calc(100% + 0.75rem);
   right: 0;
   background: white;
   border-radius: 16px;
-  padding: 1.5rem;
-  min-width: 280px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15), 0 8px 16px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  z-index: 1000;
-  animation: dropdownAppear 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  min-width: 320px;
+  z-index: 1001;
+  animation: slideDown 0.3s ease;
+  overflow: hidden;
+  font-family: inherit;
 }
 
-@keyframes dropdownAppear {
+@keyframes fadeIn {
   from {
     opacity: 0;
-    transform: scale(0.95) translateY(-10px);
   }
   to {
     opacity: 1;
-    transform: scale(1) translateY(0);
   }
 }
 
-.dropdownHeader {
-  border-bottom: 1px solid #e2e8f0;
-  padding-bottom: 1rem;
-  margin-bottom: 1rem;
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Dropdown Profile Section */
+.dropdownProfile {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+}
+
+.dropdownAvatar {
+  flex: 0 0 auto;
+}
+
+.dropdownUserImage {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+}
+
+.dropdownDefaultAvatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.8rem;
+  border: 3px solid rgba(255, 255, 255, 0.3);
 }
 
 .dropdownUserInfo {
-  text-align: center;
+  flex: 1;
+  min-width: 0;
 }
 
 .dropdownUserName {
   font-size: 1.1rem;
-  font-weight: 700;
-  color: #1a202c;
+  font-weight: 600;
   margin-bottom: 0.25rem;
-  font-family: var(--font-almarai), 'Almarai', sans-serif;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: inherit;
 }
 
 .dropdownUserEmail {
   font-size: 0.85rem;
-  color: #718096;
-  font-family: var(--font-almarai), 'Almarai', sans-serif;
+  opacity: 0.9;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: inherit;
 }
 
-.dropdownBalance {
-  background: linear-gradient(135deg, #f7fafc, #edf2f7);
-  border-radius: 12px;
-  padding: 1rem;
-  text-align: center;
-  border: 1px solid #e2e8f0;
-}
-
-.balanceLabel {
-  font-size: 0.8rem;
-  color: #4a5568;
-  margin-bottom: 0.5rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  font-weight: 600;
-  font-family: var(--font-almarai), 'Almarai', sans-serif;
-}
-
-.balanceValue {
-  font-size: 1.25rem;
+/* Arabic specific adjustments for dropdown */
+[dir="rtl"] .dropdownUserName {
   font-weight: 700;
-  color: #667eea;
+}
+
+[dir="rtl"] .dropdownUserEmail {
+  font-weight: 500;
+}
+
+/* Balance Card */
+.balanceCard {
+  padding: 1.5rem;
+  background: #f8fafc;
+}
+
+.balanceCardHeader {
   display: flex;
   align-items: center;
-  justify-content: center;
   gap: 0.5rem;
-  font-family: var(--font-almarai), 'Almarai', sans-serif;
+  margin-bottom: 1rem;
 }
 
-/* Mobile Styles */
+.balanceCardIcon {
+  color: #fbbf24;
+  font-size: 1.2rem;
+}
+
+.balanceCardLabel {
+  font-size: 0.9rem;
+  color: #6b7280;
+  font-weight: 500;
+  font-family: inherit;
+}
+
+[dir="rtl"] .balanceCardLabel {
+  font-weight: 600;
+}
+
+.balanceCardAmount {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.balanceMainAmount {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1f2937;
+  font-family: inherit;
+}
+
+.balanceCurrency {
+  font-size: 1rem;
+  color: #6b7280;
+  font-weight: 500;
+  font-family: inherit;
+}
+
+.balanceCardFooter {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.redeemButton {
+  flex: 1;
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+  font-family: inherit;
+}
+
+[dir="rtl"] .redeemButton {
+  font-weight: 700;
+}
+
+.redeemButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+}
+
+.redeemButton:active {
+  transform: translateY(0);
+}
+
+/* Mobile Responsive */
 @media (max-width: 768px) {
   .avatarButton {
-    min-width: 160px;
-    padding: 0.5rem 0.75rem;
+    padding: 0.25rem;
   }
-  
-  .userName {
-    font-size: 0.85rem;
+
+  .balanceBadge {
+    display: none;
   }
-  
-  .userBalance {
-    font-size: 0.75rem;
+
+  .dropdownArrow {
+    display: none;
   }
-  
+
   .dropdown {
-    min-width: 260px;
-    padding: 1.25rem;
+    position: fixed;
+    top: auto;
+    bottom: 0;
     left: 0;
     right: 0;
-    margin: 0 1rem;
+    min-width: 100%;
+    border-radius: 16px 16px 0 0;
+    animation: slideUp 0.3s ease;
+  }
+
+  @keyframes slideUp {
+    from {
+      transform: translateY(100%);
+    }
+    to {
+      transform: translateY(0);
+    }
   }
 }
 
 /* RTL Support */
-[dir="rtl"] .dropdown {
-  left: 0;
-  right: auto;
-  transform-origin: top left;
-}
-
-[dir="rtl"] .userInfo {
-  text-align: right;
-}
-
 [dir="rtl"] .avatarContent {
   flex-direction: row-reverse;
 }
 
-[dir="rtl"] .userBalance {
+[dir="rtl"] .dropdown {
+  left: 0;
+  right: auto;
+}
+
+[dir="rtl"] .dropdownProfile {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] .balanceCardHeader {
   flex-direction: row-reverse;
 }

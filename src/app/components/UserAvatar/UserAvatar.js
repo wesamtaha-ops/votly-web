@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { useLocale, useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
 import { callApi } from "../../helper";
 import styles from "./UserAvatar.module.css";
 import { FaUser, FaWallet, FaChevronDown } from "react-icons/fa";
@@ -13,6 +14,7 @@ const UserAvatar = () => {
   const userToken = session?.id;
   const t = useTranslations("Header");
   const locale = useLocale();
+  const router = useRouter();
   const isArabic = locale === "ar";
   
   const [userBalance, setUserBalance] = useState(session?.user?.syno_balance || 0);
@@ -103,7 +105,8 @@ const UserAvatar = () => {
   }
 
   return (
-    <div className={styles.avatarContainer}>
+    <div className={styles.avatarContainer} lang={locale} dir={isArabic ? "rtl" : "ltr"}>
+      {/* Main Avatar Button - Compact Design */}
       <button 
         className={styles.avatarButton} 
         onClick={toggleDropdown}
@@ -129,19 +132,23 @@ const UserAvatar = () => {
             <div className={styles.onlineIndicator}></div>
           </div>
 
-          {/* User Info */}
-          <div className={styles.userInfo}>
-            <div className={styles.userName}>{userName}</div>
-            <div className={styles.userBalance}>
-              <FaWallet className={styles.walletIcon} />
-              {loading ? (
-                <span className={styles.loadingBalance}>...</span>
-              ) : (
+          {/* Balance Badge - Modern Pill Design */}
+          <div className={styles.balanceBadge}>
+            {loading ? (
+              <div className={styles.loadingDots}>
+                <span></span><span></span><span></span>
+              </div>
+            ) : (
+              <>
+                <FaWallet className={styles.walletIcon} />
                 <span className={styles.balanceAmount}>
-                  {convertedBalance.toFixed(2)} {displayCurrency}
+                  {convertedBalance.toFixed(0)}
                 </span>
-              )}
-            </div>
+                <span className={styles.currencyLabel}>
+                  {displayCurrency}
+                </span>
+              </>
+            )}
           </div>
 
           {/* Dropdown Arrow */}
@@ -151,26 +158,66 @@ const UserAvatar = () => {
         </div>
       </button>
 
-      {/* Dropdown Menu */}
+      {/* Enhanced Dropdown Menu */}
       {isDropdownOpen && (
         <>
           <div className={styles.backdrop} onClick={closeDropdown}></div>
           <div className={styles.dropdown}>
-            <div className={styles.dropdownHeader}>
+            {/* User Profile Section */}
+            <div className={styles.dropdownProfile}>
+              <div className={styles.dropdownAvatar}>
+                {userImage ? (
+                  <Image
+                    src={userImage}
+                    alt={userName}
+                    width={60}
+                    height={60}
+                    className={styles.dropdownUserImage}
+                  />
+                ) : (
+                  <div className={styles.dropdownDefaultAvatar}>
+                    <FaUser />
+                  </div>
+                )}
+              </div>
               <div className={styles.dropdownUserInfo}>
                 <div className={styles.dropdownUserName}>{userName}</div>
                 <div className={styles.dropdownUserEmail}>{user.email}</div>
               </div>
             </div>
             
-            <div className={styles.dropdownBalance}>
-              <div className={styles.balanceLabel}>{t("availableBalance")}</div>
-              <div className={styles.balanceValue}>
+            {/* Balance Card */}
+            <div className={styles.balanceCard}>
+              <div className={styles.balanceCardHeader}>
+                <FaWallet className={styles.balanceCardIcon} />
+                <span className={styles.balanceCardLabel}>{t("availableBalance")}</span>
+              </div>
+              <div className={styles.balanceCardAmount}>
                 {loading ? (
-                  <span className={styles.loadingBalance}>...</span>
+                  <div className={styles.loadingDots}>
+                    <span></span><span></span><span></span>
+                  </div>
                 ) : (
-                  <span>{convertedBalance.toFixed(2)} {displayCurrency}</span>
+                  <>
+                    <span className={styles.balanceMainAmount}>
+                      {convertedBalance.toFixed(2)}
+                    </span>
+                    <span className={styles.balanceCurrency}>
+                      {displayCurrency}
+                    </span>
+                  </>
                 )}
+              </div>
+              <div className={styles.balanceCardFooter}>
+                <button 
+                  className={styles.redeemButton}
+                  onClick={() => {
+                    closeDropdown();
+                    router.push(`/${locale}/rewards`);
+                  }}
+                >
+                  {t("rewards")}
+                </button>
               </div>
             </div>
           </div>

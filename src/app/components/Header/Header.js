@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { signOut } from "next-auth/react";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "./Header.module.css";
 import UserAvatar from "../UserAvatar/UserAvatar";
 
@@ -21,6 +21,28 @@ const Header = () => {
 
   const lang = useLocale(); // Get the current locale
   const isArabic = lang === "ar";
+
+  // Prevent body scroll when mobile menu is open
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = 'hidden';
+      document.body.classList.add('menu-open');
+    } else {
+      document.body.style.overflow = 'unset';
+      document.body.classList.remove('menu-open');
+    }
+
+    // Cleanup function
+    return () => {
+      document.body.style.overflow = 'unset';
+      document.body.classList.remove('menu-open');
+    };
+  }, [isMenuOpen]);
+
+  // Close menu when route changes
+  useEffect(() => {
+    closeMenu();
+  }, [pathname]);
 
   const switchLocale = (locale) => {
     try {
@@ -68,98 +90,75 @@ const Header = () => {
 
   return (
     <header className={styles.header}>
-      <div className={styles.logo}>
-        <Link href={`/${lang}/`}>
-          <img
-            src="https://votly.app/public/web/wp-content/themes/Votly-logo-colored.png"
-            alt="Votly Logo"
-            className={styles.logoImage}
-          />
-        </Link>
-      </div>
-      <nav className={`${styles.nav} ${isMenuOpen ? styles.navOpen : ""}`}>
-        <button 
-          className={`${styles.navLink} ${isActivePage('/surveys') ? styles.active : ''}`}
-          onClick={() => handleNavigation(`/${lang}/surveys`)}
-        >
-          {t("surveys")}
-        </button>
-        <button 
-          className={`${styles.navLink} ${isActivePage('/rewards') ? styles.active : ''}`}
-          onClick={() => handleNavigation(`/${lang}/rewards`)}
-        >
-          {t("rewards")}
-        </button>
-        {session?.id && (
-          <button 
-            className={`${styles.navLink} ${isActivePage('/invite-friends') ? styles.active : ''}`}
-            onClick={() => handleNavigation(`/${lang}/invite-friends`)}
-          >
-            {t("inviteFriends")}
-          </button>
-        )}
-        {session?.id && (
-          <button 
-            className={`${styles.navLink} ${isActivePage('/profile') ? styles.active : ''}`}
-            onClick={() => handleNavigation(`/${lang}/profile`)}
-          >
-            {t("myProfile")}
-          </button>
-        )}
-
-        {!session?.id ? (
-          <>
-            <button 
-              className={`${styles.navLink} ${isActivePage('/register') ? styles.active : ''}`}
-              onClick={() => handleNavigation(`/${lang}/register`)}
-            >
-              {t("register")}
-            </button>
-
-            <button 
-              className={`${styles.navLink} ${isActivePage('/login') ? styles.active : ''}`}
-              onClick={() => handleNavigation(`/${lang}/login`)}
-            >
-              {t("login")}
-            </button>
-          </>
-        ) : (
-          <>
+      {/* Desktop Header Layout */}
+      <div className={styles.desktopHeader}>
+        <div className={styles.logo}>
+          <Link href={`/${lang}/`}>
+            <img
+              src="https://votly.app/public/web/wp-content/themes/Votly-logo-colored.png"
+              alt="Votly Logo"
+              className={styles.logoImage}
+            />
+          </Link>
+        </div>
+        
+        <nav className={styles.desktopNav}>
+          <Link href={`/${lang}/surveys`} className={`${styles.navLink} ${isActivePage('/surveys') ? styles.active : ''}`}>
+            {t("surveys")}
+          </Link>
+          <Link href={`/${lang}/rewards`} className={`${styles.navLink} ${isActivePage('/rewards') ? styles.active : ''}`}>
+            {t("rewards")}
+          </Link>
+          {session?.id && (
+            <Link href={`/${lang}/invite-friends`} className={`${styles.navLink} ${isActivePage('/invite-friends') ? styles.active : ''}`}>
+              {t("inviteFriends")}
+            </Link>
+          )}
+          {session?.id && (
+            <Link href={`/${lang}/profile`} className={`${styles.navLink} ${isActivePage('/profile') ? styles.active : ''}`}>
+              {t("myProfile")}
+            </Link>
+          )}
+          {!session?.id ? (
+            <>
+              <Link href={`/${lang}/register`} className={`${styles.navLink} ${isActivePage('/register') ? styles.active : ''}`}>
+                {t("register")}
+              </Link>
+              <Link href={`/${lang}/login`} className={`${styles.navLink} ${isActivePage('/login') ? styles.active : ''}`}>
+                {t("login")}
+              </Link>
+            </>
+          ) : (
             <button
               className={styles.navLink}
               onClick={(e) => {
                 e.preventDefault();
-                closeMenu();
                 signOut({ callbackUrl: `/${lang}/` });
               }}
             >
               {t("logout")}
             </button>
-          </>
-        )}
-
-
-      </nav>
-
-      {/* Right Side Container */}
-      <div className={styles.rightContainer}>
-        {/* User Avatar - only show if logged in */}
-        {session?.id && <UserAvatar />}
-
-        {/* Language switcher dropdown */}
-        <div className={styles.languageSwitcher}>
-          <button className={styles.dropdownButton} onClick={toggleDropdown}>
-            🌐 {lang == "ar" ? "العربية" : "English"}
-          </button>
-          {isDropdownOpen && (
-            <ul className={styles.dropdownMenu}>
-              <li onClick={() => switchLocale("en")}>English</li>
-              <li onClick={() => switchLocale("ar")}>العربية</li>
-            </ul>
           )}
-        </div>
+        </nav>
 
-        {/* Hamburger Menu Button */}
+        <div className={styles.desktopRightContainer}>
+          {session?.id && <UserAvatar />}
+          <div className={styles.desktopLanguageSwitcher}>
+            <button className={styles.dropdownButton} onClick={toggleDropdown}>
+              🌐 {lang == "ar" ? "العربية" : "English"}
+            </button>
+            {isDropdownOpen && (
+              <ul className={styles.dropdownMenu}>
+                <li onClick={() => switchLocale("en")}>English</li>
+                <li onClick={() => switchLocale("ar")}>العربية</li>
+              </ul>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile Header Layout */}
+      <div className={styles.mobileHeader}>
         <button 
           className={`${styles.hamburger} ${isMenuOpen ? styles.active : ''}`} 
           onClick={toggleMenu}
@@ -170,7 +169,102 @@ const Header = () => {
           <span className={styles.hamburgerBar}></span>
           <span className={styles.hamburgerBar}></span>
         </button>
+
+        <div className={styles.mobileLogo}>
+          <Link href={`/${lang}/`}>
+            <img
+              src="https://votly.app/public/web/wp-content/themes/Votly-logo-colored.png"
+              alt="Votly Logo"
+              className={styles.logoImage}
+            />
+          </Link>
+        </div>
+
+        <div className={styles.mobileActions}>
+          {session?.id && <UserAvatar />}
+        </div>
       </div>
+      
+      {/* Mobile Menu Backdrop */}
+      {isMenuOpen && (
+        <div className={styles.mobileBackdrop} onClick={closeMenu}></div>
+      )}
+      
+      <nav className={`${styles.mobileNav} ${isMenuOpen ? styles.mobileNavOpen : ""}`} aria-label="Mobile navigation">
+        <div className={styles.mobileNavContent}>
+          <button 
+            className={`${styles.mobileNavLink} ${isActivePage('/surveys') ? styles.active : ''}`}
+            onClick={() => handleNavigation(`/${lang}/surveys`)}
+          >
+            {t("surveys")}
+          </button>
+          
+          <button 
+            className={`${styles.mobileNavLink} ${isActivePage('/rewards') ? styles.active : ''}`}
+            onClick={() => handleNavigation(`/${lang}/rewards`)}
+          >
+            {t("rewards")}
+          </button>
+          
+          {session?.id && (
+            <button 
+              className={`${styles.mobileNavLink} ${isActivePage('/invite-friends') ? styles.active : ''}`}
+              onClick={() => handleNavigation(`/${lang}/invite-friends`)}
+            >
+              {t("inviteFriends")}
+            </button>
+          )}
+          
+          {session?.id && (
+            <button 
+              className={`${styles.mobileNavLink} ${isActivePage('/profile') ? styles.active : ''}`}
+              onClick={() => handleNavigation(`/${lang}/profile`)}
+            >
+              {t("myProfile")}
+            </button>
+          )}
+
+          {!session?.id ? (
+            <>
+              <button 
+                className={`${styles.mobileNavLink} ${isActivePage('/register') ? styles.active : ''}`}
+                onClick={() => handleNavigation(`/${lang}/register`)}
+              >
+                {t("register")}
+              </button>
+
+              <button 
+                className={`${styles.mobileNavLink} ${isActivePage('/login') ? styles.active : ''}`}
+                onClick={() => handleNavigation(`/${lang}/login`)}
+              >
+                {t("login")}
+              </button>
+            </>
+          ) : (
+            <button
+              className={styles.mobileNavLink}
+              onClick={(e) => {
+                e.preventDefault();
+                closeMenu();
+                signOut({ callbackUrl: `/${lang}/` });
+              }}
+            >
+              {t("logout")}
+            </button>
+          )}
+          
+          <div className={styles.mobileLanguageSection}>
+            <button 
+              className={styles.mobileLanguageButton}
+              onClick={() => switchLocale(lang === "ar" ? "en" : "ar")}
+            >
+              🌐 {lang === "ar" ? "Switch to English" : "التبديل إلى العربية"}
+            </button>
+          </div>
+        </div>
+      </nav>
+
+
     </header>
   );
 };
