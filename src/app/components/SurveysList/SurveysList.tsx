@@ -164,15 +164,7 @@ const SurveysList = () => {
                 className={`${styles.surveyCard} ${
                   survey.completed ? styles.answeredCard : ''
                 }`}>
-                
-                {/* Survey Header */}
-                <div className={styles.surveyHeader}>
-                  <div className={styles.surveyBadge}>
-                    <FaStar className={styles.badgeIcon} />
-                    <span>{t('availableReward')}</span>
-                  </div>
-                </div>
-
+              
                 {/* Survey Content */}
                 <div className={styles.surveyContent}>
                   <h3 className={styles.surveyTitle}>
