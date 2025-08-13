@@ -6,7 +6,7 @@ import { callApi, isUserCountryAllowed } from '../../helper';
 import { useSession } from 'next-auth/react';
 import styles from './SurveysList.module.css';
 import { useSearchParams } from 'next/navigation';
-import { FaClipboardList, FaFilter, FaGlobe } from 'react-icons/fa';
+import { FaClipboardList, FaFilter, FaGlobe, FaClock, FaCoins, FaStar, FaArrowRight } from 'react-icons/fa';
 import { Session } from 'next-auth';
 
 interface CustomSession extends Session {
@@ -29,6 +29,26 @@ const SurveysList = () => {
   const [loading, setLoading] = useState(true);
   const [activeFilter, setActiveFilter] = useState('active'); // 'active' or 'answered'
   const [filteredSurveys, setFilteredSurveys] = useState([]);
+  
+  // Get user's currency and conversion rate
+  const userCurrency = (session as CustomSession)?.user?.country_currency || "AED";
+  const conversionRate = (session as CustomSession)?.user?.countryDetails?.conversion_value || 3.67;
+  const isArabic = lang === "ar";
+
+  // Get display currency
+  let displayCurrency = userCurrency;
+  if (userCurrency === "AED" && isArabic) {
+    displayCurrency = "درهم";
+  } else if (userCurrency === "SAR" && isArabic) {
+    displayCurrency = "ريال";
+  }
+
+  // Calculate 25% of amount and convert to user currency
+  const calculateReward = (usdAmount: number) => {
+    const quarterAmount = usdAmount * 0.25; // 25% of original
+    const convertedAmount = quarterAmount * conversionRate;
+    return convertedAmount;
+  };
 
   const searchParams = useSearchParams();
   const status = searchParams.get('status');
@@ -136,45 +156,84 @@ const SurveysList = () => {
 
       {filteredSurveys.length > 0 ? (
         <div className={styles.surveysGrid}>
-          {filteredSurveys.map((survey) => (
-            <div
-              key={survey.id}
-              className={`${styles.surveyCard} ${
-                survey.completed ? styles.answeredCard : ''
-              }`}>
-              <h3 className={styles.surveyTitle}>{survey.title}</h3>
-              <p className={styles.surveyDescription}>
-                {survey.description}
-              </p>
-              <div className={styles.surveyInfo}>
-                <img
-                  src='https://i.etsystatic.com/36262552/r/il/aa81a7/4191400611/il_570xN.4191400611_23uk.jpg'
-                  alt={t('timeIconAlt')}
-                  className={styles.timeIcon}
-                />
-                <span className={styles.duration}>
-                  {survey.duration} {t('mins')}
-                </span>
+          {filteredSurveys.map((survey, index) => {
+            const reward = calculateReward(survey.amount);
+            return (
+              <div
+                key={survey.id}
+                className={`${styles.surveyCard} ${
+                  survey.completed ? styles.answeredCard : ''
+                }`}>
+                
+                {/* Survey Header */}
+                <div className={styles.surveyHeader}>
+                  <div className={styles.surveyBadge}>
+                    <FaStar className={styles.badgeIcon} />
+                    <span>{t('availableReward')}</span>
+                  </div>
+                </div>
 
-                <img
-                  src='https://i.pinimg.com/564x/a4/91/7a/a4917a4fcb3b1a6b3416e27491d9422b.jpg'
-                  alt={t('priceIconAlt')}
-                  className={styles.timeIcon2}
-                />
-                <span className={styles.amount}>
-                  {survey.amount} {survey.currencyIsoCode}
-                </span>
+                {/* Survey Content */}
+                <div className={styles.surveyContent}>
+                  <h3 className={styles.surveyTitle}>
+                    {survey.title || `${t('survey')} #${index + 1}`}
+                  </h3>
+                  <p className={styles.surveyDescription}>
+                    {survey.description || t('surveyDescription')}
+                  </p>
+                </div>
+
+                {/* Survey Stats */}
+                <div className={styles.surveyStats}>
+                  <div className={styles.statItem}>
+                    <div className={styles.statIcon}>
+                      <FaClock />
+                    </div>
+                    <div className={styles.statContent}>
+                      <span className={styles.statValue}>{survey.duration}</span>
+                      <span className={styles.statLabel}>{t('mins')}</span>
+                    </div>
+                  </div>
+
+                  <div className={styles.statItem}>
+                    <div className={styles.statIcon}>
+                      <FaCoins />
+                    </div>
+                    <div className={styles.statContent}>
+                      <span className={styles.statValue}>
+                        {reward.toFixed(2)}
+                      </span>
+                      <span className={styles.statLabel}>{displayCurrency}</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Action Button */}
+                <button
+                  className={`${styles.takeSurveyButton} ${
+                    survey.completed ? styles.completedButton : ''
+                  }`}
+                  onClick={() => {
+                    if (!survey.completed) {
+                      window.open(survey.link, '_blank');
+                    }
+                  }}
+                  disabled={survey.completed}>
+                  
+                  {survey.completed ? (
+                    <>
+                      <span>{t('surveyCompleted')}</span>
+                    </>
+                  ) : (
+                    <>
+                      <span>{t('takeSurvey')}</span>
+                      <FaArrowRight className={styles.buttonIcon} />
+                    </>
+                  )}
+                </button>
               </div>
-              <button
-                className={styles.takeSurveyButton}
-                onClick={() => {
-                  window.open(survey.link, '_blank');
-                }}
-                disabled={survey.completed}>
-                {survey.completed ? t('surveyCompleted') : t('takeSurvey')}
-              </button>
-            </div>
-          ))}
+            );
+          })}
         </div>
       ) : (
         <div className={styles.noSurveys}>
