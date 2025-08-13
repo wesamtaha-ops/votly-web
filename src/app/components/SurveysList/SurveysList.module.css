@@ -7,12 +7,14 @@
   line-height: 40px;
   margin-bottom: 0;
   padding-top: 1%;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
 }
 
 /* Arabic Font Support */
-[dir="rtl"] .surveysContainer {
-  font-family: 'Almarai', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+[dir='rtl'] .surveysContainer {
+  font-family: 'Almarai', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial,
+    sans-serif;
 }
 
 .title {
@@ -102,8 +104,6 @@
   font-size: 0.9rem;
 }
 
-
-
 /* Survey Content */
 .surveyContent {
   padding: 0 1.5rem;
@@ -175,6 +175,7 @@
   font-weight: 700;
   color: #1f2937;
   line-height: 1;
+  margin-bottom: -15px;
 }
 
 .statLabel {
@@ -182,6 +183,8 @@
   color: #6b7280;
   font-weight: 500;
   margin-top: 0.2rem;
+  font-family: 'Almarai', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial,
+    sans-serif;
 }
 
 /* Action Button */
@@ -283,7 +286,11 @@
   padding: 1.5rem;
   max-width: 800px;
   border-radius: 20px;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(249, 250, 251, 0.9));
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.9),
+    rgba(249, 250, 251, 0.9)
+  );
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.8);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
@@ -304,7 +311,11 @@
   padding: 1rem 2rem;
   border-radius: 15px;
   border: 2px solid rgba(255, 255, 255, 0.3);
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(249, 250, 251, 0.9));
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.9),
+    rgba(249, 250, 251, 0.9)
+  );
   font-weight: 600;
   font-size: 1rem;
   cursor: pointer;
@@ -323,7 +334,12 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  background: linear-gradient(
+    45deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
   transform: translateX(-100%);
   transition: transform 0.6s;
 }
@@ -333,7 +349,11 @@
 }
 
 .filterButton:hover {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 1), rgba(249, 250, 251, 1));
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 1),
+    rgba(249, 250, 251, 1)
+  );
   transform: translateY(-3px);
   box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
   border-color: rgba(102, 126, 234, 0.3);
@@ -402,7 +422,8 @@
 }
 
 @keyframes float {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0px);
   }
   50% {
@@ -443,37 +464,37 @@
 }
 
 /* RTL Support */
-[dir="rtl"] .surveyCount {
+[dir='rtl'] .surveyCount {
   margin-left: 0;
   margin-right: 0.5rem;
 }
 
-[dir="rtl"] .surveyContent .surveyDescription {
+[dir='rtl'] .surveyContent .surveyDescription {
   text-align: right;
 }
 
-[dir="rtl"] .statContent {
+[dir='rtl'] .statContent {
   align-items: flex-end;
 }
 
-[dir="rtl"] .takeSurveyButton:hover .buttonIcon {
+[dir='rtl'] .takeSurveyButton:hover .buttonIcon {
   transform: translateX(-4px);
 }
 
 /* Arabic Font Weights */
-[dir="rtl"] .surveyTitle {
+[dir='rtl'] .surveyTitle {
   font-weight: 800;
 }
 
-[dir="rtl"] .statValue {
+[dir='rtl'] .statValue {
   font-weight: 800;
 }
 
-[dir="rtl"] .takeSurveyButton {
+[dir='rtl'] .takeSurveyButton {
   font-weight: 700;
 }
 
-[dir="rtl"] .filterButton {
+[dir='rtl'] .filterButton {
   font-weight: 700;
 }
 
