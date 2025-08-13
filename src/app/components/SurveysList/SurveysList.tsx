@@ -29,7 +29,7 @@ const SurveysList = () => {
   const [loading, setLoading] = useState(true);
   const [activeFilter, setActiveFilter] = useState('active'); // 'active' or 'answered'
   const [filteredSurveys, setFilteredSurveys] = useState([]);
-  
+
   // Get user's currency and conversion rate
   const userCurrency = (session as CustomSession)?.user?.country_currency || "AED";
   const conversionRate = (session as CustomSession)?.user?.countryDetails?.conversion_value || 3.67;
@@ -128,9 +128,8 @@ const SurveysList = () => {
       <div className={styles.filterContainer}>
         <div className={styles.filterButtons}>
           <button
-            className={`${styles.filterButton} ${
-              activeFilter === 'active' ? styles.active : ''
-            }`}
+            className={`${styles.filterButton} ${activeFilter === 'active' ? styles.active : ''
+              }`}
             onClick={() => setActiveFilter('active')}>
             <FaFilter className={styles.filterIcon} />
             {t('activeSurveys')}
@@ -139,9 +138,8 @@ const SurveysList = () => {
             </span>
           </button>
           <button
-            className={`${styles.filterButton} ${
-              activeFilter === 'answered' ? styles.active : ''
-            }`}
+            className={`${styles.filterButton} ${activeFilter === 'answered' ? styles.active : ''
+              }`}
             onClick={() => setActiveFilter('answered')}>
             <FaFilter className={styles.filterIcon} />
             {t('answeredSurveys')}
@@ -161,10 +159,14 @@ const SurveysList = () => {
             return (
               <div
                 key={survey.id}
-                className={`${styles.surveyCard} ${
-                  survey.completed ? styles.answeredCard : ''
-                }`}>
-              
+                className={`${styles.surveyCard} ${survey.completed ? styles.answeredCard : ''
+                  }`}>
+
+                {/* Survey Header */}
+                <div className={styles.surveyHeader}>
+                  <br />
+                </div>
+
                 {/* Survey Content */}
                 <div className={styles.surveyContent}>
                   <h3 className={styles.surveyTitle}>
@@ -202,16 +204,15 @@ const SurveysList = () => {
 
                 {/* Action Button */}
                 <button
-                  className={`${styles.takeSurveyButton} ${
-                    survey.completed ? styles.completedButton : ''
-                  }`}
+                  className={`${styles.takeSurveyButton} ${survey.completed ? styles.completedButton : ''
+                    }`}
                   onClick={() => {
                     if (!survey.completed) {
                       window.open(survey.link, '_blank');
                     }
                   }}
                   disabled={survey.completed}>
-                  
+
                   {survey.completed ? (
                     <>
                       <span>{t('surveyCompleted')}</span>

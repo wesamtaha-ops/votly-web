@@ -7,7 +7,7 @@
 /* Arabic Font Support */
 [dir="rtl"] .avatarContainer,
 .avatarContainer[lang="ar"] {
-  font-family: 'Almarai', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+  font-family: inherit;
 }
 
 /* Main Avatar Button */

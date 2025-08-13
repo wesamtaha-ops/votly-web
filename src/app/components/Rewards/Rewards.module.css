@@ -99,7 +99,7 @@
   cursor: pointer;
   font-size: 18px;
   transition: background-color 0.3s ease, opacity 0.3s ease;
-  font-family: 'Almarai', sans-serif;
+  font-family: inherit;
 }
 
 .redeemButton:disabled {
@@ -140,7 +140,7 @@
   color: #333;
   cursor: pointer;
   transition: all 0.3s ease;
-  font-family: 'Almarai', sans-serif;
+  font-family: inherit;
   margin-right: 20px;
   margin-left: 20px;
 }
@@ -322,7 +322,7 @@
   cursor: pointer;
   transition: all 0.2s ease;
   font-weight: 500;
-  font-family: 'Almarai', sans-serif;
+  font-family: inherit;
   font-size: 18px;
 }
 

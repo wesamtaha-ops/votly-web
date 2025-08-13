@@ -6,7 +6,7 @@
   min-height: 75vh;
   background-color: var(--background-color);
   padding: 15px;
-  font-family: 'Almarai', sans-serif;
+  font-family: inherit;
 }
 
 .card {
@@ -113,7 +113,7 @@
   cursor: pointer;
   transition: all 0.3s ease;
   margin-top: 15px;
-  font-family: "Almarai", sans-serif;
+  font-family: inherit;
 }
 
 .submitButton:hover:not(:disabled) {
@@ -152,7 +152,7 @@
   padding: 8px 16px;
   border-radius: 12px;
   transition: all 0.3s ease;
-  font-family: "Almarai", sans-serif;
+  font-family: inherit;
 }
 
 .btnResend:hover:not(:disabled) {
@@ -170,7 +170,7 @@
   font-weight: 500;
   padding: 8px 16px;
   border-radius: 12px;
-  font-family: "Almarai", sans-serif;
+  font-family: inherit;
 }
 
 .otpImage {

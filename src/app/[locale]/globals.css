@@ -9,14 +9,15 @@
   --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   --pink: #b76edd;
   --green: #31d0b6;
-  --font-almarai: var(--font-almarai), 'Arial', sans-serif;
+  --font-almarai: 'Almarai', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+  --font-default: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 }
 
 html,
 body {
   margin: 0;
   padding: 0;
-  font-family: var(--font-almarai);
+  font-family: var(--font-default);
   background-color: var(--background-color);
   color: var(--text-color);
   height: 100%;
@@ -25,6 +26,20 @@ body {
   padding-top: 40px;
 }
 
+/* Arabic Font Support - Apply Almarai to all text elements when in Arabic */
+[dir="rtl"] *,
+[lang="ar"] * {
+  font-family: var(--font-almarai) !important;
+}
+
+/* Ensure all text elements inherit the font */
+*,
+*::before,
+*::after {
+  font-family: inherit;
+}
+
+/* Base text elements */
 h1,
 h2,
 h3,
@@ -33,13 +48,56 @@ h5,
 h6 {
   margin: 0;
   color: var(--text-color);
-  font-family: var(--font-almarai);
+  font-family: inherit;
 }
 
 p {
   margin: 0;
   color: var(--text-color);
-  font-family: var(--font-almarai);
+  font-family: inherit;
+}
+
+/* Form elements */
+input,
+textarea,
+select,
+button,
+label,
+option {
+  font-family: inherit;
+}
+
+/* Interactive elements */
+span,
+div,
+nav,
+ul,
+li,
+a {
+  font-family: inherit;
+}
+
+/* Ensure Arabic content uses proper font weights */
+[dir="rtl"] h1,
+[dir="rtl"] h2,
+[dir="rtl"] h3,
+[dir="rtl"] h4,
+[dir="rtl"] h5,
+[dir="rtl"] h6,
+[lang="ar"] h1,
+[lang="ar"] h2,
+[lang="ar"] h3,
+[lang="ar"] h4,
+[lang="ar"] h5,
+[lang="ar"] h6 {
+  font-weight: 700;
+}
+
+[dir="rtl"] button,
+[dir="rtl"] .button,
+[lang="ar"] button,
+[lang="ar"] .button {
+  font-weight: 600;
 }
 
 a {
@@ -55,18 +113,24 @@ a:hover {
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
-  font-family: var(--font-almarai);
+  font-family: inherit;
 }
 
-.css-1q964xs-MuiFormLabel-root-MuiInputLabel-root,
-.css-1h4bzp1-MuiButtonBase-root-MuiMenuItem-root,
-.css-15k6ek6-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.MuiSelect-select,
-.css-18pjc51-MuiFormLabel-root-MuiInputLabel-root {
+/* Material-UI Components Font Override for Arabic */
+[dir="rtl"] .css-1q964xs-MuiFormLabel-root-MuiInputLabel-root,
+[dir="rtl"] .css-1h4bzp1-MuiButtonBase-root-MuiMenuItem-root,
+[dir="rtl"] .css-15k6ek6-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.MuiSelect-select,
+[dir="rtl"] .css-18pjc51-MuiFormLabel-root-MuiInputLabel-root,
+[lang="ar"] .css-1q964xs-MuiFormLabel-root-MuiInputLabel-root,
+[lang="ar"] .css-1h4bzp1-MuiButtonBase-root-MuiMenuItem-root,
+[lang="ar"] .css-15k6ek6-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.MuiSelect-select,
+[lang="ar"] .css-18pjc51-MuiFormLabel-root-MuiInputLabel-root {
   font-family: var(--font-almarai) !important;
   text-align: right !important;
 }
 
-.css-18pjc51-MuiFormLabel-root-MuiInputLabel-root {
+[dir="rtl"] .css-18pjc51-MuiFormLabel-root-MuiInputLabel-root,
+[lang="ar"] .css-18pjc51-MuiFormLabel-root-MuiInputLabel-root {
   font-family: var(--font-almarai) !important;
   text-align: right !important;
   font-size: 20px !important;

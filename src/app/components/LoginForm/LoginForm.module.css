@@ -6,7 +6,7 @@
   min-height: 80vh;
   background-color: var(--background-color);
   padding: 20px;
-  font-family: 'Almarai', sans-serif;
+  font-family: inherit;
 }
 
 .loginBox {
@@ -40,7 +40,7 @@
   margin-bottom: 20px;
   color: var(--text-color);
   font-weight: 700;
-  font-family: 'Almarai', sans-serif;
+  font-family: inherit;
 }
 
 .tabsContainer {
@@ -114,7 +114,7 @@
   border-radius: 16px;
   font-size: 16px;
   color: var(--text-color);
-  font-family: 'Almarai', sans-serif;
+  font-family: inherit;
   background-color: #f8fafc;
   transition: all 0.3s ease;
 }
@@ -133,7 +133,7 @@
 
 .input::placeholder {
   color: #a0aec0;
-  font-family: 'Almarai', sans-serif;
+  font-family: inherit;
 }
 
 .loginButton {
@@ -147,7 +147,7 @@
   cursor: pointer;
   transition: all 0.3s ease;
   margin-top: 10px;
-  font-family: 'Almarai', sans-serif;
+  font-family: inherit;
 }
 
 .loginButton:hover:not(:disabled) {
@@ -201,7 +201,7 @@
   border-radius: 16px !important;
   font-size: 16px !important;
   color: var(--text-color) !important;
-  font-family: 'Almarai', sans-serif !important;
+  font-family: inherit !important;
   background-color: #f8fafc !important;
   transition: all 0.3s ease !important;
   box-shadow: none !important;

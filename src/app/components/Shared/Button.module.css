@@ -5,6 +5,7 @@
   border: none;
   border-radius: 10px;
   font-size: 18px;
+  font-family: inherit;
   cursor: pointer;
   transition: background 0.3s ease;
   background: linear-gradient(to right, #4299e1, #3182ce);

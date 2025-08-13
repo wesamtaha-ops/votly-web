@@ -301,7 +301,7 @@
 
 [dir="rtl"] .editButton,
 [dir="rtl"] .completeButton {
-  font-family: 'Almarai', sans-serif;
+  font-family: inherit;
 }
 
 [dir="rtl"] .infoItem:hover {

@@ -276,7 +276,7 @@
   border-radius: 8px;
   font-size: 0.875rem;
   font-weight: 500;
-  font-family: 'Almarai', sans-serif;
+  font-family: inherit;
   cursor: pointer;
   transition: background-color 0.2s;
   white-space: nowrap;
@@ -308,7 +308,7 @@
   border-radius: 8px;
   font-size: 0.875rem;
   font-weight: 500;
-  font-family: 'Almarai', sans-serif;
+  font-family: inherit;
   cursor: pointer;
   transition: transform 0.2s;
   color: white;
