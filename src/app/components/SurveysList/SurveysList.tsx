@@ -164,7 +164,6 @@ const SurveysList = () => {
 
                 {/* Survey Header */}
                 <div className={styles.surveyHeader}>
-                  <br />
                 </div>
 
                 {/* Survey Content */}
