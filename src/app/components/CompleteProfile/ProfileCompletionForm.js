@@ -8,13 +8,6 @@ import {
   Button,
   MenuItem,
   Typography,
-  FormControl,
-  FormLabel,
-  FormGroup,
-  FormControlLabel,
-  Checkbox,
-  Radio,
-  RadioGroup,
 } from "@mui/material";
 import styles from "./ProfileCompletionForm.module.css";
 import { useLocale, useTranslations } from "next-intl"; // Import for translations
@@ -84,107 +77,37 @@ const ProfileCompletionForm = ({ profile, onSubmit }) => {
 
   useEffect(() => {
     if (questionsLoaded && answersLoaded) {
-      const fields = questions.reduce((acc, question) => {
-        const questionAnswers = answers.filter((answer) => answer.questionId === question.id);
-        
-        if (question.synoQuestionTypeId === 3) {
-          // Multiple choice - store as array
-          acc[question.id] = questionAnswers.map(answer => answer.id);
-        } else {
-          // Single choice - store as single value
-          acc[question.id] = questionAnswers.length > 0 ? questionAnswers[0].id : null;
-        }
-        
+      const fields = questions.reduce((acc, item, index) => {
+        const answer = answers.find((answer) => answer.questionId === item.id);
+        acc[item.id] = answer?.id;
         return acc;
       }, {});
-      console.log('Loaded fields:', fields);
+      console.log(fields);
       setAllLoaded(true);
       setAllFields(fields);
     }
   }, [questions, answers]);
 
-  // Helper function to get question text based on locale
-  const getQuestionText = (question) => {
-    const translation = question.translations?.find(t => t.locale === lang) || 
-                       question.translations?.find(t => t.locale === 'en') ||
-                       question.translations?.[0];
-    return translation?.text || question.text || `Question ${question.id}`;
-  };
-
-  // Helper function to get answer text based on locale
-  const getAnswerText = (answer) => {
-    const translation = answer.translations?.find(t => t.locale === lang) || 
-                       answer.translations?.find(t => t.locale === 'en') ||
-                       answer.translations?.[0];
-    return translation?.text || answer.text || answer.label || `Answer ${answer.id}`;
-  };
-
-  // Helper function to determine question type rendering
-  const getQuestionType = (question) => {
-    // synoQuestionTypeId: 2 = single choice, 3 = multiple choice
-    return question.synoQuestionTypeId;
-  };
-
-  const completedFields = Object.values(allFields).filter(value => {
-    if (Array.isArray(value)) {
-      return value.length > 0; // For multiple choice, check if array has items
-    }
-    return Boolean(value); // For single choice, check if value exists
-  }).length;
+  const completedFields = Object.values(allFields).filter(Boolean).length;
   const totalFields = Object.keys(allFields).length;
-  const completionPercentage = totalFields > 0 ? (completedFields / totalFields) * 100 : 0;
+  const completionPercentage = (completedFields / totalFields) * 100;
 
-  const handleElChange = async (key, value, questionType) => {
-    if (questionType === 3) { // Multiple choice
-      const currentValues = allFields[key] || [];
-      const newValues = Array.isArray(currentValues) ? [...currentValues] : [];
-      
-      if (newValues.includes(value)) {
-        // Remove if already selected
-        const index = newValues.indexOf(value);
-        newValues.splice(index, 1);
-      } else {
-        // Add if not selected
-        newValues.push(value);
-      }
-      
-      setAllFields({
-        ...allFields,
-        [key]: newValues,
-      });
-    } else { // Single choice
-      setAllFields({
-        ...allFields,
-        [key]: value,
-      });
-    }
+  const handleElChange = async (key, value) => {
+    setAllFields({
+      ...allFields,
+      [key]: value,
+    });
   };
 
   const handleSubmit = async () => {
     setSubmitting(true);
 
     const payload = Object.entries(allFields)
-      .filter(([questionId, value]) => {
-        if (Array.isArray(value)) {
-          return value.length > 0; // For multiple choice, check if array has items
-        }
-        return value !== undefined && value !== null && value !== ""; // For single choice
-      })
-      .flatMap(([questionId, value]) => {
-        if (Array.isArray(value)) {
-          // For multiple choice questions, create multiple entries
-          return value.map(id => ({
-            questionId: parseInt(questionId),
-            id: id,
-          }));
-        } else {
-          // For single choice questions
-          return [{
-            questionId: parseInt(questionId),
-            id: value,
-          }];
-        }
-      });
+      .filter(([questionId, id]) => id !== undefined && id !== null) // Check if id exists
+      .map(([questionId, id]) => ({
+        questionId: parseInt(questionId), // Convert questionId to a number
+        id: id, // Use the value as is
+      }));
 
     await callApi({
       type: "post",
@@ -252,88 +175,41 @@ const ProfileCompletionForm = ({ profile, onSubmit }) => {
           {allLoaded && (
             <div className={styles.form}>
               {questions.map((question, index) => {
-                const questionType = getQuestionType(question);
-                const questionText = getQuestionText(question);
-                const currentValue = allFields[question.id];
-                
-                // Filter out exclusive answers for multiple choice
-                const regularAnswers = question.answers?.filter(answer => !answer.isExclusive) || [];
-                const exclusiveAnswers = question.answers?.filter(answer => answer.isExclusive) || [];
-
-                if (questionType === 3) {
-                  // Multiple Choice Question
-                  return (
-                    <FormControl key={question.id} component="fieldset" className={styles.formField}>
-                      <FormLabel component="legend" className={styles.questionLabel}>
-                        {questionText}
-                      </FormLabel>
-                      <FormGroup>
-                        {regularAnswers.map((answer) => (
-                          <FormControlLabel
-                            key={answer.id}
-                            control={
-                              <Checkbox
-                                checked={Array.isArray(currentValue) && currentValue.includes(answer.id)}
-                                onChange={(e) => handleElChange(question.id, answer.id, questionType)}
-                                disabled={Array.isArray(currentValue) && currentValue.some(val => 
-                                  exclusiveAnswers.find(exc => exc.id === val)
-                                )}
-                              />
-                            }
-                            label={getAnswerText(answer)}
-                          />
-                        ))}
-                        {exclusiveAnswers.map((answer) => (
-                          <FormControlLabel
-                            key={answer.id}
-                            control={
-                              <Checkbox
-                                checked={Array.isArray(currentValue) && currentValue.includes(answer.id)}
-                                onChange={(e) => {
-                                  // For exclusive answers, clear all other selections
-                                  if (e.target.checked) {
-                                    setAllFields({
-                                      ...allFields,
-                                      [question.id]: [answer.id],
-                                    });
-                                  } else {
-                                    setAllFields({
-                                      ...allFields,
-                                      [question.id]: [],
-                                    });
-                                  }
-                                }}
-                              />
-                            }
-                            label={getAnswerText(answer)}
-                          />
-                        ))}
-                      </FormGroup>
-                    </FormControl>
-                  );
-                } else {
-                  // Single Choice Question (Radio buttons or Select)
-                  return (
-                    <FormControl key={question.id} component="fieldset" className={styles.formField}>
-                      <FormLabel component="legend" className={styles.questionLabel}>
-                        {questionText}
-                      </FormLabel>
-                      <RadioGroup
-                        value={currentValue || ""}
-                        onChange={(e) => handleElChange(question.id, e.target.value, questionType)}
-                      >
-                        {question.answers?.map((answer) => (
-                          <FormControlLabel
-                            key={answer.id}
-                            value={answer.id}
-                            control={<Radio />}
-                            label={getAnswerText(answer)}
-                          />
-                        ))}
-                      </RadioGroup>
-                    </FormControl>
-                  );
-                }
+                const selectedAnswer = question.answers.find(
+                  (answer) => answer.id === allFields[question.id]
+                );
+                return (
+                  <TextField
+                    key={question.id}
+                    select
+                    label={question.text}
+                    variant="outlined"
+                    fullWidth
+                    className={styles.formField}
+                    value={allFields[question.id] || ""}
+                    onChange={(e) => handleElChange(question.id, e.target.value)}
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    SelectProps={{
+                      displayEmpty: true,
+                      renderValue: (value) => {
+                        if (!value) return "";
+                        const answer = question.answers.find(a => a.id === value);
+                        return answer ? answer.label : "";
+                      }
+                    }}
+                  >
+                    <MenuItem value="" disabled>
+                      {t("selectOption")}
+                    </MenuItem>
+                    {question.answers.map((answer) => (
+                      <MenuItem key={answer.id} value={answer.id}>
+                        {answer.label}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                );
               })}
 
               <Button

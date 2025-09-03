@@ -71,58 +71,6 @@
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   border-radius: 0.75rem;
   overflow: visible !important;
-  padding: 1rem;
-  margin-bottom: 1.5rem !important;
-}
-
-.questionLabel {
-  font-weight: 600 !important;
-  color: #2d3748 !important;
-  margin-bottom: 1rem !important;
-  font-size: 1rem !important;
-  line-height: 1.4 !important;
-}
-
-/* Radio Button and Checkbox Styling */
-.formField :global(.MuiFormControlLabel-root) {
-  margin-bottom: 0.5rem;
-  margin-left: 0;
-  margin-right: 0;
-}
-
-.formField :global(.MuiFormControlLabel-label) {
-  font-family: inherit;
-  font-size: 0.95rem;
-  color: #4a5568;
-  line-height: 1.4;
-}
-
-.formField :global(.MuiRadio-root),
-.formField :global(.MuiCheckbox-root) {
-  color: #3182ce;
-  padding: 8px;
-}
-
-.formField :global(.MuiRadio-root.Mui-checked),
-.formField :global(.MuiCheckbox-root.Mui-checked) {
-  color: #3182ce;
-}
-
-.formField :global(.MuiFormGroup-root) {
-  gap: 0.25rem;
-}
-
-/* Arabic Font Support for Form Elements */
-[dir="rtl"] .questionLabel,
-[lang="ar"] .questionLabel {
-  font-family: 'Almarai', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
-  font-weight: 700;
-}
-
-[dir="rtl"] .formField :global(.MuiFormControlLabel-label),
-[lang="ar"] .formField :global(.MuiFormControlLabel-label) {
-  font-family: 'Almarai', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
-  font-weight: 600;
 }
 
 .formField:hover {
