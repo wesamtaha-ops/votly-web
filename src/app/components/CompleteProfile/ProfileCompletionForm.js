@@ -23,7 +23,7 @@ const ProfileCompletionForm = ({ profile, onSubmit }) => {
   const userToken = session?.id;
   const lang = useLocale();
 
-  const [questions, setQuestions] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [questionsLoaded, setQuestionsLoaded] = useState(false);
   const [questionsLoading, setQuestionsLoading] = useState(false);
   const [answers, setAnswers] = useState([]);
@@ -32,8 +32,59 @@ const ProfileCompletionForm = ({ profile, onSubmit }) => {
 
   const [allFields, setAllFields] = useState({});
   const [allLoaded, setAllLoaded] = useState(false);
+  const [flatQuestions, setFlatQuestions] = useState([]);
 
   const [submitting, setSubmitting] = useState(false);
+
+  // Helper function to get translation based on locale
+  const getTranslation = (translations, locale) => {
+    const translation = translations?.find(t => t.locale === locale);
+    return translation?.text || translations?.[0]?.text || '';
+  };
+
+  // Helper function to flatten questions from categories
+  const flattenQuestions = (categoriesData, locale) => {
+    const questions = [];
+    
+    categoriesData.forEach(category => {
+      // Skip hidden categories
+      if (category.hidden) return;
+      
+      // Process questions directly in category
+      if (category.questions) {
+        category.questions.forEach(question => {
+          // Skip hidden questions
+          if (question.hidden) return;
+          
+          questions.push({
+            ...question,
+            categoryId: category.id,
+            categoryName: getTranslation(category.translations, locale),
+            questionText: getTranslation(question.translations, locale),
+            answers: question.answers?.map(answer => ({
+              ...answer,
+              text: getTranslation(answer.translations, locale)
+            })) || []
+          });
+        });
+      }
+      
+      // Process standalone questions (questions that appear directly in the data array)
+      if (category.synoQuestionTypeId) {
+        // This is actually a question, not a category
+        questions.push({
+          ...category,
+          questionText: getTranslation(category.translations, locale),
+          answers: category.answers?.map(answer => ({
+            ...answer,
+            text: getTranslation(answer.translations, locale)
+          })) || []
+        });
+      }
+    });
+    
+    return questions;
+  };
 
   // loading questions
   async function fetchQuestions() {
@@ -48,7 +99,13 @@ const ProfileCompletionForm = ({ profile, onSubmit }) => {
 
       setQuestionsLoading(false);
       setQuestionsLoaded(true);
-      setQuestions(response?.externalResponse?.data ?? []);
+      
+      const categoriesData = response?.externalResponse?.data ?? [];
+      setCategories(categoriesData);
+      
+      // Flatten questions for easier processing
+      const questions = flattenQuestions(categoriesData, lang);
+      setFlatQuestions(questions);
     }
   }
 
@@ -77,16 +134,17 @@ const ProfileCompletionForm = ({ profile, onSubmit }) => {
 
   useEffect(() => {
     if (questionsLoaded && answersLoaded) {
-      const fields = questions.reduce((acc, item, index) => {
-        const answer = answers.find((answer) => answer.questionId === item.id);
-        acc[item.id] = answer?.id;
+      const fields = flatQuestions.reduce((acc, question) => {
+        const answer = answers.find((answer) => answer.questionId === question.id);
+        acc[question.id] = answer?.id;
         return acc;
       }, {});
-      console.log(fields);
+      console.log('Processed fields:', fields);
+      console.log('Flat questions:', flatQuestions);
       setAllLoaded(true);
       setAllFields(fields);
     }
-  }, [questions, answers]);
+  }, [flatQuestions, answers, questionsLoaded, answersLoaded]);
 
   const completedFields = Object.values(allFields).filter(Boolean).length;
   const totalFields = Object.keys(allFields).length;
@@ -174,43 +232,85 @@ const ProfileCompletionForm = ({ profile, onSubmit }) => {
 
           {allLoaded && (
             <div className={styles.form}>
-              {questions.map((question, index) => {
-                const selectedAnswer = question.answers.find(
-                  (answer) => answer.id === allFields[question.id]
-                );
-                return (
-                  <TextField
-                    key={question.id}
-                    select
-                    label={question.text}
-                    variant="outlined"
-                    fullWidth
-                    className={styles.formField}
-                    value={allFields[question.id] || ""}
-                    onChange={(e) => handleElChange(question.id, e.target.value)}
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                    SelectProps={{
-                      displayEmpty: true,
-                      renderValue: (value) => {
-                        if (!value) return "";
-                        const answer = question.answers.find(a => a.id === value);
-                        return answer ? answer.label : "";
-                      }
-                    }}
-                  >
-                    <MenuItem value="" disabled>
-                      {t("selectOption")}
-                    </MenuItem>
-                    {question.answers.map((answer) => (
-                      <MenuItem key={answer.id} value={answer.id}>
-                        {answer.label}
-                      </MenuItem>
-                    ))}
-                  </TextField>
-                );
-              })}
+              {/* Group questions by category */}
+              {categories
+                .filter(category => !category.hidden)
+                .map(category => {
+                  // Get questions for this category
+                  const categoryQuestions = flatQuestions.filter(q => 
+                    q.categoryId === category.id || 
+                    (category.synoQuestionTypeId && q.id === category.id)
+                  );
+                  
+                  if (categoryQuestions.length === 0) return null;
+                  
+                  return (
+                    <div key={category.id} className={styles.categorySection}>
+                      {/* Category Header */}
+                      {category.translations && (
+                        <Typography 
+                          variant="h6" 
+                          className={styles.categoryTitle}
+                          style={{ color: '#fff', marginBottom: '16px', marginTop: '24px' }}
+                        >
+                          {getTranslation(category.translations, lang)}
+                        </Typography>
+                      )}
+                      
+                      {/* Questions in this category */}
+                      {categoryQuestions.map((question) => {
+                        const isMultiSelect = question.synoQuestionTypeId === 3; // Multi-select questions
+                        
+                        return (
+                          <TextField
+                            key={question.id}
+                            select={!isMultiSelect}
+                            label={question.questionText}
+                            variant="outlined"
+                            fullWidth
+                            className={styles.formField}
+                            value={allFields[question.id] || ""}
+                            onChange={(e) => handleElChange(question.id, e.target.value)}
+                            InputLabelProps={{
+                              shrink: true,
+                            }}
+                            SelectProps={!isMultiSelect ? {
+                              displayEmpty: true,
+                              renderValue: (value) => {
+                                if (!value) return "";
+                                const answer = question.answers.find(a => a.id === value);
+                                return answer ? answer.text : "";
+                              }
+                            } : {
+                              multiple: true,
+                              displayEmpty: true,
+                              renderValue: (selected) => {
+                                if (!selected || selected.length === 0) return "";
+                                return selected.map(id => {
+                                  const answer = question.answers.find(a => a.id === id);
+                                  return answer ? answer.text : "";
+                                }).join(', ');
+                              }
+                            }}
+                          >
+                            <MenuItem value="" disabled>
+                              {t("selectOption")}
+                            </MenuItem>
+                            {question.answers.map((answer) => (
+                              <MenuItem 
+                                key={answer.id} 
+                                value={answer.id}
+                                disabled={answer.hidden}
+                              >
+                                {answer.text}
+                              </MenuItem>
+                            ))}
+                          </TextField>
+                        );
+                      })}
+                    </div>
+                  );
+                })}
 
               <Button
                 type="submit"

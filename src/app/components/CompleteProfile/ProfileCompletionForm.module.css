@@ -66,6 +66,22 @@
   background: #f8fafc;
 }
 
+.categorySection {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.categoryTitle {
+  font-weight: 600;
+  color: #2d3748;
+  padding: 1rem;
+  background: rgba(49, 130, 206, 0.1);
+  border-radius: 0.75rem;
+  border-left: 4px solid #3182ce;
+  margin-bottom: 0.5rem;
+}
+
 .formField {
   background: white;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
