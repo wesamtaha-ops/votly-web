@@ -1,47 +1,71 @@
-.container {
-  max-width: 800px;
-  margin: 2rem auto;
-  padding: 0;
-  background: #f8fafc;
-  border-radius: 1.5rem;
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
-  overflow: hidden;
+/* Modern Grid-Based Layout */
+.pageWrapper {
+  min-height: 100vh;
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.twoRowMobile {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 0;
-  gap: 2rem;
-  background: linear-gradient(135deg, #3182ce 0%, #2c5282 100%);
-  padding: 3rem 2.5rem;
+.mainContainer {
+  width: 100%;
+  max-width: 1200px;
+  background: white;
+  border-radius: 24px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  animation: slideUp 0.6s ease-out;
+}
+
+/* Header Section */
+.headerSection {
+  background: linear-gradient(135deg, #1e3a8a 0%, #3730a3 50%, #581c87 100%);
+  padding: 30px;
   color: white;
   position: relative;
   overflow: hidden;
 }
 
-.twoRowMobile::after {
-  content: "";
+.headerSection::before {
+  content: '';
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
-  opacity: 0.1;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+  opacity: 0.3;
 }
 
-.progressContainer {
+.headerContent {
   position: relative;
-  width: 100px;
-  height: 100px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 50%;
-  padding: 10px;
+  z-index: 2;
   display: flex;
-  justify-content: center;
   align-items: center;
+  gap: 2rem;
+}
+
+.circularProgressContainer {
+  flex-shrink: 0;
+}
+
+.circularProgress {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.progressCircle {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.progressCircle :global(.MuiCircularProgress-circle) {
+  stroke-linecap: round;
+}
+
+.progressCircle :global(.MuiCircularProgress-colorPrimary) {
+  color: #10b981;
 }
 
 .progressText {
@@ -49,233 +73,318 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: white;
-  font-weight: 700;
-  font-size: 1rem;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   text-align: center;
-  line-height: 1.2;
-  width: 100%;
-  padding: 0 8px;
+  color: white;
 }
 
-.form {
-  display: grid;
+.progressNumber {
+  display: block;
+  font-size: 1.25rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.progressLabel {
+  display: block;
+  font-size: 0.75rem;
+  opacity: 0.9;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-top: 2px;
+}
+
+.textContent {
+  flex: 1;
+  text-align: left;
+}
+
+.mainTitle {
+  font-size: 2.0rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(45deg, #ffffff, #e0e7ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.subtitle {
+  font-size: 1.125rem;
+  opacity: 0.9;
+  margin-bottom: 0rem;
+  font-weight: 400;
+  color: #fff;
+}
+
+/* Questions Grid */
+.questionsGrid {
+  display: flex;
+  flex-direction: column;
   gap: 2rem;
-  padding: 2.5rem;
+  padding: 3rem 2rem;
   background: #f8fafc;
 }
 
-.categorySection {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
-.categoryTitle {
-  font-weight: 600;
-  color: #2d3748;
-  padding: 1rem;
-  background: rgba(49, 130, 206, 0.1);
-  border-radius: 0.75rem;
-  border-left: 4px solid #3182ce;
-  margin-bottom: 0.5rem;
-}
-
-.formField {
+.questionCard {
   background: white;
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  border-radius: 0.75rem;
-  overflow: visible !important;
+  border: 2px solid transparent;
+  position: relative;
 }
 
-.formField:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+.questionCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  border-color: #e0e7ff;
 }
 
-/* Style for MUI TextField */
-.formField :global(.MuiOutlinedInput-root) {
-  border-radius: 0.75rem;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  background-color: #f8fafc;
+.questionCard.completed {
+  border-color: #10b981;
+  background: linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%);
 }
 
-.formField :global(.MuiInputLabel-shrink) {
-  background-color: #f8fafc;
-  padding: 0 8px;
-  margin-top: 0;
+.questionHeader {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
 }
 
-.formField :global(.MuiInputLabel-root) {
-  color: #4a5568;
-  font-weight: 500;
+.questionBadge {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: #e5e7eb;
+  color: #6b7280;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.875rem;
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+}
+
+.questionBadge.badgeCompleted {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+}
+
+.questionTitle {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #1f2937;
+  line-height: 1.5;
+  margin: 0;
+  text-align: left;
+}
+
+.questionContent {
+  margin-top: 1rem;
+}
+
+.questionInput {
+  width: 100%;
+}
+
+.questionInput :global(.MuiOutlinedInput-root) {
+  border-radius: 12px;
+  background: #f9fafb;
+  border: 2px solid #e5e7eb;
+  transition: all 0.3s ease;
+}
+
+.questionInput :global(.MuiOutlinedInput-root:hover) {
+  border-color: #d1d5db;
+  background: white;
+}
+
+.questionInput :global(.MuiOutlinedInput-root.Mui-focused) {
+  border-color: #6366f1;
+  background: white;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+.questionInput :global(.MuiOutlinedInput-notchedOutline) {
+  border: none;
+}
+
+.questionInput :global(.MuiSelect-select) {
+  padding: 16px 48px 16px 16px;
   font-size: 1rem;
-  font-family: inherit;
-  transform: translate(14px, 16px) scale(1);
+  color: #374151;
 }
 
-.formField :global(.MuiInputLabel-root.Mui-focused) {
-  color: #3182ce;
-  background-color: #f8fafc;
-  padding: 0 8px;
-  transform: translate(14px, -9px) scale(0.75);
-}
-
-.formField :global(.MuiInputLabel-root.MuiInputLabel-shrink) {
-  transform: translate(14px, -9px) scale(0.75);
-  background-color: #f8fafc;
-  padding: 0 8px;
-}
-
-.formField :global(.MuiOutlinedInput-notchedOutline) {
-  border-color: #e2e8f0;
-  border-width: 1px;
-}
-
-.formField :global(.MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline) {
-  border-color: #3182ce;
-}
-
-.formField :global(.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline) {
-  border-color: #3182ce;
-  border-width: 2px;
-}
-
-.formField :global(.MuiSelect-select) {
-  padding: 16px 14px;
-  min-height: 1.4375em;
-  font-size: 1rem;
-  font-family: inherit;
-}
-
-.formField :global(.MuiMenuItem-root) {
-  font-family: inherit;
+.questionInput :global(.MuiMenuItem-root) {
   padding: 12px 16px;
+  font-size: 1rem;
   transition: all 0.2s ease;
 }
 
-.formField :global(.MuiMenuItem-root:hover) {
-  background: rgba(49, 130, 206, 0.08);
+.questionInput :global(.MuiMenuItem-root:hover) {
+  background: #f3f4f6;
 }
 
-/* Progress Circle Styles */
-.progressContainer :global(.MuiCircularProgress-root) {
-  color: white;
-  width: 100% !important;
-  height: 100% !important;
-  position: absolute;
-  top: 0;
-  left: 0;
+/* Checkbox Styles */
+.checkboxGroup {
+  width: 100%;
 }
 
-.progressContainer :global(.MuiCircularProgress-circle) {
-  stroke-linecap: round;
-  stroke-width: 3;
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+.checkboxGroup :global(.MuiFormGroup-root) {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-height: 300px;
+  overflow-y: auto;
+  padding: 0.5rem;
+  background: #f9fafb;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
 }
 
-/* Loading Spinner */
-.spinner {
+.checkboxLabel {
+  margin: 0;
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  background: white;
+  border: 1px solid #e5e7eb;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+}
+
+.checkboxLabel:hover {
+  background: #f3f4f6;
+  border-color: #d1d5db;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.checkboxLabel :global(.MuiFormControlLabel-label) {
+  font-size: 0.875rem;
+  color: #374151;
+  font-weight: 500;
+  line-height: 1.4;
+  margin-left: 0.5rem;
+}
+
+.customCheckbox {
+  padding: 4px !important;
+}
+
+.customCheckbox :global(.MuiSvgIcon-root) {
+  font-size: 1.125rem;
+  color: #9ca3af;
+  transition: all 0.2s ease;
+}
+
+.customCheckbox :global(.Mui-checked .MuiSvgIcon-root) {
+  color: #6366f1;
+}
+
+.customCheckbox :global(.MuiCheckbox-root:hover) {
+  background: rgba(99, 102, 241, 0.04);
+}
+
+.checkboxLabel :global(.Mui-checked + .MuiFormControlLabel-label) {
+  color: #1f2937;
+  font-weight: 600;
+}
+
+.checkboxLabel.checked {
+  background: #eff6ff;
+  border-color: #6366f1;
+}
+
+/* Custom scrollbar for checkbox container */
+.checkboxGroup :global(.MuiFormGroup-root)::-webkit-scrollbar {
+  width: 4px;
+}
+
+.checkboxGroup :global(.MuiFormGroup-root)::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 2px;
+}
+
+.checkboxGroup :global(.MuiFormGroup-root)::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 2px;
+}
+
+.checkboxGroup :global(.MuiFormGroup-root)::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Submit Section */
+.submitSection {
+  padding: 2rem;
+  background: white;
+  border-top: 1px solid #e5e7eb;
   display: flex;
   justify-content: center;
+}
+
+.submitBtn {
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  color: white;
+  padding: 1rem 3rem;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  text-transform: none;
+  box-shadow: 0 4px 14px 0 rgba(99, 102, 241, 0.4);
+  transition: all 0.3s ease;
+}
+
+.submitBtn:hover {
+  background: linear-gradient(135deg, #5855f7 0%, #7c3aed 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px 0 rgba(99, 102, 241, 0.5);
+}
+
+.submitBtn:disabled {
+  background: #9ca3af;
+  color: white;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Loading State */
+.loadingContainer {
+  display: flex;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
   min-height: 400px;
-  width: 100%;
-  position: relative;
   background: white;
-  border-radius: 1.5rem;
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
-  padding: 2rem;
+  border-radius: 24px;
+  padding: 3rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
 }
 
-.spinner :global(.MuiCircularProgress-root) {
-  color: #3182ce;
-  width: 60px !important;
-  height: 60px !important;
+.loadingSpinner {
+  margin-bottom: 2rem;
 }
 
-.spinner::after {
-  content: "Loading...";
-  position: absolute;
-  top: calc(50% + 40px);
-  left: 50%;
-  transform: translateX(-50%);
-  color: #4a5568;
-  font-size: 1rem;
+.loadingSpinner :global(.MuiCircularProgress-root) {
+  color: #6366f1;
+}
+
+.loadingText {
+  color: #6b7280;
+  text-align: center;
   font-weight: 500;
-  font-family: inherit;
-}
-
-/* RTL Support for Spinner */
-[dir="rtl"] .spinner::after {
-  left: auto;
-  right: 50%;
-  transform: translateX(50%);
-}
-
-/* RTL Support */
-[dir="rtl"] .formField :global(.MuiOutlinedInput-root) {
-  text-align: right;
-}
-
-[dir="rtl"] .progressText {
-  left: auto;
-  right: 50%;
-  transform: translate(50%, -50%);
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  .container {
-    margin: 1rem;
-    border-radius: 1rem;
-  }
-
-  .twoRowMobile {
-    flex-direction: column;
-    text-align: center;
-    padding: 2rem 1.5rem;
-  }
-
-  .progressContainer {
-    width: 80px;
-    height: 80px;
-    padding: 8px;
-  }
-
-  .progressText {
-    font-size: 0.875rem;
-  }
-
-  .form {
-    padding: 1.5rem;
-    gap: 2.5rem;
-    margin-top: 1rem;
-  }
-
-  .spinner {
-    min-height: 300px;
-    margin: 1rem;
-    padding: 1.5rem;
-  }
-  
-  .spinner :global(.MuiCircularProgress-root) {
-    width: 48px !important;
-    height: 48px !important;
-  }
-  
-  .spinner::after {
-    top: calc(50% + 32px);
-    font-size: 0.9rem;
-  }
 }
 
 /* Animations */
-@keyframes slideIn {
+@keyframes slideUp {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(30px);
   }
   to {
     opacity: 1;
@@ -283,90 +392,152 @@
   }
 }
 
-.formField {
-  animation: slideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-}
-
-.formField:nth-child(n) {
-  animation-delay: calc(n * 0.1s);
-}
-
-/* Enhanced Typography */
-.twoRowMobile h1 {
-  font-size: 2.25rem;
-  font-weight: 700;
-  margin-bottom: 0.75rem;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  line-height: 1.2;
-}
-
-.twoRowMobile h4 {
-  font-size: 1.25rem;
-  font-weight: 400;
-  opacity: 0.9;
-  line-height: 1.5;
-}
-
-/* Form Submit Button */
-.submitButton {
-  background: linear-gradient(135deg, #3182ce 0%, #2c5282 100%);
-  color: white;
-  padding: 1rem 2rem;
-  border: none;
-  border-radius: 0.75rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  margin-top: 1rem;
-  width: 100%;
-  font-family: inherit !important;
-  text-transform: none;
-  font-size: 1.1rem;
-  height: 56px;
-}
-
-.submitButton:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-}
-
-.submitButton:disabled {
-  background: #e2e8f0;
-  color: #a0aec0;
-  cursor: not-allowed;
-  transform: none;
-  box-shadow: none;
-}
-
-/* Error States */
-.formField :global(.Mui-error) {
-  animation: shake 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
-}
-
-@keyframes shake {
-  10%, 90% {
-    transform: translate3d(-1px, 0, 0);
+/* Responsive Design */
+@media (max-width: 768px) {
+  .pageWrapper {
+    padding: 1rem;
   }
-  20%, 80% {
-    transform: translate3d(2px, 0, 0);
+
+  .mainContainer {
+    border-radius: 16px;
   }
-  30%, 50%, 70% {
-    transform: translate3d(-4px, 0, 0);
+
+  .headerSection {
+    padding: 0;
   }
-  40%, 60% {
-    transform: translate3d(4px, 0, 0);
+
+  .headerContent {
+    flex-direction: column;
+    text-align: center;
+    gap: 1.5rem;
+  }
+
+  .textContent {
+    text-align: center;
+  }
+
+  .mainTitle {
+    font-size: 2rem;
+  }
+
+  .circularProgress {
+    margin-bottom: 1rem;
+  }
+
+  .questionsGrid {
+    gap: 1.5rem;
+    padding: 2rem 1.5rem;
+  }
+
+  .questionCard {
+    padding: 1.25rem;
+  }
+
+  .submitSection {
+    padding: 1.5rem;
+  }
+
+  .submitBtn {
+    width: 100%;
+    padding: 1rem 2rem;
   }
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
+@media (max-width: 480px) {
+  .questionsGrid {
+    padding: 1.5rem 1rem;
   }
-  to {
-    opacity: 1;
+
+  .questionHeader {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .questionBadge {
+    align-self: flex-start;
+  }
+
+  .checkboxGroup :global(.MuiFormGroup-root) {
+    max-height: 250px;
+  }
+
+  .checkboxLabel {
+    min-height: 20px;
+    padding: 0.4rem 0.6rem;
+  }
+
+  .checkboxLabel :global(.MuiFormControlLabel-label) {
+    font-size: 0.8rem;
+    margin-left: 0.4rem;
   }
 }
 
-.spinner {
-  animation: fadeIn 0.3s ease-in-out;
+/* RTL Support */
+[dir="rtl"] .questionHeader {
+  text-align: right;
+}
+
+[dir="rtl"] .questionTitle {
+  text-align: right !important;
+  direction: rtl;
+}
+
+[dir="rtl"] .questionTitle :global(.MuiTypography-root) {
+  text-align: right !important;
+  direction: rtl;
+}
+
+[dir="rtl"] .statsContainer {
+  direction: rtl;
+}
+
+[dir="rtl"] .questionInput {
+  direction: rtl;
+  text-align: right;
+}
+
+[dir="rtl"] .questionInput :global(.MuiOutlinedInput-root) {
+  text-align: right;
+}
+
+[dir="rtl"] .questionInput :global(.MuiSelect-select) {
+  text-align: right;
+  padding: 12px 36px 12px 48px;
+}
+
+[dir="rtl"] .questionInput :global(.MuiMenuItem-root) {
+  text-align: right;
+  direction: rtl;
+}
+
+[dir="rtl"] .checkboxGroup {
+  direction: rtl;
+}
+
+[dir="rtl"] .checkboxLabel {
+  text-align: right;
+}
+
+[dir="rtl"] .checkboxLabel :global(.MuiFormControlLabel-label) {
+  margin-left: 0;
+  margin-right: 0.5rem;
+  text-align: right;
+}
+
+[dir="rtl"] .customCheckbox {
+  margin-left: 0.5rem;
+  margin-right: 0;
+}
+
+[dir="rtl"] .headerContent {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] .textContent {
+  text-align: right;
+}
+
+[dir="rtl"] .mainTitle,
+[dir="rtl"] .subtitle {
+  text-align: right;
 }

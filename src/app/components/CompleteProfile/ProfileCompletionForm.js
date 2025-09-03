@@ -8,6 +8,11 @@ import {
   Button,
   MenuItem,
   Typography,
+  FormControl,
+  FormLabel,
+  FormGroup,
+  FormControlLabel,
+  Checkbox,
 } from "@mui/material";
 import styles from "./ProfileCompletionForm.module.css";
 import { useLocale, useTranslations } from "next-intl"; // Import for translations
@@ -45,6 +50,7 @@ const ProfileCompletionForm = ({ profile, onSubmit }) => {
   // Helper function to flatten questions from categories
   const flattenQuestions = (categoriesData, locale) => {
     const questions = [];
+    const processedQuestionIds = new Set(); // Track processed question IDs to avoid duplicates
     
     categoriesData.forEach(category => {
       // Skip hidden categories
@@ -53,9 +59,10 @@ const ProfileCompletionForm = ({ profile, onSubmit }) => {
       // Process questions directly in category
       if (category.questions) {
         category.questions.forEach(question => {
-          // Skip hidden questions
-          if (question.hidden) return;
+          // Skip hidden questions, questions without code starting with "P", or already processed questions
+          if (question.hidden || !question.code || !question.code.startsWith('C') || !question.code.startsWith('P') || processedQuestionIds.has(question.id)) return;
           
+          processedQuestionIds.add(question.id);
           questions.push({
             ...question,
             categoryId: category.id,
@@ -70,8 +77,12 @@ const ProfileCompletionForm = ({ profile, onSubmit }) => {
       }
       
       // Process standalone questions (questions that appear directly in the data array)
-      if (category.synoQuestionTypeId) {
-        // This is actually a question, not a category
+      if (category.synoQuestionTypeId && category.code && (category.code.startsWith('P') || category.code.startsWith('C') )) {
+        // Skip if already processed
+        if (processedQuestionIds.has(category.id)) return;
+        
+        processedQuestionIds.add(category.id);
+        // This is actually a question, not a category, and has code starting with "P"
         questions.push({
           ...category,
           questionText: getTranslation(category.translations, locale),
@@ -83,7 +94,12 @@ const ProfileCompletionForm = ({ profile, onSubmit }) => {
       }
     });
     
-    return questions;
+    // Sort questions by their code for consistent ordering
+    return questions.sort((a, b) => {
+      const aCode = a.code || '';
+      const bCode = b.code || '';
+      return aCode.localeCompare(bCode);
+    });
   };
 
   // loading questions
@@ -135,8 +151,20 @@ const ProfileCompletionForm = ({ profile, onSubmit }) => {
   useEffect(() => {
     if (questionsLoaded && answersLoaded) {
       const fields = flatQuestions.reduce((acc, question) => {
-        const answer = answers.find((answer) => answer.questionId === question.id);
-        acc[question.id] = answer?.id;
+        const isMultiSelect = question.synoQuestionTypeId === 3;
+        
+        if (isMultiSelect) {
+          // For multi-select questions, collect all matching answers into an array
+          const matchingAnswers = answers
+            .filter((answer) => answer.questionId === question.id)
+            .map(answer => answer.id);
+          // Only set the array if it has items, otherwise set undefined
+          acc[question.id] = matchingAnswers.length > 0 ? matchingAnswers : undefined;
+        } else {
+          // For single-select questions, find the first matching answer
+          const answer = answers.find((answer) => answer.questionId === question.id);
+          acc[question.id] = answer?.id;
+        }
         return acc;
       }, {});
       console.log('Processed fields:', fields);
@@ -146,14 +174,49 @@ const ProfileCompletionForm = ({ profile, onSubmit }) => {
     }
   }, [flatQuestions, answers, questionsLoaded, answersLoaded]);
 
-  const completedFields = Object.values(allFields).filter(Boolean).length;
+  const completedFields = Object.values(allFields).filter(value => {
+    if (Array.isArray(value)) {
+      return value.length > 0; // For multi-select, check if array has items
+    }
+    return Boolean(value); // For single select, check if value exists
+  }).length;
   const totalFields = Object.keys(allFields).length;
   const completionPercentage = (completedFields / totalFields) * 100;
 
-  const handleElChange = async (key, value) => {
+  const handleElChange = async (key, value, isMultiSelect = false) => {
+    if (isMultiSelect) {
+      // Handle checkbox array values
+      setAllFields({
+        ...allFields,
+        [key]: value,
+      });
+    } else {
+      // Handle single select values
+      setAllFields({
+        ...allFields,
+        [key]: value,
+      });
+    }
+  };
+
+  const handleCheckboxChange = (questionId, answerId, checked) => {
+    const currentValues = allFields[questionId] || [];
+    let newValues;
+    
+    if (checked) {
+      // Add the answer ID if it's not already in the array
+      newValues = currentValues.includes(answerId) 
+        ? currentValues 
+        : [...currentValues, answerId];
+    } else {
+      // Remove the answer ID from the array
+      newValues = currentValues.filter(id => id !== answerId);
+    }
+    
+    // Set to undefined if array becomes empty, otherwise set the array
     setAllFields({
       ...allFields,
-      [key]: value,
+      [questionId]: newValues.length > 0 ? newValues : undefined,
     });
   };
 
@@ -161,11 +224,27 @@ const ProfileCompletionForm = ({ profile, onSubmit }) => {
     setSubmitting(true);
 
     const payload = Object.entries(allFields)
-      .filter(([questionId, id]) => id !== undefined && id !== null) // Check if id exists
-      .map(([questionId, id]) => ({
-        questionId: parseInt(questionId), // Convert questionId to a number
-        id: id, // Use the value as is
-      }));
+      .filter(([questionId, value]) => {
+        if (Array.isArray(value)) {
+          return value.length > 0; // For arrays, check if not empty
+        }
+        return value !== undefined && value !== null && value !== ""; // For single values
+      })
+      .flatMap(([questionId, value]) => {
+        if (Array.isArray(value)) {
+          // For multi-select questions, create multiple entries
+          return value.map(id => ({
+            questionId: parseInt(questionId),
+            id: id,
+          }));
+        } else {
+          // For single-select questions, create single entry
+          return [{
+            questionId: parseInt(questionId),
+            id: value,
+          }];
+        }
+      });
 
     await callApi({
       type: "post",
@@ -183,148 +262,159 @@ const ProfileCompletionForm = ({ profile, onSubmit }) => {
   };
 
   return (
-    <div className={styles.container}>
+    <div className={styles.pageWrapper}>
       {!allLoaded ? (
-        <div className={styles.spinner}>
-          <CircularProgress />
+        <div className={styles.loadingContainer}>
+          <div className={styles.loadingSpinner}>
+            <CircularProgress size={60} thickness={4} />
+          </div>
+          <Typography variant="h6" className={styles.loadingText}>
+            Loading your profile questions...
+          </Typography>
         </div>
       ) : (
-        <>
-          <div className={styles.twoRowMobile}>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "space-between",
-                width: "inherit",
-              }}
-            >
-              <Typography
-                variant="h4"
-                component="h1"
-                style={{ color: "#fff" }}
-                gutterBottom
-              >
-                {t("beforeContinue")}
-              </Typography>
-              <Typography
-                variant="h6"
-                component="h4"
-                style={{ color: "#fff" }}
-                gutterBottom
-              >
-                {t("moreDetails")}
-              </Typography>
-            </div>
+        <div className={styles.mainContainer}>
+          {/* Header Section */}
+          <div className={styles.headerSection}>
+            <div className={styles.headerContent}>
+              {/* Circular Progress on the left */}
+              <div className={styles.circularProgressContainer}>
+                <div className={styles.circularProgress}>
+                  <CircularProgress
+                    variant="determinate"
+                    value={completionPercentage}
+                    size={100}
+                    thickness={4}
+                    className={styles.progressCircle}
+                  />
+                  <div className={styles.progressText}>
+                    <span className={styles.progressNumber}>{Math.round(completionPercentage)}%</span>
+                    <span className={styles.progressLabel}>Complete</span>
+                  </div>
+                </div>
+              </div>
 
-            <div className={styles.progressContainer}>
-              <CircularProgress
-                variant="determinate"
-                value={completionPercentage}
-              />
-              <Typography variant="body1" className={styles.progressText}>
-                {Math.round(completionPercentage)}%
-                <br />
-                {t("complete")}
-              </Typography>
+              {/* Text content on the right */}
+              <div className={styles.textContent}>
+                <Typography variant="h3" className={styles.mainTitle}>
+                  {t("beforeContinue")}
+                </Typography>
+                <Typography variant="body1" className={styles.subtitle}>
+                  {t("moreDetails")}
+                </Typography>
+              </div>
             </div>
           </div>
 
-          {allLoaded && (
-            <div className={styles.form}>
-              {/* Group questions by category */}
-              {categories
-                .filter(category => !category.hidden)
-                .map(category => {
-                  // Get questions for this category
-                  const categoryQuestions = flatQuestions.filter(q => 
-                    q.categoryId === category.id || 
-                    (category.synoQuestionTypeId && q.id === category.id)
-                  );
-                  
-                  if (categoryQuestions.length === 0) return null;
-                  
-                  return (
-                    <div key={category.id} className={styles.categorySection}>
-                      {/* Category Header */}
-                      {category.translations && (
-                        <Typography 
-                          variant="h6" 
-                          className={styles.categoryTitle}
-                          style={{ color: '#fff', marginBottom: '16px', marginTop: '24px' }}
-                        >
-                          {getTranslation(category.translations, lang)}
-                        </Typography>
-                      )}
-                      
-                      {/* Questions in this category */}
-                      {categoryQuestions.map((question) => {
-                        const isMultiSelect = question.synoQuestionTypeId === 3; // Multi-select questions
-                        
-                        return (
-                          <TextField
-                            key={question.id}
-                            select={!isMultiSelect}
-                            label={question.questionText}
-                            variant="outlined"
-                            fullWidth
-                            className={styles.formField}
-                            value={allFields[question.id] || ""}
-                            onChange={(e) => handleElChange(question.id, e.target.value)}
-                            InputLabelProps={{
-                              shrink: true,
-                            }}
-                            SelectProps={!isMultiSelect ? {
-                              displayEmpty: true,
-                              renderValue: (value) => {
-                                if (!value) return "";
-                                const answer = question.answers.find(a => a.id === value);
-                                return answer ? answer.text : "";
-                              }
-                            } : {
-                              multiple: true,
-                              displayEmpty: true,
-                              renderValue: (selected) => {
-                                if (!selected || selected.length === 0) return "";
-                                return selected.map(id => {
-                                  const answer = question.answers.find(a => a.id === id);
-                                  return answer ? answer.text : "";
-                                }).join(', ');
-                              }
-                            }}
-                          >
-                            <MenuItem value="" disabled>
-                              {t("selectOption")}
-                            </MenuItem>
-                            {question.answers.map((answer) => (
-                              <MenuItem 
-                                key={answer.id} 
-                                value={answer.id}
-                                disabled={answer.hidden}
-                              >
-                                {answer.text}
-                              </MenuItem>
-                            ))}
-                          </TextField>
-                        );
-                      })}
+          {/* Questions Grid */}
+          <div className={styles.questionsGrid}>
+            {flatQuestions.map((question, index) => {
+              const isMultiSelect = question.synoQuestionTypeId === 3;
+              const isCompleted = allFields[question.id];
+              
+              return (
+                <div 
+                  key={question.id} 
+                  className={`${styles.questionCard} ${isCompleted ? styles.completed : ''}`}
+                >
+                  <div className={styles.questionHeader}>
+                    <div className={`${styles.questionBadge} ${isCompleted ? styles.badgeCompleted : ''}`}>
+                      {index + 1}
                     </div>
-                  );
-                })}
+                    <Typography 
+                      variant="h6" 
+                      className={styles.questionTitle}
+                      style={{ 
+                        textAlign: lang === 'ar' ? 'right' : 'left',
+                        direction: lang === 'ar' ? 'rtl' : 'ltr'
+                      }}
+                    >
+                      {question.questionText}
+                    </Typography>
+                  </div>
+                  
+                  <div className={styles.questionContent}>
+                    {isMultiSelect ? (
+                      <FormControl component="fieldset" className={styles.checkboxGroup}>
+                        <FormGroup>
+                          {question.answers
+                            .filter(answer => !answer.hidden)
+                            .map((answer) => {
+                              const currentValues = allFields[question.id] || [];
+                              const isChecked = currentValues.includes(answer.id);
+                              
+                              return (
+                                <FormControlLabel
+                                  key={answer.id}
+                                  control={
+                                    <Checkbox
+                                      checked={isChecked}
+                                      onChange={(e) => handleCheckboxChange(question.id, answer.id, e.target.checked)}
+                                      className={styles.customCheckbox}
+                                    />
+                                  }
+                                  label={answer.text}
+                                  className={`${styles.checkboxLabel} ${isChecked ? styles.checked : ''}`}
+                                />
+                              );
+                            })}
+                        </FormGroup>
+                      </FormControl>
+                    ) : (
+                      <TextField
+                        select
+                        placeholder={t("selectOption")}
+                        variant="outlined"
+                        fullWidth
+                        className={styles.questionInput}
+                        value={allFields[question.id] || ""}
+                        onChange={(e) => handleElChange(question.id, e.target.value)}
+                        SelectProps={{
+                          displayEmpty: true,
+                          renderValue: (value) => {
+                            if (!value) return t("selectOption");
+                            const answer = question.answers.find(a => a.id === value);
+                            return answer ? answer.text : "";
+                          }
+                        }}
+                      >
+                        {question.answers.map((answer) => (
+                          <MenuItem 
+                            key={answer.id} 
+                            value={answer.id}
+                            disabled={answer.hidden}
+                          >
+                            {answer.text}
+                          </MenuItem>
+                        ))}
+                      </TextField>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
 
-              <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                disabled={submitting}
-                onClick={handleSubmit}
-                className={styles.submitButton}
-              >
-                {submitting ? t("submitting") : t("submit")}
-              </Button>
-            </div>
-          )}
-        </>
+          {/* Submit Section */}
+          <div className={styles.submitSection}>
+            <Button
+              variant="contained"
+              disabled={submitting}
+              onClick={handleSubmit}
+              className={styles.submitBtn}
+              size="large"
+            >
+              {submitting ? (
+                <>
+                  <CircularProgress size={20} style={{ marginRight: 8, color: 'white' }} />
+                  {t("submitting")}
+                </>
+              ) : (
+                t("submit")
+              )}
+            </Button>
+          </div>
+        </div>
       )}
     </div>
   );
