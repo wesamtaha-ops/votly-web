@@ -61,9 +61,11 @@ const SurveysList = () => {
     // Filter surveys based on activeFilter
     const filtered = surveys.filter((survey) => {
       if (activeFilter === 'active') {
+        // Active surveys are those not completed (null or false)
         return !survey.completed;
       } else {
-        return survey.completed;
+        // Answered surveys are those completed (true)
+        return survey.completed === true;
       }
     });
     setFilteredSurveys(filtered);
@@ -77,8 +79,11 @@ const SurveysList = () => {
       userToken: userToken,
     });
 
-    if (response.status == 200) {
-      if (response.data.length > 0) setSurveys(response?.data);
+    if (response.status == "1" && response.externalResponse?.status === 200) {
+      const surveysData = response.externalResponse?.data?.surveys || [];
+      if (surveysData.length > 0) {
+        setSurveys(surveysData);
+      }
     }
     setLoading(false);
   }
@@ -144,7 +149,7 @@ const SurveysList = () => {
             <FaFilter className={styles.filterIcon} />
             {t('answeredSurveys')}
             <span className={styles.surveyCount}>
-              {surveys.filter((s) => s.completed).length}
+              {surveys.filter((s) => s.completed === true).length}
             </span>
           </button>
         </div>
