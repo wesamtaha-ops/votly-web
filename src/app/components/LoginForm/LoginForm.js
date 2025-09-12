@@ -127,11 +127,21 @@ const Login = () => {
   };
 
   return (
-    <div
-      className={styles.loginContainer}
-      style={{ opacity: loading ? 0.5 : 1 }}>
+    <div className={styles.loginContainer}>
       <div className={styles.loginBox}>
-        <h2 className={styles.title}>{t('logIn')}</h2>
+        {loading && (
+          <div className={styles.loadingOverlay}>
+            <div className={styles.loadingSpinner}>
+              <div className={styles.spinner}></div>
+              <p className={styles.loadingText}>{t('loading')}</p>
+            </div>
+          </div>
+        )}
+        
+        <div className={styles.formHeader}>
+          <h2 className={styles.title}>{t('logIn')}</h2>
+          <p className={styles.subtitle}>Welcome back! Please sign in to your account</p>
+        </div>
         {/* Tabs */}
         <div className={styles.tabsContainer}>
           <button
@@ -154,7 +164,7 @@ const Login = () => {
           </button>
         </div>
         <form
-          className={styles.form}
+          className={`${styles.form} ${loading ? styles.formDisabled : ''}`}
           onSubmit={handleSubmit(onSubmit)}
           onKeyPress={handleKeyPress}>
           {/* Display request error */}
@@ -166,32 +176,36 @@ const Login = () => {
 
           {/* Mobile Number Input */}
           {loginType === 'mobile' && (
-            <div className={styles.inputWrapper}>
-              <PhoneInput
-                country={'ae'}
-                value={phoneValue}
-                onChange={(phone) => {
-                  setPhoneValue(phone);
-                  setValue('phone', phone);
-                }}
-                inputProps={{
-                  name: 'phone',
-                  required: true,
-                  autoFocus: false,
-                  disabled: loading,
-                  placeholder:
-                    t('mobilePlaceholder') || '+971 Enter Mobile Number',
-                }}
-                inputClass={classNames(
-                  styles.phoneInput,
-                  errors.phone && styles.errorBorder,
-                )}
-                buttonClass={styles.phoneButton}
-                containerClass={styles.phoneContainer}
-                dropdownClass={styles.phoneDropdown}
-                specialLabel=''
-                enableSearch
-              />
+            <div className={styles.formSection}>
+              <div className={styles.inputGroup}>
+                <PhoneInput
+                  country={'ae'}
+                  value={phoneValue}
+                  onChange={(phone) => {
+                    setPhoneValue(phone);
+                    setValue('phone', phone);
+                  }}
+                  inputProps={{
+                    name: 'phone',
+                    required: true,
+                    autoFocus: false,
+                    disabled: loading,
+                    placeholder:
+                      t('mobilePlaceholder') || '+971 Enter Mobile Number',
+                  }}
+                  inputClass={classNames(
+                    styles.phoneInput,
+                    errors.phone && styles.errorBorder,
+                    loading && styles.inputDisabled,
+                  )}
+                  buttonClass={styles.phoneButton}
+                  containerClass={styles.phoneContainer}
+                  dropdownClass={styles.phoneDropdown}
+                  specialLabel=''
+                  enableSearch
+                />
+                {loading && <div className={styles.inputSpinner}></div>}
+              </div>
               {errors.phone && (
                 <p role='alert' className={styles.error}>
                   {errors.phone.message}
@@ -202,47 +216,64 @@ const Login = () => {
 
           {/* Email Input */}
           {loginType === 'email' && (
-            <input
-              type='text'
-              placeholder={t('emailOrPhone')}
-              className={classNames(
-                styles.input,
-                errors.email && styles.errorBorder,
+            <div className={styles.formSection}>
+              <div className={styles.inputGroup}>
+                <input
+                  type='email'
+                  placeholder={t('emailOrPhone')}
+                  className={classNames(
+                    styles.input,
+                    errors.email && styles.errorBorder,
+                    loading && styles.inputDisabled,
+                  )}
+                  {...register('email', {
+                    required: t('emailRequired'),
+                    validate: validateEmailOrPhone,
+                  })}
+                  disabled={loading}
+                />
+                {loading && <div className={styles.inputSpinner}></div>}
+              </div>
+              {errors.email && (
+                <p role='alert' className={styles.error}>
+                  {errors.email.message}
+                </p>
               )}
-              {...register('email', {
-                required: t('emailRequired'),
-                validate: validateEmailOrPhone,
-              })}
-              disabled={loading}
-            />
-          )}
-          {loginType === 'email' && errors.email && (
-            <p role='alert' className={styles.error}>
-              {errors.email.message}
-            </p>
+            </div>
           )}
 
-          <input
-            type='password'
-            placeholder={t('password')}
-            className={classNames(
-              styles.input,
-              errors.password && styles.errorBorder,
+          <div className={styles.formSection}>
+            <div className={styles.inputGroup}>
+              <input
+                type='password'
+                placeholder={t('password')}
+                className={classNames(
+                  styles.input,
+                  errors.password && styles.errorBorder,
+                  loading && styles.inputDisabled,
+                )}
+                {...register('password', { required: t('passwordRequired') })}
+                disabled={loading}
+              />
+              {loading && <div className={styles.inputSpinner}></div>}
+            </div>
+            {errors.password && (
+              <p role='alert' className={styles.error}>
+                {errors.password.message}
+              </p>
             )}
-            {...register('password', { required: t('passwordRequired') })}
-            disabled={loading}
-          />
-          {errors.password && (
-            <p role='alert' className={styles.error}>
-              {errors.password.message}
-            </p>
-          )}
+          </div>
 
-          <Button
-            title={loading ? t('loading') : t('logIn')}
-            style={{ fontFamily: 'Almarai', marginTop: 20 }}
+          <button
+            type="submit"
+            className={`${styles.submitButton} ${loading ? styles.submitButtonLoading : ''}`}
             disabled={loading}
-          />
+          >
+            {loading && <div className={styles.buttonSpinner}></div>}
+            <span className={loading ? styles.buttonTextLoading : styles.buttonText}>
+              {loading ? t('loading') : t('logIn')}
+            </span>
+          </button>
         </form>
         <br />
         <Link href='/forgot-password' className={styles.forgotPasswordLink}>

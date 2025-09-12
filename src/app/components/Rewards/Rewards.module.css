@@ -31,18 +31,6 @@
 }
 
 
-.noRewardsMessage {
-  font-size: 24px;
-  color: var(--text-color);
-  text-align: center;
-  line-height: 100px;
-  background-color: #ffffff !important  ;
-  padding: 10px;
-  border-radius: 30px;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-  margin-top: 60px;
-  
-}
 .rewardsGrid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -539,16 +527,66 @@
   cursor: not-allowed;
 }
 
+/* No Rewards State - Modern Design */
 .noRewards {
   text-align: center;
-  padding: 3rem;
-  color: #718096;
+  padding: 4rem 2rem;
+  background: linear-gradient(145deg, #ffffff, #f8fafc);
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  margin: 2rem auto;
+  max-width: 500px;
+  border: 1px solid rgba(255, 255, 255, 0.8);
 }
 
 .noRewardsIcon {
-  font-size: 3rem;
+  font-size: 4rem;
+  color: #667eea;
+  margin-bottom: 1.5rem;
+  opacity: 0.8;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.noRewardsTitle {
+  color: #1f2937;
+  font-size: 1.8rem;
   margin-bottom: 1rem;
-  opacity: 0.5;
+  font-weight: 700;
+}
+
+.noRewardsText {
+  color: #6b7280;
+  line-height: 1.6;
+  font-size: 1.1rem;
+}
+
+.restrictionMessage {
+  margin-top: 2rem;
+  padding: 3rem;
+  background: linear-gradient(145deg, #fef2f2, #fef7f7);
+  border: 1px solid rgba(248, 113, 113, 0.2);
+}
+
+.restrictionMessage .noRewardsIcon {
+  color: #ef4444;
+}
+
+.restrictionMessage .noRewardsTitle {
+  color: #dc2626;
+}
+
+.restrictionMessage .noRewardsText {
+  color: #991b1b;
 }
 
 /* Responsive Design */
@@ -562,6 +600,51 @@
 
   .rewardsGrid {
     grid-template-columns: 1fr;
+  }
+
+  .noRewards {
+    padding: 3rem 1.5rem;
+    margin: 1rem;
+    border-radius: 16px;
+  }
+
+  .noRewardsTitle {
+    font-size: 1.5rem;
+  }
+
+  .noRewardsText {
+    font-size: 1rem;
+  }
+
+  .noRewardsIcon {
+    font-size: 3rem;
+  }
+
+  .restrictionMessage {
+    padding: 2.5rem 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .noRewards {
+    padding: 2rem 1rem;
+    margin: 0.5rem;
+  }
+
+  .noRewardsTitle {
+    font-size: 1.25rem;
+  }
+
+  .noRewardsText {
+    font-size: 0.9rem;
+  }
+
+  .noRewardsIcon {
+    font-size: 2.5rem;
+  }
+
+  .restrictionMessage {
+    padding: 2rem 1rem;
   }
 }
 

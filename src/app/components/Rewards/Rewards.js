@@ -384,17 +384,18 @@ const Rewards = () => {
               </div>
             </>
           ) : (
-            <div className={styles.noRewardsMessage}>
-              <img
-                src="https://www.deeluxe.fr/img/cms/Homepage%202024/Reassurance/Paiement-securis%C3%A9-png.png"
-                width={150}
-                style={{ marginBottom: -60 }}
-                alt={t("noRewardsAvailable")}
-              />
-              <h3 style={{ marginBottom: -40 }}>
+            <div className={`${styles.noRewards} ${styles.restrictionMessage}`}>
+              <div className={styles.noRewardsIcon}>
+                <svg width="64" height="64" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                </svg>
+              </div>
+              <h3 className={styles.noRewardsTitle}>
                 {t("noRewardsAvailableTitle")}
               </h3>
-              <p>{t("noRewardsMessage")}</p>
+              <p className={styles.noRewardsText}>
+                {t("noRewardsMessage")}
+              </p>
             </div>
           )}
         </>
