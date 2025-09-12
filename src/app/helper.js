@@ -28,6 +28,11 @@ export async function redirectIfEmailPhoneNotVerified(session) {
     return { redirect: '/mobile-verification' };
   }
 
+  // Skip profile completion check if user has no SynoId and SynoToken
+  if (!session?.user?.syno_id && !session?.user?.syno_token) {
+    return; // Skip profile completion for users without Syno credentials
+  }
+
   if (session?.user?.is_profile_completed !== 1) {
     return { redirect: '/complete-profile' };
   }

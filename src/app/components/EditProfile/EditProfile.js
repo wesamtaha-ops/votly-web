@@ -272,7 +272,7 @@ const EditProfile = ({ user, userToken, updateSession }) => {
           </form>
         </div>
 
-        {isUserCountryAllowed(user) && (
+        {isUserCountryAllowed(user) && (user?.syno_id || user?.syno_token) && (
           <div className={`${styles.card} ${styles.profileCompletionCard}`}>
             <h3 className={styles.cardTitle}>{t('profileCompletion')}</h3>
             <div className={styles.progressBarContainer}>
@@ -353,7 +353,7 @@ const EditProfile = ({ user, userToken, updateSession }) => {
                 {...passwordRegister('password', {
                   required: t('passwordRequired'),
                   minLength: {
-                    value: 6,
+                    value: 8,
                     message: t('passwordMinLength'),
                   },
                 })}

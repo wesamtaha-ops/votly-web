@@ -81,7 +81,7 @@ const Profile = ({ user }) => {
               </div>
             </div>
           </motion.div>
-          {isUserCountryAllowed(user) && (
+          {isUserCountryAllowed(user) && (user?.syno_id || user?.syno_token) && (
             <motion.div
               className={`${styles.card} ${styles.profileCompletionCard}`}
               variants={cardVariants}

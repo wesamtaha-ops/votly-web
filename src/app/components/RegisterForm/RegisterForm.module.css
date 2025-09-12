@@ -1,490 +1,453 @@
+/* Modern Registration Form Styles */
+
+/* Container and Layout */
 .formContainer {
-  width: 100%;
-  max-width: 500px;
-  margin: 80px auto;
-  padding: 40px;
-  background-color: white;
-  border-radius: 16px;
-  box-shadow: 0 10px 25px rgba(27, 52, 251, 0.1);
-  animation: fadeIn 0.4s ease-in-out;
-  font-family: inherit;
-}
-
-.react_tel_input_custom {
   position: relative;
-  font-size: 16px !important;
-  letter-spacing: 0.01rem;
-  margin-top: 0 !important;
-  margin-bottom: 0 !important;
-  padding-left: 58px !important;
-  margin-left: 0;
-  border: 2px solid #eef1f6 !important;
-  border-radius: 12px !important;
-  line-height: 25px;
-  height: 56px !important;
-  width: 100% !important;
-  outline: none;
-  background-color: #f8fafc !important;
-  transition: all 0.3s ease;
-  font-family: inherit !important;
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 2.5rem;
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  border-radius: 20px;
+  box-shadow: 
+    0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(10px);
+  animation: slideInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  font-family: inherit;
+  overflow: hidden;
 }
 
-.react-tel-input .form-control {
-  direction: ltr !important;
-  padding-left: 50px !important;
-}
-
-@keyframes fadeIn {
+@keyframes slideInUp {
   from {
     opacity: 0;
-    transform: translateY(-10px);
+    transform: translateY(30px);
   }
-
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
 
-.title {
-  font-size: 32px;
-  margin-bottom: 30px;
-  color: var(--text-color);
-  font-weight: 700;
-  text-align: center;
-  font-family: inherit;
-}
-
-.form {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.input, .inputHalf {
-  padding: 16px 20px;
-  border: 2px solid #eef1f6;
-  border-radius: 12px;
-  font-size: 16px;
-  color: var(--text-color);
-  transition: all 0.3s ease;
-  font-family: inherit;
-  background-color: #f8fafc;
-}
-
-.input {
-  width: 94% !important;
-}
-
-.inputHalf {
-  width: 48%;
-}
-
-.input:focus, .inputHalf:focus {
-  border-color: var(--primary-color);
-  outline: none;
-  box-shadow: 0 0 0 4px rgba(49, 130, 206, 0.1);
-  background-color: white;
-}
-
-.input:hover, .inputHalf:hover {
-  background-color: white;
-  border-color: #cbd5e0;
-}
-
-.errorBorder {
-  border-color: red;
-}
-
-.nameContainer, .dateOfBirthContainer {
-  display: flex;
-  justify-content: space-between;
-  gap: 15px;
-}
-
-.genderContainer {
+/* Loading Overlay */
+.loadingOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
   display: flex;
   align-items: center;
-  gap: 20px;
-  font-size: 16px;
-  padding: 10px 0;
-  font-family: inherit;
+  justify-content: center;
+  z-index: 1000;
+  border-radius: 20px;
 }
 
-.radioInput {
-  margin-right: 8px;
-  width: 20px;
-  height: 20px;
-  accent-color: var(--primary-color);
+.loadingSpinner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
 }
 
-.termsContainer {
-  margin-top: 10px;
-  font-size: 15px;
-  color: var(--text-color);
-  line-height: 1.8;
-  font-family: inherit;
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid #e2e8f0;
+  border-top: 4px solid var(--primary-color, #3182ce);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
 }
 
-.checkbox {
-  margin-right: 10px;
-  width: 20px;
-  height: 20px;
-  position: relative;
-  top: 4px;
-  accent-color: var(--primary-color);
-  border-radius: 6px;
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
-.error {
-  color: #e53e3e;
-  font-size: 14px;
-  margin-top: -15px;
-  margin-bottom: -5px;
-  font-family: inherit;
+.loadingText {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--primary-color, #3182ce);
+  margin: 0;
 }
 
-.button {
-  padding: 16px;
-  background-color: var(--primary-color);
-  color: white;
-  border: none;
-  border-radius: 12px;
-  font-size: 18px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-family: inherit;
-  margin-top: 10px;
-}
-
-.button:hover:not(:disabled) {
-  background-color: #2c5282;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(49, 130, 206, 0.2);
-}
-
-.button:disabled {
-  opacity: 0.7;
-  cursor: not-allowed;
-}
-
-.loginLink {
-  margin-top: 25px;
-  font-size: 15px;
+/* Form Header */
+.formHeader {
   text-align: center;
-  color: var(--text-color);
-  font-family: inherit;
-}
-
-.link {
-  color: var(--primary-color);
-  text-decoration: none;
-  font-weight: 600;
-  transition: all 0.2s ease;
-  font-family: inherit;
-}
-
-.link:hover {
-  color: #2c5282;
-  text-decoration: underline;
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .formContainer {
-    width: 85%;
-    margin: 20px auto;
-    padding: 25px 20px;
-    border-radius: 12px;
-  }
-
-  .title {
-    font-size: 24px;
-    margin-bottom: 20px;
-  }
-
-  .form {
-    gap: 15px;
-    width: 90%;
-  }
-
-  .input {
-    width: 100%;
-    padding: 14px 16px;
-    border-radius: 8px;
-    font-size: 16px;
-  }
-
-  .nameContainer,
-  .dateOfBirthContainer {
-    flex-direction: column;
-    gap: 15px;
-    width: 100%;
-  }
-
-  .inputHalf {
-    width: 100%;
-    padding: 14px 16px;
-    border-radius: 8px;
-    font-size: 16px;
-  }
-
-  .genderContainer {
-    padding: 5px 0;
-    gap: 15px;
-    width: 100%;
-  }
-
-  .termsContainer {
-    margin-top: 5px;
-    gap: 10px;
-    width: 100%;
-    font-size: 14px;
-  }
-
-  .button {
-    margin-top: 5px;
-    padding: 14px;
-    font-size: 16px;
-    border-radius: 8px;
-    width: 100%;
-  }
-
-  .loginLink {
-    margin-top: 20px;
-    font-size: 14px;
-    width: 100%;
-  }
-
-  .error {
-    margin-top: -10px;
-    margin-bottom: -10px;
-    font-size: 13px;
-    width: 100%;
-  }
-
-  .react_tel_input_custom {
-    width: 100% !important;
-    padding: 14px 16px !important;
-    padding-left: 50px !important;
-    font-size: 16px !important;
-    border-radius: 8px !important;
-  }
-}
-
-@media (max-width: 480px) {
-  .formContainer {
-    width: 85%;
-    margin: 15px auto;
-    padding: 20px 15px;
-  }
-
-  .title {
-    font-size: 22px;
-    margin-bottom: 15px;
-  }
-
-  .form {
-    gap: 12px;
-  }
-
-  .input, 
-  .inputHalf,
-  .react_tel_input_custom {
-    padding: 12px 14px !important;
-  }
-
-  .react_tel_input_custom {
-    padding-left: 45px !important;
-  }
-
-  .button {
-    padding: 12px;
-    font-size: 15px;
-  }
-
-  .loginLink {
-    margin-top: 15px;
-    font-size: 13px;
-  }
-
-  .termsContainer {
-    font-size: 13px;
-  }
-
-  .error {
-    font-size: 12px;
-  }
-}
-
-/* RTL Support */
-[dir="rtl"] .react_tel_input_custom {
-  padding-left: 16px !important;
-  padding-right: 50px !important;
-}
-
-@media (max-width: 480px) {
-  [dir="rtl"] .react_tel_input_custom {
-    padding-right: 45px !important;
-  }
-}
-
-/* Base styles */
-.formContainer {
-  max-width: 600px;
-  margin: 2rem auto;
-  padding: 2rem;
-  background: white;
-  border-radius: 1rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.title {
-  text-align: center;
-  font-size: 2rem;
-  color: #2d3748;
   margin-bottom: 2rem;
 }
 
+.title {
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: #1a202c;
+  margin-bottom: 1rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.progressBar {
+  width: 100%;
+  height: 4px;
+  background: #e2e8f0;
+  border-radius: 2px;
+  overflow: hidden;
+  margin-top: 1rem;
+}
+
+.progressFill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary-color, #3182ce) 0%, #667eea 100%);
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+
+/* Form Styles */
 .form {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+  transition: opacity 0.3s ease;
 }
 
-.input {
-  width: 100%;
-  padding: 0.75rem 1rem;
-  border: 1px solid #e2e8f0;
-  border-radius: 0.5rem;
-  font-size: 1rem;
+.formDisabled {
+  opacity: 0.7;
+  pointer-events: none;
 }
 
-.nameContainer {
-  display: flex;
-  gap: 1rem;
-}
-
-.inputHalf {
-  width: 50%;
-  padding: 0.75rem 1rem;
-  border: 1px solid #e2e8f0;
-  border-radius: 0.5rem;
-  font-size: 1rem;
-}
-
-.error {
-  color: #e53e3e;
-  font-size: 0.875rem;
-  margin-top: 0.25rem;
-}
-
-.errorBorder {
-  border-color: #e53e3e;
-}
-
-.button {
-  background: #3182ce;
-  color: white;
-  padding: 0.75rem;
-  border: none;
-  border-radius: 0.5rem;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-.button:hover {
-  background: #2c5282;
-}
-
-.button:disabled {
-  background: #90cdf4;
-  cursor: not-allowed;
-}
-
-.loginLink {
-  text-align: center;
-  margin-top: 1.5rem;
-  color: #4a5568;
-}
-
-.link {
-  color: #3182ce;
-  text-decoration: none;
-}
-
-.link:hover {
-  text-decoration: underline;
-}
-
-.genderContainer {
-  display: flex;
-  gap: 2rem;
-  align-items: center;
-}
-
-.radioInput {
-  margin-right: 0.5rem;
-}
-
-.label {
-  display: block;
-  margin-bottom: 0.5rem;
-  color: #4a5568;
-}
-
-.dateOfBirthContainer {
-  display: flex;
-  gap: 1rem;
-}
-
-.termsContainer {
+.formSection {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
 }
 
-.checkbox {
-  margin-right: 0.5rem;
+/* Input Styles */
+.inputGroup {
+  position: relative;
+  display: flex;
+  align-items: center;
 }
 
-/* Custom styles for phone input */
+.input, .inputHalf {
+  width: 100%;
+  padding: 1rem 1.25rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-family: inherit;
+  background: #ffffff;
+  color: #2d3748;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  outline: none;
+  position: relative;
+}
+
+.input:focus, .inputHalf:focus {
+  border-color: var(--primary-color, #3182ce);
+  box-shadow: 
+    0 0 0 3px rgba(49, 130, 206, 0.1),
+    0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+  background: #ffffff;
+}
+
+.input:hover:not(:disabled), .inputHalf:hover:not(:disabled) {
+  border-color: #cbd5e0;
+  transform: translateY(-1px);
+}
+
+.inputDisabled {
+  background: #f7fafc !important;
+  color: #a0aec0 !important;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.inputSpinner {
+  position: absolute;
+  right: 1rem;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #e2e8f0;
+  border-top: 2px solid var(--primary-color, #3182ce);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+/* Container Layouts */
+.nameContainer, .dateOfBirthContainer {
+  display: flex;
+  gap: 1rem;
+}
+
+.inputHalf {
+  flex: 1;
+}
+
+/* Gender Container */
+.genderContainer {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  padding: 1rem;
+  background: #f8fafc;
+  border-radius: 12px;
+  border: 2px solid #e2e8f0;
+  transition: all 0.3s ease;
+}
+
+.genderContainer:hover {
+  background: #ffffff;
+  border-color: #cbd5e0;
+}
+
+.radioInput {
+  width: 20px;
+  height: 20px;
+  margin-right: 0.75rem;
+  accent-color: var(--primary-color, #3182ce);
+  cursor: pointer;
+}
+
+.label {
+  display: block;
+  font-weight: 600;
+  color: #4a5568;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+}
+
+/* Terms Container */
+.termsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.5rem;
+  background: #f8fafc;
+  border-radius: 12px;
+  border: 2px solid #e2e8f0;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #4a5568;
+}
+
+.termsContainer label {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.termsContainer label:hover {
+  color: #2d3748;
+}
+
+.checkbox {
+  width: 20px;
+  height: 20px;
+  margin-top: 2px;
+  accent-color: var(--primary-color, #3182ce);
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+/* Submit Button */
+.submitButton {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 1.25rem 2rem;
+  background: linear-gradient(135deg, var(--primary-color, #3182ce) 0%, #667eea 100%);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 1.125rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  margin-top: 1rem;
+  min-height: 56px;
+  overflow: hidden;
+}
+
+.submitButton:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(135deg, #2c5282 0%, #5a67d8 100%);
+}
+
+.submitButton:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.submitButton:disabled {
+  cursor: not-allowed;
+  opacity: 0.8;
+}
+
+.submitButtonLoading {
+  background: linear-gradient(135deg, #a0aec0 0%, #cbd5e0 100%);
+}
+
+.buttonSpinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top: 2px solid white;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.buttonText {
+  transition: opacity 0.3s ease;
+}
+
+.buttonTextLoading {
+  opacity: 0.8;
+}
+
+/* Error Styles */
+.error {
+  color: #e53e3e;
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-top: 0.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.error::before {
+  content: "⚠";
+  font-size: 1rem;
+}
+
+.errorBorder {
+  border-color: #e53e3e !important;
+  box-shadow: 0 0 0 3px rgba(229, 62, 62, 0.1) !important;
+}
+
+/* Links */
+.loginLink {
+  text-align: center;
+  margin-top: 2rem;
+  font-size: 1rem;
+  color: #4a5568;
+  font-family: inherit;
+}
+
+.link {
+  color: var(--primary-color, #3182ce);
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.link:hover {
+  color: #2c5282;
+}
+
+.link::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -2px;
+  left: 0;
+  background: var(--primary-color, #3182ce);
+  transition: width 0.3s ease;
+}
+
+.link:hover::after {
+  width: 100%;
+}
+
+/* Phone Input Styles */
 .react_tel_input_custom {
   width: 100% !important;
-  padding: 0.75rem 1rem !important;
-  border: 1px solid #e2e8f0 !important;
-  border-radius: 0.5rem !important;
+  padding: 1rem 1.25rem !important;
+  padding-left: 60px !important;
+  border: 2px solid #e2e8f0 !important;
+  border-radius: 12px !important;
   font-size: 1rem !important;
+  font-family: inherit !important;
+  background: #ffffff !important;
+  color: #2d3748 !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  outline: none !important;
+  height: 56px !important;
 }
 
-/* Mobile Responsive Styles */
+.react_tel_input_custom:focus {
+  border-color: var(--primary-color, #3182ce) !important;
+  box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.1) !important;
+  transform: translateY(-2px);
+}
+
+.react_tel_input_container {
+  position: relative !important;
+}
+
+.react_tel_input_button {
+  background: #f8fafc !important;
+  border: 2px solid #e2e8f0 !important;
+  border-radius: 12px 0 0 12px !important;
+  padding: 0 12px !important;
+  transition: all 0.3s ease !important;
+}
+
+.react_tel_input_button:hover {
+  background: #ffffff !important;
+  border-color: #cbd5e0 !important;
+}
+
+.react_tel_input_dropdown {
+  background: white !important;
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 12px !important;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1) !important;
+  font-family: inherit !important;
+  max-height: 200px !important;
+  overflow-y: auto !important;
+}
+
+.react_tel_input_search {
+  padding: 0.75rem !important;
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 8px !important;
+  margin: 0.5rem !important;
+  font-family: inherit !important;
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
   .formContainer {
-    margin: 1rem auto;
-    margin-top: 3rem;
-    margin-bottom: 3rem;
-    padding: 1.5rem;
+    margin: 1rem;
+    padding: 2rem;
+    border-radius: 16px;
   }
 
   .title {
-    font-size: 1.75rem;
-    margin-bottom: 1.5rem;
+    font-size: 2rem;
   }
 
-  .nameContainer {
+  .nameContainer, .dateOfBirthContainer {
     flex-direction: column;
     gap: 1rem;
   }
 
   .inputHalf {
     width: 100%;
-  }
-
-  .dateOfBirthContainer {
-    flex-direction: column;
-    gap: 1rem;
   }
 
   .genderContainer {
@@ -493,30 +456,128 @@
     gap: 1rem;
   }
 
-  .input,
-  .inputHalf,
-  .react_tel_input_custom {
+  .input, .inputHalf, .react_tel_input_custom {
     font-size: 16px !important; /* Prevent zoom on iOS */
-    padding: 0.875rem !important;
-  }
-
-  .button {
-    padding: 1rem;
-    font-size: 1.125rem;
   }
 
   .termsContainer {
-    font-size: 0.875rem;
+    padding: 1.25rem;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .formContainer {
+    margin: 0.5rem;
+    padding: 1.5rem;
+  }
+
+  .title {
+    font-size: 1.75rem;
+  }
+
+  .form {
+    gap: 1.25rem;
+  }
+
+  .input, .inputHalf {
+    padding: 0.875rem 1rem;
+  }
+
+  .submitButton {
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
+  }
+
+  .react_tel_input_custom {
+    padding: 0.875rem 1rem !important;
+    padding-left: 55px !important;
   }
 }
 
 /* RTL Support */
 [dir="rtl"] .radioInput {
   margin-right: 0;
-  margin-left: 0.5rem;
+  margin-left: 0.75rem;
 }
 
 [dir="rtl"] .checkbox {
   margin-right: 0;
-  margin-left: 0.5rem;
+  margin-left: 0.75rem;
+}
+
+[dir="rtl"] .react_tel_input_custom {
+  padding-left: 1.25rem !important;
+  padding-right: 60px !important;
+}
+
+[dir="rtl"] .inputSpinner {
+  right: auto;
+  left: 1rem;
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .formContainer {
+    background: linear-gradient(135deg, #2d3748 0%, #4a5568 100%);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .title {
+    color: #f7fafc;
+  }
+
+  .input, .inputHalf, .react_tel_input_custom {
+    background: #4a5568 !important;
+    border-color: #718096 !important;
+    color: #f7fafc !important;
+  }
+
+  .input:focus, .inputHalf:focus {
+    background: #2d3748 !important;
+  }
+
+  .genderContainer, .termsContainer {
+    background: #4a5568;
+    border-color: #718096;
+    color: #f7fafc;
+  }
+
+  .label {
+    color: #e2e8f0;
+  }
+
+  .loginLink {
+    color: #e2e8f0;
+  }
+}
+
+/* Accessibility - Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .formContainer,
+  .spinner,
+  .loadingSpinner,
+  .input,
+  .inputHalf,
+  .submitButton,
+  .inputGroup,
+  .genderContainer,
+  .termsContainer,
+  .link,
+  .buttonSpinner,
+  .inputSpinner {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Focus visible for better accessibility */
+.input:focus-visible, 
+.inputHalf:focus-visible,
+.submitButton:focus-visible,
+.checkbox:focus-visible,
+.radioInput:focus-visible {
+  outline: 2px solid var(--primary-color, #3182ce);
+  outline-offset: 2px;
 }

@@ -179,38 +179,57 @@ const RegisterForm = () => {
   };
 
   return (
-    <div
-      className={styles.formContainer}
-      style={{ opacity: loading ? 0.5 : 1 }} // Adjust opacity while loading
-    >
-      <h2 className={styles.title}>{t('signUpTitle')}</h2>
+    <div className={styles.formContainer}>
+      {loading && (
+        <div className={styles.loadingOverlay}>
+          <div className={styles.loadingSpinner}>
+            <div className={styles.spinner}></div>
+            <p className={styles.loadingText}>{t('loading')}</p>
+          </div>
+        </div>
+      )}
+      
+      <div className={styles.formHeader}>
+        <h2 className={styles.title}>{t('signUpTitle')}</h2>
+        <div className={styles.progressBar}>
+          <div className={styles.progressFill} style={{ width: '0%' }}></div>
+        </div>
+      </div>
+      
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className={styles.form}
-        disabled={loading} // Disable form when loading
+        className={`${styles.form} ${loading ? styles.formDisabled : ''}`}
       >
         {requestError && (
           <p role='alert' className={styles.error}>
             {requestError}
           </p>
         )}
-        <div className={styles.nameContainer}>
-          <input
-            className={`${styles.inputHalf} ${
-              errors.firstname ? styles.errorBorder : ''
-            }`}
-            {...register('firstname', { required: t('firstNameRequired') })}
-            placeholder={t('firstName')}
-            disabled={loading} // Disable input when loading
-          />
-          <input
-            className={`${styles.inputHalf} ${
-              errors.lastname ? styles.errorBorder : ''
-            }`}
-            {...register('lastname', { required: t('lastNameRequired') })}
-            placeholder={t('lastName')}
-            disabled={loading} // Disable input when loading
-          />
+        <div className={styles.formSection}>
+          <div className={styles.nameContainer}>
+            <div className={styles.inputGroup}>
+              <input
+                className={`${styles.inputHalf} ${
+                  errors.firstname ? styles.errorBorder : ''
+                } ${loading ? styles.inputDisabled : ''}`}
+                {...register('firstname', { required: t('firstNameRequired') })}
+                placeholder={t('firstName')}
+                disabled={loading}
+              />
+              {loading && <div className={styles.inputSpinner}></div>}
+            </div>
+            <div className={styles.inputGroup}>
+              <input
+                className={`${styles.inputHalf} ${
+                  errors.lastname ? styles.errorBorder : ''
+                } ${loading ? styles.inputDisabled : ''}`}
+                {...register('lastname', { required: t('lastNameRequired') })}
+                placeholder={t('lastName')}
+                disabled={loading}
+              />
+              {loading && <div className={styles.inputSpinner}></div>}
+            </div>
+          </div>
         </div>
         {errors.firstname && (
           <p className={styles.error}>{errors.firstname.message}</p>
@@ -219,37 +238,48 @@ const RegisterForm = () => {
           <p className={styles.error}>{errors.lastname.message}</p>
         )}
 
-        <input
-          className={`${styles.input} ${
-            errors.email ? styles.errorBorder : ''
-          }`}
-          {...register('email', {
-            required: t('emailRequired'),
-            pattern: { value: /^\S+@\S+$/i, message: t('invalidEmail') },
-          })}
-          placeholder={t('email')}
-          disabled={loading} // Disable input when loading
-        />
-        {errors.email && <p className={styles.error}>{errors.email.message}</p>}
+        <div className={styles.formSection}>
+          <div className={styles.inputGroup}>
+            <input
+              className={`${styles.input} ${
+                errors.email ? styles.errorBorder : ''
+              } ${loading ? styles.inputDisabled : ''}`}
+              {...register('email', {
+                required: t('emailRequired'),
+                pattern: { value: /^\S+@\S+$/i, message: t('invalidEmail') },
+              })}
+              placeholder={t('email')}
+              disabled={loading}
+              type="email"
+            />
+            {loading && <div className={styles.inputSpinner}></div>}
+          </div>
+          {errors.email && <p className={styles.error}>{errors.email.message}</p>}
+        </div>
 
-        <input
-          className={`${styles.input} ${
-            errors.password ? styles.errorBorder : ''
-          }`}
-          {...register('password', {
-            required: t('passwordRequired'),
-            minLength: {
-              value: 6,
-              message: t('passwordMinLength'),
-            },
-          })}
-          type='password'
-          placeholder={t('password')}
-          disabled={loading} // Disable input when loading
-        />
-        {errors.password && (
-          <p className={styles.error}>{errors.password.message}</p>
-        )}
+        <div className={styles.formSection}>
+          <div className={styles.inputGroup}>
+            <input
+              className={`${styles.input} ${
+                errors.password ? styles.errorBorder : ''
+              } ${loading ? styles.inputDisabled : ''}`}
+              {...register('password', {
+                required: t('passwordRequired'),
+                minLength: {
+                  value: 8,
+                  message: t('passwordMinLength'),
+                },
+              })}
+              type='password'
+              placeholder={t('password')}
+              disabled={loading}
+            />
+            {loading && <div className={styles.inputSpinner}></div>}
+          </div>
+          {errors.password && (
+            <p className={styles.error}>{errors.password.message}</p>
+          )}
+        </div>
 
         <label className={styles.label}>{t('phone')}</label>
         <div dir='ltr'>
@@ -408,11 +438,14 @@ const RegisterForm = () => {
         )}
 
         <button
-          className={styles.button}
+          className={`${styles.submitButton} ${loading ? styles.submitButtonLoading : ''}`}
           type='submit'
-          disabled={loading} // Disable button when loading
+          disabled={loading}
         >
-          {loading ? t('loading') : t('signUp')} {/* Show loader text */}
+          {loading && <div className={styles.buttonSpinner}></div>}
+          <span className={loading ? styles.buttonTextLoading : styles.buttonText}>
+            {loading ? t('loading') : t('signUp')}
+          </span>
         </button>
       </form>
       <p className={styles.loginLink}>

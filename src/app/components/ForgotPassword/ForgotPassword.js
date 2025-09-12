@@ -202,7 +202,7 @@ const ForgotPassword = () => {
             className={styles.input}
             {...register("newPassword", {
               required: t("passwordRequired"),
-              minLength: { value: 6, message: t("passwordMinLength") },
+              minLength: { value: 8, message: t("passwordMinLength") },
             })}
             placeholder={t("newPasswordPlaceholder")}
           />
