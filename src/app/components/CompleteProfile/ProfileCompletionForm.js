@@ -51,17 +51,17 @@ const ProfileCompletionForm = ({ profile, onSubmit }) => {
   const flattenQuestions = (categoriesData, locale) => {
     const questions = [];
     const processedQuestionIds = new Set(); // Track processed question IDs to avoid duplicates
-    
+
     categoriesData.forEach(category => {
       // Skip hidden categories
       if (category.hidden) return;
-      
+
       // Process questions directly in category
       if (category.questions) {
         category.questions.forEach(question => {
           // Skip hidden questions, questions without code starting with "P", or already processed questions
           if (question.hidden || !question.code || !question.code.startsWith('C') || !question.code.startsWith('P') || processedQuestionIds.has(question.id)) return;
-          
+
           processedQuestionIds.add(question.id);
           questions.push({
             ...question,
@@ -75,12 +75,12 @@ const ProfileCompletionForm = ({ profile, onSubmit }) => {
           });
         });
       }
-      
+
       // Process standalone questions (questions that appear directly in the data array)
-      if (category.synoQuestionTypeId && category.code && (category.code.startsWith('P') || category.code.startsWith('C') )) {
+      if (category.synoQuestionTypeId && category.code && (category.code.startsWith('P') || category.code.startsWith('C'))) {
         // Skip if already processed
         if (processedQuestionIds.has(category.id)) return;
-        
+
         processedQuestionIds.add(category.id);
         // This is actually a question, not a category, and has code starting with "P"
         questions.push({
@@ -93,7 +93,7 @@ const ProfileCompletionForm = ({ profile, onSubmit }) => {
         });
       }
     });
-    
+
     // Sort questions by their code for consistent ordering
     return questions.sort((a, b) => {
       const aCode = a.code || '';
@@ -115,10 +115,10 @@ const ProfileCompletionForm = ({ profile, onSubmit }) => {
 
       setQuestionsLoading(false);
       setQuestionsLoaded(true);
-      
+
       const categoriesData = response?.externalResponse?.data ?? [];
       setCategories(categoriesData);
-      
+
       // Flatten questions for easier processing
       const questions = flattenQuestions(categoriesData, lang);
       setFlatQuestions(questions);
@@ -152,23 +152,34 @@ const ProfileCompletionForm = ({ profile, onSubmit }) => {
     if (questionsLoaded && answersLoaded) {
       const fields = flatQuestions.reduce((acc, question) => {
         const isMultiSelect = question.synoQuestionTypeId === 3;
-        
+
         if (isMultiSelect) {
           // For multi-select questions, collect all matching answers into an array
+          // Match using synoQuestionId from API response to question.id from questions
           const matchingAnswers = answers
-            .filter((answer) => answer.questionId === question.id)
-            .map(answer => answer.id);
+            .filter((answer) => answer.synoQuestionId === question.id)
+            .map(answer => answer.synoAnswerId);
           // Only set the array if it has items, otherwise set undefined
           acc[question.id] = matchingAnswers.length > 0 ? matchingAnswers : undefined;
+
+          if (matchingAnswers.length > 0) {
+            console.log(`Multi-select question ${question.id} pre-selected with answers:`, matchingAnswers);
+          }
         } else {
           // For single-select questions, find the first matching answer
-          const answer = answers.find((answer) => answer.questionId === question.id);
-          acc[question.id] = answer?.id;
+          // Match using synoQuestionId from API response to question.id from questions
+          const answer = answers.find((answer) => answer.synoQuestionId === question.id);
+          acc[question.id] = answer?.synoAnswerId;
+
+          if (answer) {
+            console.log(`Single-select question ${question.id} pre-selected with answer:`, answer.synoAnswerId);
+          }
         }
         return acc;
       }, {});
-      console.log('Processed fields:', fields);
-      console.log('Flat questions:', flatQuestions);
+      console.log('Processed fields for pre-selection:', fields);
+      console.log('Total questions loaded:', flatQuestions.length);
+      console.log('Total answers from API:', answers.length);
       setAllLoaded(true);
       setAllFields(fields);
     }
@@ -202,17 +213,17 @@ const ProfileCompletionForm = ({ profile, onSubmit }) => {
   const handleCheckboxChange = (questionId, answerId, checked) => {
     const currentValues = allFields[questionId] || [];
     let newValues;
-    
+
     if (checked) {
       // Add the answer ID if it's not already in the array
-      newValues = currentValues.includes(answerId) 
-        ? currentValues 
+      newValues = currentValues.includes(answerId)
+        ? currentValues
         : [...currentValues, answerId];
     } else {
       // Remove the answer ID from the array
       newValues = currentValues.filter(id => id !== answerId);
     }
-    
+
     // Set to undefined if array becomes empty, otherwise set the array
     setAllFields({
       ...allFields,
@@ -311,20 +322,20 @@ const ProfileCompletionForm = ({ profile, onSubmit }) => {
             {flatQuestions.map((question, index) => {
               const isMultiSelect = question.synoQuestionTypeId === 3;
               const isCompleted = allFields[question.id];
-              
+
               return (
-                <div 
-                  key={question.id} 
+                <div
+                  key={question.id}
                   className={`${styles.questionCard} ${isCompleted ? styles.completed : ''}`}
                 >
                   <div className={styles.questionHeader}>
                     <div className={`${styles.questionBadge} ${isCompleted ? styles.badgeCompleted : ''}`}>
                       {index + 1}
                     </div>
-                    <Typography 
-                      variant="h6" 
+                    <Typography
+                      variant="h6"
                       className={styles.questionTitle}
-                      style={{ 
+                      style={{
                         textAlign: lang === 'ar' ? 'right' : 'left',
                         direction: lang === 'ar' ? 'rtl' : 'ltr'
                       }}
@@ -332,7 +343,7 @@ const ProfileCompletionForm = ({ profile, onSubmit }) => {
                       {question.questionText}
                     </Typography>
                   </div>
-                  
+
                   <div className={styles.questionContent}>
                     {isMultiSelect ? (
                       <FormControl component="fieldset" className={styles.checkboxGroup}>
@@ -342,7 +353,7 @@ const ProfileCompletionForm = ({ profile, onSubmit }) => {
                             .map((answer) => {
                               const currentValues = allFields[question.id] || [];
                               const isChecked = currentValues.includes(answer.id);
-                              
+
                               return (
                                 <FormControlLabel
                                   key={answer.id}
@@ -379,8 +390,8 @@ const ProfileCompletionForm = ({ profile, onSubmit }) => {
                         }}
                       >
                         {question.answers.map((answer) => (
-                          <MenuItem 
-                            key={answer.id} 
+                          <MenuItem
+                            key={answer.id}
                             value={answer.id}
                             disabled={answer.hidden}
                           >
