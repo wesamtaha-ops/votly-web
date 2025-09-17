@@ -142,7 +142,6 @@ const Profile = ({ user }) => {
             {[
               { label: 'firstName', value: user.firstname },
               { label: 'lastName', value: user.lastname },
-              { label: 'username', value: user.username },
               { label: 'email', value: user.email },
               { label: 'phone', value: user.phone },
               { label: 'birthday', value: user.birthday },

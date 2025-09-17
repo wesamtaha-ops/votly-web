@@ -30,7 +30,6 @@ const EditProfile = ({ user, userToken, updateSession }) => {
     defaultValues: {
       firstname: user.firstname,
       lastname: user.lastname,
-      username: user.username,
       email: user.email,
       phone: user.phone,
       birthday: user.birthday,
@@ -177,20 +176,6 @@ const EditProfile = ({ user, userToken, updateSession }) => {
               />
               {errors.lastname && (
                 <p className={styles.error}>{errors.lastname.message}</p>
-              )}
-            </div>
-
-            <div className={styles.formGroup}>
-              <label>{t('username')}</label>
-              <input
-                className={`${styles.input} ${
-                  errors.username ? styles.errorBorder : ''
-                }`}
-                {...register('username', { required: t('usernameRequired') })}
-                disabled={loading} // Disable input during loading
-              />
-              {errors.username && (
-                <p className={styles.error}>{errors.username.message}</p>
               )}
             </div>
 
