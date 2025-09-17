@@ -140,7 +140,6 @@ const Login = () => {
         
         <div className={styles.formHeader}>
           <h2 className={styles.title}>{t('logIn')}</h2>
-          <p className={styles.subtitle}>Welcome back! Please sign in to your account</p>
         </div>
         {/* Tabs */}
         <div className={styles.tabsContainer}>
