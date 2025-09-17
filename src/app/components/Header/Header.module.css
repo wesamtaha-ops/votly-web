@@ -50,15 +50,24 @@
     flex: 0 0 auto;
   }
 
-  .logoImage {
-    height: 45px;
-    width: auto;
+  .logoButton {
+    background: none;
+    border: none;
+    padding: 0;
     cursor: pointer;
+    display: flex;
+    align-items: center;
     transition: transform 0.3s ease;
   }
 
-  .logoImage:hover {
+  .logoButton:hover {
     transform: scale(1.05);
+  }
+
+  .logoImage {
+    height: 45px;
+    width: auto;
+    transition: transform 0.3s ease;
   }
 
   .desktopNav {
@@ -148,6 +157,20 @@
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
+}
+
+.mobileLogo .logoButton {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: transform 0.3s ease;
+}
+
+.mobileLogo .logoButton:hover {
+  transform: scale(1.05);
 }
 
 .mobileLogo .logoImage {

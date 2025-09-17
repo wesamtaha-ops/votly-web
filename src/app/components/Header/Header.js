@@ -7,12 +7,14 @@ import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
 import styles from "./Header.module.css";
 import UserAvatar from "../UserAvatar/UserAvatar";
+import { useNavigation } from "../../contexts/NavigationContext";
 
 import { useLocale, useTranslations } from "next-intl"; // Import for translations
 
 const Header = () => {
   const { data: session } = useSession();
   const router = useRouter();
+  const { navigateWithLoading, replaceWithLoading } = useNavigation();
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const t = useTranslations("Header"); // Initialize translations
@@ -57,7 +59,7 @@ const Header = () => {
 
       const newUrl = `/${locale}${newParams}?${params.toString()}`;
       // Replace the current URL with the new locale
-      router.replace(newUrl);
+      replaceWithLoading(newUrl);
     } catch (error) {
       console.error("Error switching locale:", error);
     }
@@ -81,7 +83,7 @@ const Header = () => {
 
   const handleNavigation = (href) => {
     closeMenu();
-    router.push(href);
+    navigateWithLoading(href);
   };
 
   const isActivePage = (path) => {
@@ -93,40 +95,61 @@ const Header = () => {
       {/* Desktop Header Layout */}
       <div className={styles.desktopHeader}>
         <div className={styles.logo}>
-          <Link href={`/${lang}/`}>
+          <button 
+            onClick={() => navigateWithLoading(`/${lang}/`)}
+            className={styles.logoButton}
+          >
             <img
               src="https://votly.app/public/web/wp-content/themes/Votly-logo-colored.png"
               alt="Votly Logo"
               className={styles.logoImage}
             />
-          </Link>
+          </button>
         </div>
         
         <nav className={styles.desktopNav}>
-          <Link href={`/${lang}/surveys`} className={`${styles.navLink} ${isActivePage('/surveys') ? styles.active : ''}`}>
+          <button 
+            className={`${styles.navLink} ${isActivePage('/surveys') ? styles.active : ''}`}
+            onClick={() => navigateWithLoading(`/${lang}/surveys`)}
+          >
             {t("surveys")}
-          </Link>
-          <Link href={`/${lang}/rewards`} className={`${styles.navLink} ${isActivePage('/rewards') ? styles.active : ''}`}>
+          </button>
+          <button 
+            className={`${styles.navLink} ${isActivePage('/rewards') ? styles.active : ''}`}
+            onClick={() => navigateWithLoading(`/${lang}/rewards`)}
+          >
             {t("rewards")}
-          </Link>
+          </button>
           {session?.id && (
-            <Link href={`/${lang}/invite-friends`} className={`${styles.navLink} ${isActivePage('/invite-friends') ? styles.active : ''}`}>
+            <button 
+              className={`${styles.navLink} ${isActivePage('/invite-friends') ? styles.active : ''}`}
+              onClick={() => navigateWithLoading(`/${lang}/invite-friends`)}
+            >
               {t("inviteFriends")}
-            </Link>
+            </button>
           )}
           {session?.id && (
-            <Link href={`/${lang}/profile`} className={`${styles.navLink} ${isActivePage('/profile') ? styles.active : ''}`}>
+            <button 
+              className={`${styles.navLink} ${isActivePage('/profile') ? styles.active : ''}`}
+              onClick={() => navigateWithLoading(`/${lang}/profile`)}
+            >
               {t("myProfile")}
-            </Link>
+            </button>
           )}
           {!session?.id ? (
             <>
-              <Link href={`/${lang}/register`} className={`${styles.navLink} ${isActivePage('/register') ? styles.active : ''}`}>
+              <button 
+                className={`${styles.navLink} ${isActivePage('/register') ? styles.active : ''}`}
+                onClick={() => navigateWithLoading(`/${lang}/register`)}
+              >
                 {t("register")}
-              </Link>
-              <Link href={`/${lang}/login`} className={`${styles.navLink} ${isActivePage('/login') ? styles.active : ''}`}>
+              </button>
+              <button 
+                className={`${styles.navLink} ${isActivePage('/login') ? styles.active : ''}`}
+                onClick={() => navigateWithLoading(`/${lang}/login`)}
+              >
                 {t("login")}
-              </Link>
+              </button>
             </>
           ) : (
             <button
@@ -171,13 +194,16 @@ const Header = () => {
         </button>
 
         <div className={styles.mobileLogo}>
-          <Link href={`/${lang}/`}>
+          <button 
+            onClick={() => navigateWithLoading(`/${lang}/`)}
+            className={styles.logoButton}
+          >
             <img
               src="https://votly.app/public/web/wp-content/themes/Votly-logo-colored.png"
               alt="Votly Logo"
               className={styles.logoImage}
             />
-          </Link>
+          </button>
         </div>
 
         <div className={styles.mobileActions}>
