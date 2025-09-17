@@ -142,7 +142,7 @@ const UserAvatar = () => {
               <>
                 <FaWallet className={styles.walletIcon} />
                 <span className={styles.balanceAmount}>
-                  {convertedBalance.toFixed(0)}
+                  {convertedBalance.toFixed(2)}
                 </span>
                 <span className={styles.currencyLabel}>
                   {displayCurrency}

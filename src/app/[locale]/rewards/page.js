@@ -9,7 +9,12 @@ import { redirectIfEmailPhoneNotVerified } from "../../helper";
 export default async function RewardsPage() {
   const session = await getServerSession(authOptions);
 
-  // Check redirections
+  // Check if user is logged in
+  if (!session?.id) {
+    return redirect("/login");
+  }
+
+  // Check redirections for email/phone verification and profile completion
   const redirectResult = await redirectIfEmailPhoneNotVerified(session);
 
   if (redirectResult?.redirect) {
