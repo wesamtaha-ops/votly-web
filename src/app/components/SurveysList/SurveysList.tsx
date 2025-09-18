@@ -102,8 +102,9 @@ const SurveysList = () => {
         userToken: userToken,
       });
 
-      if (response.status == "1" && response.data?.transactions) {
-        setTransactions(response.data.transactions || []);
+      if (response.status == "1" && response.data) {
+        // New response structure has transactions directly in data array
+        setTransactions(response.data || []);
       }
     } catch (error) {
       console.error('Error fetching transactions:', error);
