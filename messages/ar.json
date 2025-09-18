@@ -288,7 +288,13 @@
     "estimatedTime": "الوقت المتوقع",
     "serviceNotAvailable": "الخدمة غير متوفرة",
     "serviceNotAvailableInCountry": "نعتذر، هذه الخدمة غير متوفرة حالياً في بلدك. نحن نعمل على توسيع تغطيتنا لتشمل المزيد من المناطق قريباً.",
-    "survey": "استطلاع"
+    "survey": "استطلاع",
+    "transactionHistory": "تاريخ المعاملات",
+    "transactionHistoryDescription": "اعرض مكافآت الاستطلاعات المكتملة وتاريخ معاملاتك",
+    "noTransactions": "لا توجد معاملات بعد",
+    "noTransactionsText": "أكمل الاستطلاعات لرؤية تاريخ معاملاتك هنا",
+    "points": "نقاط",
+    "completed": "مكتمل"
   },
   "Profile": {
     "myProfile": "ملفي الشخصي",

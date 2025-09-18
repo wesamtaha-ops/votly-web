@@ -292,7 +292,13 @@
     "serviceNotAvailable": "Service Not Available",
     "serviceNotAvailableInCountry": "We apologize, but this service is not yet available in your country. We're working on expanding our coverage to more regions soon.",
     "qualification": "Qualification Rate",
-    "survey": "Survey"
+    "survey": "Survey",
+    "transactionHistory": "Transaction History",
+    "transactionHistoryDescription": "View your completed survey rewards and transaction history",
+    "noTransactions": "No Transactions Yet",
+    "noTransactionsText": "Complete surveys to see your transaction history here",
+    "points": "Points",
+    "completed": "Completed"
   },
   "Profile": {
     "myProfile": "My Profile",

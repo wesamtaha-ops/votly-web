@@ -6,7 +6,7 @@ import { callApi, isUserCountryAllowed } from '../../helper';
 import { useSession } from 'next-auth/react';
 import styles from './SurveysList.module.css';
 import { useSearchParams } from 'next/navigation';
-import { FaClipboardList, FaFilter, FaGlobe, FaClock, FaCoins, FaStar, FaArrowRight } from 'react-icons/fa';
+import { FaClipboardList, FaFilter, FaGlobe, FaClock, FaCoins, FaStar, FaArrowRight, FaDollarSign, FaCheckCircle } from 'react-icons/fa';
 import { Session } from 'next-auth';
 
 interface CustomSession extends Session {
@@ -27,8 +27,10 @@ const SurveysList = () => {
   const userToken = (session as CustomSession)?.id;
   const [surveys, setSurveys] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [transactionsLoading, setTransactionsLoading] = useState(false);
   const [activeFilter, setActiveFilter] = useState('active'); // 'active' or 'answered'
   const [filteredSurveys, setFilteredSurveys] = useState([]);
+  const [transactions, setTransactions] = useState([]);
 
   // Get user's currency and conversion rate
   const userCurrency = (session as CustomSession)?.user?.country_currency || "AED";
@@ -54,7 +56,10 @@ const SurveysList = () => {
   const status = searchParams.get('status');
 
   useEffect(() => {
-    if (userToken) fetchData();
+    if (userToken) {
+      fetchData();
+      fetchTransactions();
+    }
   }, [userToken, session]);
 
   useEffect(() => {
@@ -88,6 +93,25 @@ const SurveysList = () => {
     setLoading(false);
   }
 
+  async function fetchTransactions() {
+    setTransactionsLoading(true);
+    try {
+      const response = await callApi({
+        type: 'get',
+        url: 'transactions',
+        userToken: userToken,
+      });
+
+      if (response.status == "1" && response.data?.transactions) {
+        setTransactions(response.data.transactions || []);
+      }
+    } catch (error) {
+      console.error('Error fetching transactions:', error);
+    } finally {
+      setTransactionsLoading(false);
+    }
+  }
+
   // Country restriction message component
   const CountryRestrictionMessage = () => (
     <div className={`${styles.noSurveys} ${styles.restrictionMessage}`}>
@@ -109,6 +133,9 @@ const SurveysList = () => {
       </div>
     );
   }
+
+  // Show transactions loading when switching to transactions tab
+  const isTransactionsTabLoading = activeFilter === 'answered' && transactionsLoading;
 
   // Only check country restriction after session is loaded
   if (sessionStatus === "authenticated" && !isUserCountryAllowed(session?.user)) {
@@ -135,7 +162,10 @@ const SurveysList = () => {
           <button
             className={`${styles.filterButton} ${activeFilter === 'active' ? styles.active : ''
               }`}
-            onClick={() => setActiveFilter('active')}>
+            onClick={() => {
+              setActiveFilter('active');
+              fetchData();
+            }}>
             <FaFilter className={styles.filterIcon} />
             {t('activeSurveys')}
             <span className={styles.surveyCount}>
@@ -145,19 +175,79 @@ const SurveysList = () => {
           <button
             className={`${styles.filterButton} ${activeFilter === 'answered' ? styles.active : ''
               }`}
-            onClick={() => setActiveFilter('answered')}>
+            onClick={() => {
+              setActiveFilter('answered');
+              fetchTransactions();
+            }}>
             <FaFilter className={styles.filterIcon} />
             {t('answeredSurveys')}
             <span className={styles.surveyCount}>
-              {surveys.filter((s) => s.completed === true).length}
+              {transactions.length}
             </span>
           </button>
         </div>
       </div>
-      <h2 className={styles.title}>{t('earnBySurveys')}</h2>
-      <p className={styles.surveyDescription}>{t('surveyDescription')}</p>
+      <h2 className={styles.title}>
+        {activeFilter === 'answered' ? t('transactionHistory') : t('earnBySurveys')}
+      </h2>
+      <p className={styles.surveyDescription}>
+        {activeFilter === 'answered' ? t('transactionHistoryDescription') : t('surveyDescription')}
+      </p>
 
-      {filteredSurveys.length > 0 ? (
+      {isTransactionsTabLoading ? (
+        <div className={styles.surveysContainer}>
+          <div className={styles.spinner}></div>
+        </div>
+      ) : activeFilter === 'answered' && transactions.length > 0 ? (
+        <div className={styles.transactionsList}>
+          {transactions.map((transaction, index) => {
+            const transactionDate = new Date(transaction.date);
+            const formattedDate = transactionDate.toLocaleDateString(lang, {
+              year: 'numeric',
+              month: 'short',
+              day: 'numeric',
+              hour: '2-digit',
+              minute: '2-digit'
+            });
+            
+            return (
+              <div
+                key={transaction.id}
+                className={styles.transactionRow}>
+
+                {/* Transaction Info */}
+                <div className={styles.transactionInfo}>
+                  <h3 className={styles.transactionTitle}>
+                    {transaction.name}
+                  </h3>
+                  <p className={styles.transactionDescription}>
+                    {transaction.description}
+                  </p>
+                </div>
+
+                {/* Transaction Details */}
+                <div className={styles.transactionDetails}>
+                  <div className={styles.transactionAmount}>
+                    <FaCoins className={styles.amountIcon} />
+                    <span className={styles.amountValue}>
+                      {parseFloat(transaction.amount).toFixed(2)} {displayCurrency}
+                    </span>
+                  </div>
+                  <div className={styles.transactionDate}>
+                    {formattedDate}
+                  </div>
+                </div>
+
+                {/* Transaction Status */}
+                <div className={styles.transactionStatus}>
+                  <FaCheckCircle className={styles.statusIcon} />
+                  <span className={styles.statusText}>{t('completed')}</span>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      ) : activeFilter === 'active' && filteredSurveys.length > 0 ? (
         <div className={styles.surveysGrid}>
           {filteredSurveys.map((survey, index) => {
             const reward = calculateReward(survey.amount);
@@ -240,12 +330,16 @@ const SurveysList = () => {
           <h3 className={styles.noSurveysTitle}>
             {activeFilter === 'active'
               ? t('noActiveSurveys')
-              : t('noAnsweredSurveys')}
+              : activeFilter === 'answered' 
+                ? t('noTransactions')
+                : t('noAnsweredSurveys')}
           </h3>
           <p className={styles.noSurveysText}>
             {activeFilter === 'active'
               ? t('noActiveSurveysText')
-              : t('noAnsweredSurveysText')}
+              : activeFilter === 'answered'
+                ? t('noTransactionsText')
+                : t('noAnsweredSurveysText')}
           </p>
         </div>
       )}
