@@ -293,10 +293,10 @@
     "serviceNotAvailableInCountry": "We apologize, but this service is not yet available in your country. We're working on expanding our coverage to more regions soon.",
     "qualification": "Qualification Rate",
     "survey": "Survey",
-    "transactionHistory": "Transaction History",
-    "transactionHistoryDescription": "View your completed survey rewards and transaction history",
+    "transactionHistory": "Completed Surveys",
+    "transactionHistoryDescription": "View your completed survey rewards and completed surveys",
     "noTransactions": "No Transactions Yet",
-    "noTransactionsText": "Complete surveys to see your transaction history here",
+    "noTransactionsText": "Complete surveys to see your completed surveys here",
     "points": "Points",
     "completed": "Completed"
   },

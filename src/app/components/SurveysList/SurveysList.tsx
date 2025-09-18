@@ -216,33 +216,24 @@ const SurveysList = () => {
                 key={transaction.id}
                 className={styles.transactionRow}>
 
-                {/* Transaction Info */}
-                <div className={styles.transactionInfo}>
-                  <h3 className={styles.transactionTitle}>
-                    {transaction.name}
-                  </h3>
-                  <p className={styles.transactionDescription}>
-                    {transaction.description}
-                  </p>
+                {/* Transaction Date */}
+                <div className={styles.transactionDateLeft}>
+                  {formattedDate}
                 </div>
 
-                {/* Transaction Details */}
-                <div className={styles.transactionDetails}>
+                {/* Transaction Amount and Status */}
+                <div className={styles.transactionRightSection}>
                   <div className={styles.transactionAmount}>
                     <FaCoins className={styles.amountIcon} />
                     <span className={styles.amountValue}>
                       {parseFloat(transaction.amount).toFixed(2)} {displayCurrency}
                     </span>
                   </div>
-                  <div className={styles.transactionDate}>
-                    {formattedDate}
+                  
+                  <div className={styles.transactionStatus}>
+                    <FaCheckCircle className={styles.statusIcon} />
+                    <span className={styles.statusText}>{t('completed')}</span>
                   </div>
-                </div>
-
-                {/* Transaction Status */}
-                <div className={styles.transactionStatus}>
-                  <FaCheckCircle className={styles.statusIcon} />
-                  <span className={styles.statusText}>{t('completed')}</span>
                 </div>
               </div>
             );

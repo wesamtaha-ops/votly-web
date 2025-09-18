@@ -595,44 +595,24 @@
   transform: translateY(-1px);
 }
 
-/* Transaction Info Section */
-.transactionInfo {
-  flex: 1;
-  min-width: 0;
-}
-
-.transactionTitle {
-  font-size: 1.125rem;
-  font-weight: 600;
-  color: #1f2937;
-  margin: 0 0 0.5rem 0;
-  line-height: 1.4;
-}
-
-.transactionDescription {
+/* Transaction Date Left Section */
+.transactionDateLeft {
   font-size: 0.875rem;
   color: #6b7280;
-  margin: 0;
-  line-height: 1.4;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
-  -webkit-box-orient: vertical;
-}
-
-/* Transaction Details Section */
-.transactionDetails {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 0.5rem;
+  font-weight: 500;
   flex-shrink: 0;
 }
 
-[dir='rtl'] .transactionDetails {
-  align-items: flex-start;
+/* Transaction Right Section */
+.transactionRightSection {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-shrink: 0;
+}
+
+[dir='rtl'] .transactionRightSection {
+  flex-direction: row-reverse;
 }
 
 .transactionAmount {
@@ -652,15 +632,6 @@
   margin: 0;
 }
 
-.transactionDate {
-  font-size: 1rem;
-  color: #9ca3af;
-  text-align: right;
-}
-
-[dir='rtl'] .transactionDate {
-  text-align: left;
-}
 
 /* Transaction Status Section */
 .transactionStatus {
@@ -705,25 +676,21 @@
     padding: 1rem;
   }
 
-  .transactionDetails {
-    align-items: stretch;
-    flex-direction: row;
+  .transactionRightSection {
     justify-content: space-between;
+    width: 100%;
   }
 
-  [dir='rtl'] .transactionDetails {
-    align-items: stretch;
+  [dir='rtl'] .transactionRightSection {
+    flex-direction: row;
   }
 
-  .transactionDate {
+  .transactionDateLeft {
     text-align: left;
+    margin-bottom: 0.5rem;
   }
 
-  [dir='rtl'] .transactionDate {
+  [dir='rtl'] .transactionDateLeft {
     text-align: right;
-  }
-
-  .transactionStatus {
-    align-self: center;
   }
 }

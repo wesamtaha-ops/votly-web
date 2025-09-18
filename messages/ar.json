@@ -289,10 +289,10 @@
     "serviceNotAvailable": "الخدمة غير متوفرة",
     "serviceNotAvailableInCountry": "نعتذر، هذه الخدمة غير متوفرة حالياً في بلدك. نحن نعمل على توسيع تغطيتنا لتشمل المزيد من المناطق قريباً.",
     "survey": "استطلاع",
-    "transactionHistory": "تاريخ المعاملات",
+    "transactionHistory": "الاستطلاعات المكتملة",
     "transactionHistoryDescription": "اعرض مكافآت الاستطلاعات المكتملة وتاريخ معاملاتك",
     "noTransactions": "لا توجد معاملات بعد",
-    "noTransactionsText": "أكمل الاستطلاعات لرؤية تاريخ معاملاتك هنا",
+    "noTransactionsText": "أكمل الاستطلاعات لرؤية الاستطلاعات المكتملة هنا",
     "points": "نقاط",
     "completed": "مكتمل"
   },
