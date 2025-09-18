@@ -126,8 +126,8 @@ const SurveysList = () => {
     </div>
   );
 
-  // Show loading spinner while session is loading
-  if (sessionStatus === "loading" || loading) {
+  // Show loading spinner while session is loading (but not for surveys loading)
+  if (sessionStatus === "loading") {
     return (
       <div className={styles.surveysContainer}>
         <div className={styles.spinner}></div>
@@ -196,7 +196,7 @@ const SurveysList = () => {
       </p>
 
       {isTransactionsTabLoading ? (
-        <div className={styles.surveysContainer}>
+        <div className={styles.loadingContainer}>
           <div className={styles.spinner}></div>
         </div>
       ) : activeFilter === 'answered' && transactions.length > 0 ? (
@@ -247,6 +247,10 @@ const SurveysList = () => {
               </div>
             );
           })}
+        </div>
+      ) : loading && activeFilter === 'active' ? (
+        <div className={styles.loadingContainer}>
+          <div className={styles.spinner}></div>
         </div>
       ) : activeFilter === 'active' && filteredSurveys.length > 0 ? (
         <div className={styles.surveysGrid}>
