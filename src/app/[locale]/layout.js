@@ -63,7 +63,7 @@ export default function RootLayout({ children, params }) {
         />
         
         {/* ContentSquare */}
-        <script src="https://t.contentsquare.net/uxa/be62824408779.js"></script>
+        <script src="https://t.contentsquare.net/uxa/7a619070550dc.js"></script>
       </head>
       <body className={isRTL ? almarai.className : inter.className}>
         <SessionProvider>
