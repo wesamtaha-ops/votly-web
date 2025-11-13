@@ -173,15 +173,15 @@
   font-size: 1.2rem;
   font-weight: 700;
   color: #1f2937;
-  line-height: 1;
-  margin-bottom: -15px;
+  line-height: 1.2;
+  margin-bottom: 0.2rem;
 }
 
 .statLabel {
   font-size: 0.8rem;
   color: #6b7280;
   font-weight: 500;
-  margin-top: 0.2rem;
+  margin-top: 0;
   font-family: inherit;
 }
 
