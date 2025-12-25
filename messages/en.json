@@ -298,7 +298,8 @@
     "noTransactions": "No Transactions Yet",
     "noTransactionsText": "Complete surveys to see your completed surveys here",
     "points": "Points",
-    "completed": "Completed"
+    "completed": "Completed",
+    "reference": "Ref"
   },
   "Profile": {
     "myProfile": "My Profile",

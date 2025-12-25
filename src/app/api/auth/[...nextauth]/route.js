@@ -1,6 +1,7 @@
 import NextAuth from "next-auth";
 import CredentialProvider from "next-auth/providers/credentials";
 import axios from "axios";
+import { callVotlyApi } from "../../../helper";
 
 export const authOptions = {
   pages: {
@@ -12,29 +13,60 @@ export const authOptions = {
       credentials: {},
       authorize: async (credentials) => {
         try {
-          const res = await axios.post(
-            `${process.env.NEXT_PUBLIC_BASE_URL_API}login`,
-            {
+          console.log('=== NextAuth AUTHORIZE CALLED ===');
+          console.log('Login credentials:', { 
+            email: credentials.email, 
+            lang: credentials.lang,
+            hasPassword: !!credentials.password 
+          });
+          
+          // Call backend API directly using helper function
+          // This avoids HTTP calls and uses the correct BACKEND_BASE_URL_API
+          console.log('Calling backend API: v2/login');
+          
+          const res = await callVotlyApi({
+            type: "post",
+            url: "v2/login",
+            data: {
               email: credentials.email,
               password: credentials.password,
               lang: credentials.lang,
             },
-            {
-              "User-Agent":
-                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
-            }
-          );
+            userToken: undefined, // No token needed for login
+            lang: credentials.lang,
+          });
 
-          if (res.data.token) {
+          console.log('Backend response:', JSON.stringify(res, null, 2));
+
+          // Check if response has token (backend format)
+          const token = res?.token || res?.data?.token;
+          const user = res?.user || res?.data?.user;
+
+          if (token) {
+            console.log('Login successful, token received:', token.substring(0, 20) + '...');
+            console.log('User data:', user);
+            console.log('=== NextAuth AUTHORIZE SUCCESS ===');
             return {
-              id: res.data.token,
-              user: res.data.user,
+              id: token,
+              user: user,
             };
+          } else {
+            console.log('Login failed: No token in response');
+            console.log('=== NextAuth AUTHORIZE FAILED (no token) ===');
           }
         } catch (error) {
-          console.log("Login failed:", error.response?.data || error.message);
+          console.error("=== NextAuth AUTHORIZE ERROR ===");
+          console.error("Error message:", error.message);
+          console.error("Error response:", error.response?.data);
+          console.error("Error status:", error.response?.status);
+          console.error("Error config:", {
+            url: error.config?.url,
+            method: error.config?.method,
+          });
+          console.error("=== NextAuth AUTHORIZE ERROR END ===");
+          
           throw new Error(
-            "Login failed: " + (error.response?.data.message || error.message)
+            "Login failed: " + (error.response?.data?.message || error.message)
           );
         }
 
@@ -53,16 +85,32 @@ export const authOptions = {
     session: async ({ session, token }) => {
       session.id = token.id;
 
-      const response = await axios(
-        `${process.env.NEXT_PUBLIC_BASE_URL_API}getUser`,
-        {
-          method: "get",
-          headers: { userToken: token.id },
-        }
-      );
+      console.log('=== NextAuth SESSION CALLBACK ===');
+      console.log('Token ID:', token.id?.substring(0, 20) + '...');
 
-      session.user = response.data;
+      try {
+        // Call backend API directly using helper function
+        console.log('Calling backend API: user');
+        
+        const userData = await callVotlyApi({
+          type: "get",
+          url: "user",
+          data: {},
+          userToken: token.id,
+          lang: 'en',
+        });
 
+        console.log('GetUser API response:', userData);
+        session.user = userData;
+      } catch (error) {
+        console.error('=== NextAuth SESSION ERROR ===');
+        console.error('GetUser API error:', error.response?.data || error.message);
+        console.error('Error status:', error.response?.status);
+        console.error('=== NextAuth SESSION ERROR END ===');
+        // Don't fail the session, just log the error
+      }
+
+      console.log('=== NextAuth SESSION CALLBACK COMPLETE ===');
       return session;
     },
   },

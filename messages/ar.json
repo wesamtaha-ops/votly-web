@@ -294,7 +294,8 @@
     "noTransactions": "لا توجد معاملات بعد",
     "noTransactionsText": "أكمل الاستطلاعات لرؤية الاستطلاعات المكتملة هنا",
     "points": "نقاط",
-    "completed": "مكتمل"
+    "completed": "مكتمل",
+    "reference": "المرجع"
   },
   "Profile": {
     "myProfile": "ملفي الشخصي",

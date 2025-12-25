@@ -45,8 +45,16 @@ export async function callApi({
   userToken,
   lang = 'en',
 }) {
+  // Use Next.js API routes instead of calling backend directly
+  // This avoids CORS issues since requests go through the same origin
+  const baseUrl = typeof window !== 'undefined' 
+    ? window.location.origin 
+    : process.env.NEXTAUTH_URL || 'http://localhost:3000';
+  
+  const apiUrl = `${baseUrl}/api/${url}`;
+  
   const response = await axios(
-    `${process.env.NEXT_PUBLIC_BASE_URL_API}${url}`,
+    apiUrl,
     {
       method: type,
       data: {
@@ -68,7 +76,19 @@ export async function callApi({
 }
 
 export async function callVotlyApi({ type, url, data = [], userToken, lang }) {
-  const response = await axios(`${process.env.BACKEND_BASE_URL_API}${url}`, {
+  const baseUrl = process.env.BACKEND_BASE_URL_API;
+  
+  if (!baseUrl) {
+    console.error('BACKEND_BASE_URL_API is not defined in environment variables');
+    throw new Error('BACKEND_BASE_URL_API environment variable is not set');
+  }
+  
+  // Ensure baseUrl ends with / and url doesn't start with /
+  const cleanBaseUrl = baseUrl.endsWith('/') ? baseUrl : `${baseUrl}/`;
+  const cleanUrl = url.startsWith('/') ? url.slice(1) : url;
+  const fullUrl = `${cleanBaseUrl}${cleanUrl}`;
+  
+  const response = await axios(fullUrl, {
     method: type,
     data,
     headers: {
@@ -96,5 +116,14 @@ export function apiErrorResponse(errorCode, message = '') {
   return {
     errorCode: errorCode ?? 400,
     message,
+  };
+}
+
+// CORS headers helper function
+export function getCorsHeaders() {
+  return {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization, userToken',
   };
 }

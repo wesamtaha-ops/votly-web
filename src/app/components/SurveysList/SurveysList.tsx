@@ -87,6 +87,8 @@ const SurveysList = () => {
     if (response.status == "1" && response.externalResponse?.status === 200) {
       const surveysData = response.externalResponse?.data?.surveys || [];
       if (surveysData.length > 0) {
+        // Debug: Log survey structure to see available fields
+        console.log('Survey data structure:', surveysData[0]);
         setSurveys(surveysData);
       }
     }
@@ -211,14 +213,26 @@ const SurveysList = () => {
               minute: '2-digit'
             });
             
+            // Debug: Log transaction structure to see available fields
+            if (index === 0) {
+              console.log('Transaction data structure:', transaction);
+            }
+            
             return (
               <div
                 key={transaction.id}
                 className={styles.transactionRow}>
 
-                {/* Transaction Date */}
+                {/* Transaction Date and Survey ID */}
                 <div className={styles.transactionDateLeft}>
-                  {formattedDate}
+                  <div>{formattedDate}</div>
+                  <div className={styles.transactionReference}>
+                    {t('reference')}: {transaction.survey_id !== undefined && transaction.survey_id !== null 
+                      ? transaction.survey_id 
+                      : (transaction.id !== undefined && transaction.id !== null 
+                        ? transaction.id 
+                        : (transaction.reference || transaction.ref || transaction.survey_reference || transaction.survey_ref || 'N/A'))}
+                  </div>
                 </div>
 
                 {/* Transaction Amount and Status */}
@@ -261,6 +275,9 @@ const SurveysList = () => {
                 <div className={styles.surveyContent}>
                   <h3 className={styles.surveyTitle}>
                     {survey.title || `${t('survey')} #${index + 1}`}
+                    <span className={styles.surveyReference}>
+                      {' '}({t('reference')}: {survey.id !== undefined && survey.id !== null ? survey.id : (survey.reference || survey.ref || survey.survey_reference || survey.survey_ref || 'N/A')})
+                    </span>
                   </h3>
                   <p className={styles.surveyDescription}>
                     {survey.description || t('surveyDescription')}
