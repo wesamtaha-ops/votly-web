@@ -45,11 +45,12 @@ const SurveysList = () => {
     displayCurrency = "ريال";
   }
 
-  // Calculate 25% of amount and convert to user currency
-  const calculateReward = (usdAmount: number) => {
-    const quarterAmount = usdAmount * 0.25; // 25% of original
-    const convertedAmount = quarterAmount * conversionRate;
-    return convertedAmount;
+  // The API already provides the converted and divided amount
+  // So we just return it directly without recalculation
+  const calculateReward = (amount: number) => {
+    // API already provides the final amount (converted and divided by division_factor)
+    // So we just return it as-is
+    return amount;
   };
 
   const searchParams = useSearchParams();
