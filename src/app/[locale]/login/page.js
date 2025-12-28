@@ -13,7 +13,16 @@ export default async function LoginPage() {
 
   return (
     <>
-      <Login />
+      <div
+        style={{
+          marginTop:
+            typeof window !== 'undefined' && window.innerWidth <= 768
+              ? '-140px'
+              : undefined,
+        }}
+      >
+        <Login />
+      </div>
     </>
   );
 }

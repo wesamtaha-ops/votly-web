@@ -17,8 +17,8 @@
 /* Mobile adjustments */
 @media (max-width: 768px) {
   .main {
-    margin-top: 60px; /* Mobile header height */
-    min-height: calc(100vh - 120px); /* Mobile header (60px) + footer (60px) */
+    margin-top: 0; /* Remove mobile header margin */
+    min-height: calc(100vh - 60px); /* Footer (60px) */
   }
 }
 

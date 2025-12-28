@@ -8,6 +8,21 @@
   min-height: 100vh;
   padding: 2rem;
   font-family: inherit;
+  box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+  .loginContainer {
+    padding: 1rem;
+    padding-top: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .loginContainer {
+    padding: 0.75rem;
+    padding-top: 0.75rem;
+  }
 }
 
 .loginBox {
@@ -206,10 +221,33 @@
   background: #ffffff;
 }
 
+@media (max-width: 768px) {
+  .input:focus {
+    transform: none;
+    box-shadow: 
+      0 0 0 4px rgba(49, 130, 206, 0.15),
+      0 2px 4px -1px rgba(0, 0, 0, 0.1);
+  }
+}
+
 .input:hover:not(:disabled):not(:focus) {
   border-color: #cbd5e0;
   transform: translateY(-1px);
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px) {
+  .input:hover:not(:disabled):not(:focus) {
+    transform: none;
+  }
+
+  .forgotPasswordLink:hover {
+    transform: none;
+  }
+
+  .registerLink:hover {
+    transform: none;
+  }
 }
 
 .input::placeholder {
@@ -321,6 +359,17 @@
   background: linear-gradient(135deg, #2c5282 0%, #5a67d8 100%);
 }
 
+@media (max-width: 768px) {
+  .submitButton:hover:not(:disabled) {
+    transform: translateY(-2px);
+  }
+  
+  .submitButton:active:not(:disabled) {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.1);
+  }
+}
+
 .submitButton:active:not(:disabled) {
   transform: translateY(-1px);
 }
@@ -376,39 +425,64 @@
 
 /* Links */
 .forgotPasswordLink {
-  display: inline-block;
-  margin-top: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1rem;
   font-size: 1rem;
   color: var(--primary-color, #3182ce);
   text-decoration: none;
   font-weight: 600;
-  padding: 0.75rem 1.5rem;
+  padding: 0.875rem 1.5rem;
   border-radius: 12px;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-  background: rgba(49, 130, 206, 0.05);
+  background: rgba(49, 130, 206, 0.08);
+  border: 1px solid rgba(49, 130, 206, 0.2);
+  width: 90%;
+  min-height: 48px;
 }
 
 .forgotPasswordLink:hover {
-  background: rgba(49, 130, 206, 0.1);
-  transform: translateY(-2px);
+  background: rgba(49, 130, 206, 0.15);
+  border-color: rgba(49, 130, 206, 0.3);
   color: #2c5282;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(49, 130, 206, 0.2);
 }
 
-.forgotPasswordLink::after {
-  content: '';
-  position: absolute;
-  width: 0;
-  height: 2px;
-  bottom: 0.5rem;
-  left: 50%;
-  background: var(--primary-color, #3182ce);
-  transition: all 0.3s ease;
-  transform: translateX(-50%);
+.forgotPasswordLink:active {
+  transform: translateY(0);
 }
 
-.forgotPasswordLink:hover::after {
-  width: 70%;
+.registerLink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0.75rem;
+  font-size: 1rem;
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  padding: 0.875rem 1.5rem;
+  border-radius: 12px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  width: 100%;
+  min-height: 48px;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+}
+
+.registerLink:hover {
+  background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
+  color: white;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.registerLink:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(102, 126, 234, 0.3);
 }
 
 /* Responsive Design */
@@ -416,16 +490,113 @@
   .loginContainer {
     padding: 1rem;
     min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .loginBox {
     padding: 2rem 1.5rem;
     border-radius: 20px;
     max-width: 100%;
+    width: 100%;
+    box-shadow: 
+      0 10px 25px -5px rgba(0, 0, 0, 0.15),
+      0 0 0 1px rgba(255, 255, 255, 0.1);
   }
 
   .title {
-    font-size: 2rem;
+    font-size: 1.875rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .subtitle {
+    font-size: 0.95rem;
+  }
+
+  .formHeader {
+    margin-bottom: 1.75rem;
+  }
+
+  .tabsContainer {
+    margin-bottom: 1.5rem;
+    padding: 6px;
+    gap: 4px;
+  }
+
+  .tab {
+    padding: 12px 14px;
+    font-size: 0.95rem;
+    min-height: 44px;
+  }
+
+  .form {
+    gap: 1.5rem;
+  }
+
+  .formSection {
+    gap: 0.65rem;
+  }
+
+  .input, .phoneInput {
+    padding: 0.875rem 1.25rem !important;
+    font-size: 16px !important; /* Prevent zoom on iOS */
+    min-height: 48px;
+    border-radius: 12px;
+  }
+
+  .phoneInput {
+    padding-left: 60px !important;
+  }
+
+  .phoneButton {
+    min-height: 48px !important;
+  }
+
+  .submitButton {
+    padding: 0.875rem 1.5rem;
+    font-size: 1rem;
+    min-height: 48px;
+    margin-top: 0.25rem;
+    border-radius: 12px;
+  }
+
+  .forgotPasswordLink {
+    margin-top: 1rem;
+    padding: 0.75rem 1.25rem;
+    font-size: 0.95rem;
+    min-height: 44px;
+  }
+
+  .registerLink {
+    margin-top: 0.75rem;
+    padding: 0.75rem 1.25rem;
+    font-size: 0.95rem;
+    min-height: 44px;
+  }
+
+  .error {
+    font-size: 0.875rem;
+    margin-top: 0.4rem;
+    padding-left: 0.4rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .loginContainer {
+    padding: 0.75rem;
+  }
+
+  .loginBox {
+    padding: 1.5rem 1.25rem;
+    border-radius: 18px;
+    margin: 0;
+  }
+
+  .title {
+    font-size: 1.75rem;
+    line-height: 1.2;
+    margin-bottom: 0.4rem;
   }
 
   .subtitle {
@@ -433,68 +604,69 @@
   }
 
   .formHeader {
-    margin-bottom: 2rem;
-  }
-
-  .tabsContainer {
     margin-bottom: 1.5rem;
-  }
-
-  .tab {
-    padding: 10px 12px;
-    font-size: 0.95rem;
-  }
-
-  .input, .phoneInput {
-    padding: 1rem 1.25rem !important;
-    font-size: 16px !important; /* Prevent zoom on iOS */
-  }
-
-  .phoneInput {
-    padding-left: 60px !important;
-  }
-
-  .submitButton {
-    padding: 1rem 1.5rem;
-    font-size: 1rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .loginContainer {
-    padding: 0.5rem;
-  }
-
-  .loginBox {
-    padding: 1.5rem 1rem;
-    border-radius: 16px;
-  }
-
-  .title {
-    font-size: 1.75rem;
   }
 
   .form {
     gap: 1.25rem;
   }
 
+  .formSection {
+    gap: 0.6rem;
+  }
+
+  .tabsContainer {
+    margin-bottom: 1.25rem;
+    padding: 5px;
+    gap: 3px;
+  }
+
+  .tab {
+    padding: 10px 12px;
+    font-size: 0.9rem;
+    min-height: 42px;
+  }
+
   .input, .phoneInput {
-    padding: 0.875rem 1rem !important;
+    padding: 0.8rem 1.1rem !important;
+    font-size: 16px !important;
+    min-height: 46px;
+    border-radius: 10px;
   }
 
   .phoneInput {
     padding-left: 55px !important;
   }
 
+  .phoneButton {
+    min-height: 46px !important;
+  }
+
   .submitButton {
-    padding: 0.875rem 1.25rem;
+    padding: 0.8rem 1.5rem;
     font-size: 0.95rem;
+    min-height: 46px;
+    width: 100%;
+    margin-top: 0.25rem;
   }
 
   .forgotPasswordLink {
-    margin-top: 1rem;
-    padding: 0.5rem 1rem;
+    margin-top: 0.875rem;
+    padding: 0.7rem 1.1rem;
     font-size: 0.9rem;
+    min-height: 42px;
+  }
+
+  .registerLink {
+    margin-top: 0.625rem;
+    padding: 0.7rem 1.1rem;
+    font-size: 0.9rem;
+    min-height: 42px;
+  }
+
+  .error {
+    font-size: 0.8rem;
+    margin-top: 0.35rem;
   }
 }
 
@@ -612,7 +784,6 @@
   outline: 2px solid var(--primary-color, #3182ce);
   outline-offset: 2px;
 }
-
 /* High contrast mode support */
 @media (prefers-contrast: high) {
   .input, .phoneInput {

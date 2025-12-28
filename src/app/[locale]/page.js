@@ -1,39 +1,15 @@
-'use client';
+import { getServerSession } from 'next-auth/next';
+import { authOptions } from '../api/auth/[...nextauth]/route';
+import { redirect } from 'next/navigation';
+import HomeContent from '../components/Home/HomeContent';
 
-import { useEffect } from 'react';
-import { useSearchParams } from 'next/navigation';
-import Features from '../components/Home/Features';
-import HowItWorks from '../components/Home/HowItWorks';
-import HeroBanner from './../components/HeroBanner/HeroBanner';
-import InfoSection from './../components/InfoSection/InfoSection';
-import FeaturesList from './../components/FeaturesList/FeaturesList';
-import FAQ from './../components/FAQ/FAQ';
-
-export default function Home() {
-  const searchParams = useSearchParams();
+export default async function Home() {
+  const session = await getServerSession(authOptions);
   
-  useEffect(() => {
-    // Check for inviter parameter in URL
-    const inviterHash = searchParams.get('inviter');
-    
-    if (inviterHash) {
-      // Store inviter hash in localStorage
-      localStorage.setItem('inviterHash', inviterHash);
-      
-      // Optionally, you can remove the parameter from the URL
-      const url = new URL(window.location.href);
-      url.searchParams.delete('inviter');
-      window.history.replaceState({}, '', url.toString());
-    }
-  }, [searchParams]);
+  // If user is logged in, redirect to surveys
+  if (session) {
+    return redirect('/surveys');
+  }
 
-  return (
-    <main>
-      <HeroBanner />
-      <Features />
-      <HowItWorks />
-      <InfoSection />
-      <FAQ />
-    </main>
-  );
+  return <HomeContent />;
 }
