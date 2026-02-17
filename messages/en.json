@@ -299,6 +299,7 @@
     "noTransactionsText": "Complete surveys to see your completed surveys here",
     "points": "Points",
     "completed": "Completed",
+    "cancelled": "Cancelled",
     "reference": "Ref"
   },
   "Profile": {

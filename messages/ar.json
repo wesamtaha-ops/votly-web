@@ -295,6 +295,7 @@
     "noTransactionsText": "أكمل الاستطلاعات لرؤية الاستطلاعات المكتملة هنا",
     "points": "نقاط",
     "completed": "مكتمل",
+    "cancelled": "ملغى",
     "reference": "المرجع"
   },
   "Profile": {

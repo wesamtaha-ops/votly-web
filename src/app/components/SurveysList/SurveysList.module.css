@@ -674,6 +674,17 @@
   white-space: nowrap;
 }
 
+/* Transaction Status - Cancelled (amount < 0) */
+.transactionStatusCancelled {
+  background: #fef2f2;
+  border-color: #fecaca;
+  color: #dc2626;
+}
+
+.transactionStatusCancelled .statusIcon {
+  color: #dc2626;
+}
+
 /* Loading Container */
 .loadingContainer {
   display: flex;

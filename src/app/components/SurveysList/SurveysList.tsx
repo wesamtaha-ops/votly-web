@@ -6,7 +6,7 @@ import { callApi, isUserCountryAllowed } from '../../helper';
 import { useSession } from 'next-auth/react';
 import styles from './SurveysList.module.css';
 import { useSearchParams } from 'next/navigation';
-import { FaClipboardList, FaFilter, FaGlobe, FaClock, FaCoins, FaStar, FaArrowRight, FaDollarSign, FaCheckCircle } from 'react-icons/fa';
+import { FaClipboardList, FaFilter, FaGlobe, FaClock, FaCoins, FaStar, FaArrowRight, FaDollarSign, FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
 import { Session } from 'next-auth';
 
 interface CustomSession extends Session {
@@ -245,9 +245,18 @@ const SurveysList = () => {
                     </span>
                   </div>
                   
-                  <div className={styles.transactionStatus}>
-                    <FaCheckCircle className={styles.statusIcon} />
-                    <span className={styles.statusText}>{t('completed')}</span>
+                  <div className={`${styles.transactionStatus} ${parseFloat(transaction.amount) < 0 ? styles.transactionStatusCancelled : ''}`}>
+                    {parseFloat(transaction.amount) < 0 ? (
+                      <>
+                        <FaTimesCircle className={styles.statusIcon} />
+                        <span className={styles.statusText}>{t('cancelled')}</span>
+                      </>
+                    ) : (
+                      <>
+                        <FaCheckCircle className={styles.statusIcon} />
+                        <span className={styles.statusText}>{t('completed')}</span>
+                      </>
+                    )}
                   </div>
                 </div>
               </div>
